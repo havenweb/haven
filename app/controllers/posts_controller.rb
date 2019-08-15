@@ -1,9 +1,19 @@
 class PostsController < ApplicationController
+  @@markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+
+  def index
+    posts_raw = Post.all
+    @posts = []
+    posts_raw.each do |post|
+      html = @@markdown.render(post.content).html_safe
+      @posts << [post.datetime,html]
+    end
+    @posts
+  end
 
   def show
     @post = Post.find(params[:id])
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
-    @post_html = markdown.render(@post.content).html_safe
+    @post_html = @@markdown.render(@post.content).html_safe
   end
 
   def new
