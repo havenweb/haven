@@ -16,6 +16,10 @@ class PostsController < ApplicationController
     @post.content = "" if @post.content.nil?
   end
 
+  def edit
+    @post = Post.find(params[:id])
+  end
+
   def create
     @post = post_from_form(params)
     if params[:commit] == "Upload Selected Image"
@@ -30,8 +34,22 @@ class PostsController < ApplicationController
     end
   end
 
+  def update
+    @post = post_from_form(params)
+    if params[:commit] == "Upload Selected Image"
+      @image = Image.new
+      @image.blob.attach params[:post][:pic]
+      @image.save
+      @post.content += "\n\n![](#{path_for(@image.blob)})"
+      render 'edit'
+    else
+      @post.save
+      redirect_to @post
+    end
+  end
+
   def post_from_form(params)
-    post = Post.new
+    post = Post.find_by(id: params[:id]) || Post.new
     date = params[:post][:date]
     time = params[:post][:time]
     post.datetime = DateTime.parse("#{date} #{time}")
