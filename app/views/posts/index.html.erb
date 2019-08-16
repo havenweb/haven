@@ -1,7 +1,7 @@
 <h1>My Blog</h1>
 <hr> 
 <% @posts.each do |post| %>
-  <small><%= link_to post.datetime, post_path(post) %></small>
+  <small><%= link_to post.datetime, post_path(post) %> <%= link_to 'Edit', edit_post_path(post) %></small>
   <%= PostsController::Markdown.render(post.content).html_safe %>
   <hr>
 <% end %>

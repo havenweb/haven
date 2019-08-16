@@ -1,5 +1,5 @@
 
-<small><%=@post.datetime%></small>
+<small><%=@post.datetime%> <%= link_to 'Edit', edit_post_path(@post) %> </small>
 <div id="content">
 <%=@post_html%>
 </div>
