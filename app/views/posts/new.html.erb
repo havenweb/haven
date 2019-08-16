@@ -1,4 +1,4 @@
-<h1>New Post</h1>
+<h1>New Post</h1> <%= link_to 'Back', posts_path %>
 <hr>
 <%= form_with scope: :post, url: posts_path, local: true do |form| %>
   <%= form.date_field :date, :style => 'display:inline;', :value => @post.datetime.strftime("%Y-%m-%d") %>
