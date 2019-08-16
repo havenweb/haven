@@ -1,7 +1,7 @@
 <h1>My Blog</h1>
 <hr> 
 <% @posts.each do |post| %>
-  <small><%= link_to post.datetime, post_path(post) %></small>
+  <small><%= link_to post.datetime.strftime("%a %b %-d, %Y"), post_path(post) %></small>
   <br>
   <%= link_to 'Edit', edit_post_path(post) %>
 

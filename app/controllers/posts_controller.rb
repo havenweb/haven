@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   Markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
 
   def index
-    @posts = Post.all
+    @posts = Post.order(datetime: :desc)
   end
 
   def show
