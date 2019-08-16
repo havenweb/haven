@@ -21,27 +21,24 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = post_from_form(params)
-    if params[:commit] == "Upload Selected Image"
-      @image = Image.new
-      @image.blob.attach params[:post][:pic]
-      @image.save
-      @post.content += "\n\n![](#{path_for(@image.blob)})"
-      render 'new'
-    else
-      @post.save
-      redirect_to @post
-    end
+    handle_form_submit(params, 'new')
   end
 
   def update
+    handle_form_submit(params, 'edit')
+  end
+
+  private
+
+
+  def handle_form_submit(params, view)
     @post = post_from_form(params)
     if params[:commit] == "Upload Selected Image"
       @image = Image.new
       @image.blob.attach params[:post][:pic]
       @image.save
       @post.content += "\n\n![](#{path_for(@image.blob)})"
-      render 'edit'
+      render view
     else
       @post.save
       redirect_to @post
