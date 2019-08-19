@@ -65,6 +65,8 @@ GEM
     chromedriver-helper (2.1.1)
       archive-zip (~> 0.10)
       nokogiri (~> 1.8)
+    commonmarker (0.20.1)
+      ruby-enum (~> 0.5)
     concurrent-ruby (1.1.5)
     crass (1.0.4)
     erubi (1.8.0)
@@ -130,8 +132,9 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
-    redcarpet (2.3.0)
     regexp_parser (1.6.0)
+    ruby-enum (0.7.2)
+      i18n
     ruby_dep (1.5.0)
     rubyzip (1.2.3)
     sass (3.7.4)
@@ -186,11 +189,11 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   chromedriver-helper
+  commonmarker (~> 0.20)
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   puma (~> 3.11)
   rails (~> 5.2.3)
-  redcarpet (~> 2.3)
   sass-rails (~> 5.0)
   selenium-webdriver
   spring

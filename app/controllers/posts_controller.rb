@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  Markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+  GFM_EXT = [:table, :strikethrough, :autolink, :tagfilter]
 
   def index
     @posts = Post.order(datetime: :desc)
@@ -7,7 +7,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
-    @post_html = Markdown.render(@post.content).html_safe
+    @post_html = CommonMarker.render_html(@post.content, :UNSAFE, GFM_EXT).html_safe
   end
 
   def new

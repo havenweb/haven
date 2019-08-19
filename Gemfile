@@ -16,8 +16,8 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 
-# Redcarpet is for parsing markdown
-gem 'redcarpet', '~> 2.3'
+# For parsing markdown
+gem 'commonmarker', '~> 0.20'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'

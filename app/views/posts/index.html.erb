@@ -9,6 +9,6 @@
               method: :delete,
               data: { confirm: 'Are you sure?' } %>
 
-  <%= PostsController::Markdown.render(post.content).html_safe %>
+  <%= CommonMarker.render_html(post.content, :UNSAFE, PostsController::GFM_EXT).html_safe %>
   <hr>
 <% end %>

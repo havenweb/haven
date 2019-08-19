@@ -15,6 +15,7 @@
 <script type="text/javascript">
 function doRender() {
   var converter = new showdown.Converter();
+  converter.setFlavor('github');
   var text      = document.getElementById("post_content").value;
   var html      = converter.makeHtml(text);
   document.getElementById("display").innerHTML = html;
