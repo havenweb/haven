@@ -1,0 +1,33 @@
+<%= form_with scope: :setting, local: true do |form| %>
+  <p>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </p>
+  <p>
+    <%= form.label :subtitle %><br>
+    <%= form.text_field :subtitle %>
+  </p>
+  <p>
+    <%= form.label :author %><br>
+    <%= form.text_field :author %>
+  </p>
+ 
+  <p>
+    <%= form.label :private %><br>
+    <%= form.radio_button :private, "Private" %>
+  </p>
+  <p>
+    <%= form.label :public %><br>
+    <%= form.radio_button :public, "Public" %>
+  </p>
+
+
+  <p>
+    <%= form.label :css %><br>
+    <%= form.text_area :css %>
+  </p>
+ 
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
