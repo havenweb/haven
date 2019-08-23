@@ -1,0 +1,7 @@
+Post form has two buttons, and I have logic based on their value.  Move the value of the special button to a variable/constant so I can't break the logic by renaming the text
+
+Add validation to post form
+
+Add validation to settings form
+
+Settings radio button uses text which logic on it, set those values to variables/constants

@@ -1,3 +1,5 @@
+<h1>Blog Settings</h1>
+
 <%= form_with scope: :setting, local: true do |form| %>
   <p>
     <%= form.label :title %><br>
@@ -11,16 +13,11 @@
     <%= form.label :author %><br>
     <%= form.text_field :author %>
   </p>
- 
   <p>
-    <%= form.label :private %><br>
-    <%= form.radio_button :private, "Private" %>
-  </p>
-  <p>
-    <%= form.label :public %><br>
-    <%= form.radio_button :public, "Public" %>
-  </p>
-
+    <%= form.label :visibility %><br />
+    <%= form.radio_button :visibility, 'private', checked: true %> Private<br />
+    <%= form.radio_button :visibility, 'public' %> Public<br />
+  </p
 
   <p>
     <%= form.label :css %><br>
@@ -28,6 +25,6 @@
   </p>
  
   <p>
-    <%= form.submit %>
+    <%= form.submit value: "Save Settings" %>
   </p>
 <% end %>
