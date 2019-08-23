@@ -7,7 +7,6 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
-    @post_html = CommonMarker.render_html(@post.content, :UNSAFE, GFM_EXT).html_safe
   end
 
   def new
