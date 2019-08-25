@@ -1,10 +1,15 @@
 class PostsController < ApplicationController
   GFM_EXT = [:table, :strikethrough, :autolink, :tagfilter]
+  IMG_REGEX = /!\[.*\]\(.*\)/
 
   def index
     @posts = Post.order(datetime: :desc)
     @settings = SettingsController.get_setting
     @css = true
+    respond_to do |format|
+      format.html
+      format.rss { render layout: false }
+    end
   end
 
   def show
@@ -41,10 +46,22 @@ class PostsController < ApplicationController
     txt.gsub(/[^0-9A-Za-z]/, '-').squeeze("-")
   end
 
+  def self.strip_image(txt)
+    img_pure = IMG_REGEX.match(txt).to_a.first
+    alt_text = /\[.*\]/.match(img_pure).to_a.first.gsub(/[\[\]]/,"")
+    filepath = /\(.*\)/.match(img_pure).to_a.first.gsub(/[\(\)]/,"")
+    filename = filepath.split("/").last.split(".").first
+    return alt_text unless alt_text.strip.empty?
+    return filename
+  end
+
   def self.make_slug(content)
+    fallback = "post"
     content.each_line do |line|
-      puts "##{line}"
-      old = line.strip
+      if IMG_REGEX.match(line) && (fallback == "post")
+        fallback = strip_image(line)
+      end
+      old = ActionController::Base.helpers.strip_tags(line.gsub(/['"]/,"").strip)
         .gsub("!","") ## these remove markdown images
         .gsub(/\(.*\)/,"")
         .gsub(/\[.*\]/,"")
@@ -56,6 +73,7 @@ class PostsController < ApplicationController
       next unless old.length > 3
       return sanitize(old)[0..50].downcase
     end
+    return sanitize(fallback)[0..50].downcase
   end
 
   def self.make_title(content)
