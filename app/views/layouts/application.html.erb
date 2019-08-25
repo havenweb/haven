@@ -16,9 +16,6 @@
       <% if !!@settings.subtitle && !@settings.subtitle.empty? %>
         <p class="lead blog_subtitle"><%=@settings.subtitle%></p>
       <% end %>
-      <% if !!@settings.author && !@settings.author.empty? %>
-        <p class="blog_author"><%=@settings.author%></p>
-      <% end %>
     <% end %>
     <%= yield %>
   </body>
