@@ -3,6 +3,7 @@ class PostsController < ApplicationController
   IMG_REGEX = /!\[.*\]\(.*\)/
 
   def index
+    require_signed_in
     @posts = Post.order(datetime: :desc)
     @settings = SettingsController.get_setting
     @css = true
@@ -83,6 +84,11 @@ class PostsController < ApplicationController
 
   private
 
+  def require_signed_in
+    if !user_signed_in?
+      redirect_to new_user_session_path
+    end
+  end
 
   def handle_form_submit(params, view)
     @post = post_from_form(params)

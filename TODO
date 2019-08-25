@@ -5,11 +5,12 @@ DEFER - prefix CSS with md5 for cache busting when css changes
 
 DEFER - Timestamps.  JS to capture TimeZone of poster, display timezone on post
 
-RSS/ATOM
+DEFER RSS/ATOM
 
-Auto-parse text to create title
+DONE Use title to create slug-links, semi-pretty style: https://medium.com/nimble/pretty-urls-in-rails-without-a-gem-c5ea545a285f
 
-Use title to create slug-links, semi-pretty style: https://medium.com/nimble/pretty-urls-in-rails-without-a-gem-c5ea545a285f
+Auth with Devise
+https://github.com/plataformatec/devise#starting-with-rails
 
 # Tech Debt
 

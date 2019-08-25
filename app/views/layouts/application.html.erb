@@ -9,6 +9,7 @@
 
   </head>
   <body>
+
     <% if !!@settings %>
       <% if !!@settings.title && !@settings.title.empty? %>
         <h1 class="blog_title"><%=link_to @settings.title, posts_path%></h1>
@@ -17,6 +18,11 @@
         <p class="lead blog_subtitle"><%=@settings.subtitle%></p>
       <% end %>
     <% end %>
+    
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
     <%= yield %>
+
   </body>
 </html>

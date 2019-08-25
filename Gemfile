@@ -7,7 +7,7 @@ ruby '2.4.1'
 gem 'rails', '~> 5.2.3'
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
-gem 'pg'
+gem 'pg', '~> 1.1.4'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -19,6 +19,9 @@ gem 'uglifier', '>= 1.3.0'
 
 # For parsing markdown
 gem 'commonmarker', '~> 0.20'
+
+# For Auth
+gem 'devise', '~> 4.7.0'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
