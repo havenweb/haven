@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Blog</title>
+    <title><%= !!@settings ? @settings.title : "Blog Not Named" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
-  </head>
 
+  </head>
   <body>
+    <% if !!@settings %>
+      <% if !!@settings.title && !@settings.title.empty? %>
+        <h1 class="blog_title"><%=@settings.title%></h1>
+      <% end %>
+      <% if !!@settings.subtitle && !@settings.subtitle.empty? %>
+        <p class="lead blog_subtitle"><%=@settings.subtitle%></h2>
+      <% end %>
+      <% if !!@settings.author && !@settings.author.empty? %>
+        <p class="blog_author"><%=@settings.author%></h3>
+      <% end %>
+    <% end %>
     <%= yield %>
   </body>
 </html>

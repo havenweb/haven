@@ -1,6 +1,4 @@
-<h1>My Blog</h1>
 <%= link_to "New Post", new_post_path %>
-
 <hr> 
 <% @posts.each do |post| %>
   <%= render "posts", post: post  %>

@@ -3,10 +3,14 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.order(datetime: :desc)
+    @settings = SettingsController.get_setting
+    @css = true
   end
 
   def show
     @post = Post.find(params[:id])
+    @settings = SettingsController.get_setting
+    @css = true
   end
 
   def new
@@ -32,6 +36,32 @@ class PostsController < ApplicationController
     @post.destroy
     redirect_to posts_path
   end
+
+  def self.sanitize(txt)
+    txt.gsub(/[^0-9A-Za-z]/, '-').squeeze("-")
+  end
+
+  def self.make_slug(content)
+    content.each_line do |line|
+      puts "##{line}"
+      old = line.strip
+        .gsub("!","") ## these remove markdown images
+        .gsub(/\(.*\)/,"")
+        .gsub(/\[.*\]/,"")
+        .squeeze("#") ## treat all headers the same
+      next if old.empty?
+      if old[0]=="#"
+         old = old[1..-1].strip
+      end
+      next unless old.length > 3
+      return sanitize(old)[0..50].downcase
+    end
+  end
+
+  def self.make_title(content)
+    make_slug(content).gsub("-"," ").titleize
+  end
+
 
   private
 

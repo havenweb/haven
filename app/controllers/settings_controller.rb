@@ -13,6 +13,10 @@ class SettingsController < ApplicationController
     redirect_to settings_url
   end
 
+  def style
+    @setting = SettingsController.get_setting
+  end
+
   def self.get_setting
     Setting.find(1)
   rescue

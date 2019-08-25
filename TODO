@@ -1,3 +1,18 @@
+# Next Steps
+
+DEFER - Reference the CSS somehow
+DEFER - prefix CSS with md5 for cache busting when css changes
+
+DEFER - Timestamps.  JS to capture TimeZone of poster, display timezone on post
+
+RSS/ATOM
+
+Auto-parse text to create title
+
+Use title to create slug-links, semi-pretty style: https://medium.com/nimble/pretty-urls-in-rails-without-a-gem-c5ea545a285f
+
+# Tech Debt
+
 Post form has two buttons, and I have logic based on their value.  Move the value of the special button to a variable/constant so I can't break the logic by renaming the text
 
 Add validation to post form
