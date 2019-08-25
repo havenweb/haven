@@ -11,13 +11,13 @@
   <body>
     <% if !!@settings %>
       <% if !!@settings.title && !@settings.title.empty? %>
-        <h1 class="blog_title"><%=@settings.title%></h1>
+        <h1 class="blog_title"><%=link_to @settings.title, posts_path%></h1>
       <% end %>
       <% if !!@settings.subtitle && !@settings.subtitle.empty? %>
-        <p class="lead blog_subtitle"><%=@settings.subtitle%></h2>
+        <p class="lead blog_subtitle"><%=@settings.subtitle%></p>
       <% end %>
       <% if !!@settings.author && !@settings.author.empty? %>
-        <p class="blog_author"><%=@settings.author%></h3>
+        <p class="blog_author"><%=@settings.author%></p>
       <% end %>
     <% end %>
     <%= yield %>

@@ -10,7 +10,7 @@ class SettingsController < ApplicationController
   def update
     @setting = SettingsController.get_setting
     @setting.update(setting_params)
-    redirect_to settings_url
+    redirect_to posts_path
   end
 
   def style
