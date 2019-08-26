@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
-  get 'welcome/index'
+  scope '/admin' do
+    resources :users
+  end
 
   resources :posts
 

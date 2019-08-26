@@ -1,0 +1,20 @@
+<h2>Manage Users</h2>
+<%= link_to "New User", new_user_path %>
+<hr>
+<table>
+  <tr>
+    <th>Email</th>
+    <th>Name</th>
+    <th>Role</th>
+  </tr>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%=user.email%></td>
+      <td><%=user.name%></td>
+      <td><%= user.admin == 1 ? "Admin" : "Subscriber" %></td>
+      <td><%= link_to 'Destroy', user_path(user),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</table>

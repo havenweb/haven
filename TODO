@@ -12,6 +12,9 @@ DONE Use title to create slug-links, semi-pretty style: https://medium.com/nimbl
 Auth with Devise
 https://github.com/plataformatec/devise#starting-with-rails
 
+automaticall generated passwords
+https://github.com/plataformatec/devise/wiki/How-To:-Automatically-generate-password-for-users-(simpler-registration)
+
 # Tech Debt
 
 Post form has two buttons, and I have logic based on their value.  Move the value of the special button to a variable/constant so I can't break the logic by renaming the text

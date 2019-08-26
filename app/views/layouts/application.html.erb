@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= !!@settings ? @settings.title : "Blog Not Named" %></title>
+    <title><%= ApplicationController.get_settings.title || "Blog Not Named" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag    'application', media: 'all' %>

@@ -1,0 +1,22 @@
+<%= form_with(model: @article, local: true) do |form| %>
+  <p>
+    <%= form.label :email %><br>
+    <%= form.email_field :email %>
+  </p>
+  <p>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </p>
+  <p>
+    <%= form.label :role %><br>
+    <%= form.radio_button :role, 'subscriber', checked: true %>Subscriber<br />
+    <%= form.radio_button :role, 'admin' %>Admin<br />
+  </p>  
+ 
+  <p>
+    <%= form.submit value: "Create User" %>
+  </p>
+ 
+<% end %>
+ 
+<%= link_to 'Back', users_path %>
