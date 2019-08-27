@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   scope '/admin' do
     resources :users
+    post '/users/:id/resetpassword', to: 'users#resetpassword', as: 'reset_user_password'
   end
 
   resources :posts

@@ -13,6 +13,15 @@ class UsersController < ApplicationController
     email = params[:user][:email]
     name = params[:user][:name]
     @user = User.create! email: email, name: name, admin: admin, password: @password
+    @verb = "created"
+    render :show
+  end
+
+  def resetpassword
+    @password = Devise.friendly_token.first(20)
+    @user = User.find(params[:id])
+    @user.update_attributes(password: @password)
+    @verb = "updated"
     render :show
   end
 
