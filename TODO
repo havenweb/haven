@@ -12,8 +12,14 @@ DONE Use title to create slug-links, semi-pretty style: https://medium.com/nimbl
 Auth with Devise
 https://github.com/plataformatec/devise#starting-with-rails
 
-automaticall generated passwords
+Reset password link from user management
+Change Role link from user management
+Filters to controll access
+
+DONE automaticall generated passwords
 https://github.com/plataformatec/devise/wiki/How-To:-Automatically-generate-password-for-users-(simpler-registration)
+
+DEFER email notification of new passwords
 
 # Tech Debt
 

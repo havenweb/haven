@@ -7,6 +7,15 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def create
+    @password = Devise.friendly_token.first(20)
+    admin = params[:user][:role] == "admin" ? 1 : 0
+    email = params[:user][:email]
+    name = params[:user][:name]
+    @user = User.create! email: email, name: name, admin: admin, password: @password
+    render :show
+  end
+
   def destroy
     @user = User.find(params[:id])
     @user.destroy
