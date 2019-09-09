@@ -10,10 +10,8 @@ DEFER RSS/ATOM
 Auth with Devise
 https://github.com/plataformatec/devise#starting-with-rails
 
-Change Role link from user management
 Filters to controll access
-Don't allow deleting yourself
-confirmation on user delete to include users name/email
+Control access to images
 
 Configure mail dynamically from app?
 Alternate flows if mail is setup:

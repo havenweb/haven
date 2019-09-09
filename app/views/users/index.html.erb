@@ -1,5 +1,6 @@
 <h2>Manage Users</h2>
-<%= link_to "New User", new_user_path %>
+<%= link_to "New User", new_user_path %> |
+<%= link_to "Home", posts_path %>
 <hr>
 <table>
   <tr>
@@ -13,12 +14,18 @@
       <td><%=user.name%></td>
       <td><%= user.admin == 1 ? "Admin" : "Subscriber" %></td>
       <td>
-        <%= link_to 'Destroy', user_path(user),
-          method: :delete,
-          data: { confirm: 'Are you sure?' } %>
-        |
-        <%= link_to 'Reset Password', reset_user_password_path(user),
-          method: :post %>
+        <% if user == current_user %>
+          <%= link_to "Change Password", edit_user_registration_path %> 
+        <% else %>
+          <%= link_to (user.admin == 1 ? "Make Subscriber" : "Make Admin"), 
+            toggle_user_admin_path(user),
+            method: :post %> |
+          <%= link_to 'Reset Password', reset_user_password_path(user),
+            method: :post %> |
+          <%= link_to 'Delete User', user_path(user),
+            method: :delete,
+            data: { confirm: "Are you sure you want to delete #{user.name} with email: #{user.email}?" } %>
+        <% end %>
       </td>
     </tr>
   <% end %>

@@ -25,6 +25,13 @@ class UsersController < ApplicationController
     render :show
   end
 
+  def toggleadmin
+    @user = User.find(params[:id])
+    @user.admin = (@user.admin + 1) % 2 #toggle between 1 (Admin) and 0 (Subscriber)
+    @user.save
+    redirect_to users_path
+  end
+
   def destroy
     @user = User.find(params[:id])
     @user.destroy

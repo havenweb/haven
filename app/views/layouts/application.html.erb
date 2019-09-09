@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= ApplicationController.get_settings.title || "Blog Not Named" %></title>
+    <title><%= ApplicationController.get_settings.title || "New Blog" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag    'application', media: 'all' %>
@@ -9,16 +9,29 @@
 
   </head>
   <body>
+    <nav class="navigation">
+    <section class="container">
+      <a class="navigation-title" href="/"><p class="title">Home</p></a>
+      <ul class="navigation-list float-right">
+        <% if user_signed_in? %>
+          <li class='navigation-item'>
+            <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "navigation-link" %>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+    </nav>
 
     <% if !!@settings %>
       <% if !!@settings.title && !@settings.title.empty? %>
-        <h1 class="blog_title"><%=link_to @settings.title, posts_path%></h1>
+        <h1 class="blog_title"><%=@settings.title%></h1>
       <% end %>
       <% if !!@settings.subtitle && !@settings.subtitle.empty? %>
         <p class="lead blog_subtitle"><%=@settings.subtitle%></p>
       <% end %>
     <% end %>
     
+
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 

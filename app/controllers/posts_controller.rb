@@ -1,9 +1,10 @@
 class PostsController < ApplicationController
   GFM_EXT = [:table, :strikethrough, :autolink, :tagfilter]
   IMG_REGEX = /!\[.*\]\(.*\)/
+  before_action :authenticate_user!
 
   def index
-    require_signed_in
+#    require_signed_in
     @posts = Post.order(datetime: :desc)
     @settings = SettingsController.get_setting
     @css = true

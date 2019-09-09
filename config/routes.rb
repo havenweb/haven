@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   scope '/admin' do
     resources :users
     post '/users/:id/resetpassword', to: 'users#resetpassword', as: 'reset_user_password'
+    post '/users/:id/toggleadmin', to: 'users#toggleadmin', as: 'toggle_user_admin'
   end
 
   resources :posts
