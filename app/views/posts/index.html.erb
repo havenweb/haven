@@ -1,6 +1,4 @@
-<%= link_to "New Post", new_post_path %> |
-<%= link_to "Edit Settings", controller: "settings", action: "edit", id: 1 %> |
-<%= link_to "Manage Users", users_path %>
+
 <hr> 
 <% @posts.each do |post| %>
   <%= render "posts", post: post  %>

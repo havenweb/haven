@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :verify_admin
+
   def index
     @users = User.order(email: :asc)
   end
@@ -37,4 +40,6 @@ class UsersController < ApplicationController
     @user.destroy
     redirect_to users_path
   end
+
+
 end

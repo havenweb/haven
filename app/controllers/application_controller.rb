@@ -5,9 +5,10 @@ class ApplicationController < ActionController::Base
 
 
   private
-
-#  def after_sign_out_path_for(resource_or_scope)
-#    puts "DEBUG:  I got called!! "
-#    root_path
-#  end
+  
+  def verify_admin
+    if current_user.admin != 1
+      redirect_to posts_path
+    end
+  end 
 end

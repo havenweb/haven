@@ -2,6 +2,7 @@ class PostsController < ApplicationController
   GFM_EXT = [:table, :strikethrough, :autolink, :tagfilter]
   IMG_REGEX = /!\[.*\]\(.*\)/
   before_action :authenticate_user!
+  before_action :verify_admin, except: [:index, :show]
 
   def index
 #    require_signed_in
