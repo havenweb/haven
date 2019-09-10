@@ -9,22 +9,21 @@
 
   </head>
   <body>
+    <div>
     <nav class="navigation">
-    <section class="container">
-      <a class="navigation-title" href="/"><p class="title">Home</p></a>
-      <ul class="navigation-list float-right">
-        <%= yield(:navbar) %>
+      <ul class="navigation-list">
+      <li id="navigation-home"><%=link_to "Home", root_path %></li>
         <% if user_signed_in? %>
-          <% if current_user.admin == 1 %>
-            <li><%= link_to "New Post", new_post_path %></li>
-            <li><%= link_to "Edit Settings", controller: "settings", action: "edit", id: 1 %></li>
-            <li><%= link_to "Manage Users", users_path %></li>
-          <% end %>
           <li><%= link_to "Logout", destroy_user_session_path, method: :delete  %></li>
+          <% if current_user.admin == 1 %>
+            <li><%= link_to "Manage Users", users_path %></li>
+            <li><%= link_to "Edit Settings", controller: "settings", action: "edit", id: 1 %></li>
+            <li><%= link_to "New Post", new_post_path %></li>
+          <% end %>
         <% end %>
       </ul>
-    </section>
     </nav>
+    </div>
 
     <% if !!@settings %>
       <% if !!@settings.title && !@settings.title.empty? %>
