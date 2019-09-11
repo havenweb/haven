@@ -1,6 +1,6 @@
 class SettingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :verify_admin
+  before_action :verify_admin, except:[:style]
 
   IMPORTANT_PREFIX = 
 <<-HEREDOC
