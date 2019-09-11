@@ -1,5 +1,4 @@
 
-<p class="post_title">
 <%= link_to post.datetime, post_path(post) %>
 <span style="float: right;">
 <%= link_to 'Edit', edit_post_path(post) %>
@@ -7,7 +6,4 @@
               method: :delete,
               data: { confirm: 'Are you sure?' } %>
 </span>
-</p>
-<div id="content">
 <%= CommonMarker.render_html(post.content, :UNSAFE, PostsController::GFM_EXT).html_safe %>
-</div>

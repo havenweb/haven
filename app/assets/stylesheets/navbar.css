@@ -1,3 +1,17 @@
+.full-width {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+.container {
+  max-width:800px;
+  margin:20px auto;
+}
+
 .navigation-list {
   list-style-type: none;
   margin: 0;
