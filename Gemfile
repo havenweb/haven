@@ -20,6 +20,10 @@ gem 'uglifier', '>= 1.3.0'
 # For parsing markdown
 gem 'commonmarker', '~> 0.20'
 
+# For making user stylesheet !important
+gem 'less', '~> 2.6.0'
+gem 'therubyracer', '~> 0.12.3' #undeclared dependency of less
+
 # For Auth
 gem 'devise', '~> 4.7.0'
 
