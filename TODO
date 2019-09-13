@@ -1,17 +1,14 @@
 # Next Steps
 
-DEFER - Reference the CSS somehow
-DEFER - prefix CSS with md5 for cache busting when css changes
-
-DEFER - Timestamps.  JS to capture TimeZone of poster, display timezone on post
+Timezone in settings,
 
 DEFER RSS/ATOM
 
 Auth with Devise
 https://github.com/plataformatec/devise#starting-with-rails
 
-Filters to controll access
 Control access to images
+  images controller exposes image url, proxy image from underlying storage?
 
 Configure mail dynamically from app?
 Alternate flows if mail is setup:
