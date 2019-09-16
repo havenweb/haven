@@ -17,4 +17,4 @@ test:
 
 production:
   <<: *default
-  database: tails_production_db
+  database: rails_production_db
