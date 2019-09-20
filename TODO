@@ -1,11 +1,8 @@
 # Next Steps
 
 CSS Validation!!
-
-DEFER RSS/ATOM
-
-Auth with Devise
-https://github.com/plataformatec/devise#starting-with-rails
+resize image to min(image width, 1600px)
+RSS token/url generation
 
 Control access to images
   images controller exposes image url, proxy image from underlying storage?
@@ -24,4 +21,4 @@ Add validation to post form
 
 Add validation to settings form
 
-Settings radio button uses text which logic on it, set those values to variables/constants
+Settings radio button uses text with logic on it, set those values to variables/constants
