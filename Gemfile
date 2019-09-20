@@ -30,6 +30,9 @@ gem 'image_processing', '~> 1.9.3'
 # For Auth
 gem 'devise', '~> 4.7.0'
 
+# Pagination
+gem 'kaminari', '~> 1.1.1'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password

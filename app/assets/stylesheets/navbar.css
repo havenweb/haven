@@ -39,3 +39,7 @@
 .navigation-list li a:hover {
   background-color: #111;
 }
+
+.pagination {
+  text-align: center;
+}

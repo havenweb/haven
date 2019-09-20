@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   before_action :verify_admin, except: [:index, :show]
 
   def index
-    @posts = Post.order(datetime: :desc)
+    @posts = Post.order(datetime: :desc).page(params[:page])
     @settings = SettingsController.get_setting
     @css = true
     respond_to do |format|
