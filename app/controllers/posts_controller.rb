@@ -98,11 +98,9 @@ class PostsController < ApplicationController
       @image.blob.attach params[:post][:pic]
       @image.save
       blob_path = path_for(@image.blob)
-      # This is a conditional incase I want to revisit this.  I couldn't
-      # get the file size to reduce very much (5MB -> 3MB) even with
-      # very low quality settings (25%)
-      if false #resized image with link to full-size
-        variant = @image.blob.variant(combine_options:{resize: '800', quality: '25%', interlace: 'plane'}).processed
+      # This is a conditional incase I want to make it configurable
+      if true #resized image with link to full-size
+        variant = @image.blob.variant(combine_options:{thumbnail: '1600', quality: '65%', interlace: 'plane'}).processed
         variant_path = path_for(variant)
         @post.content += "\n\n[![](#{variant_path})](#{blob_path})"
       else #simple full image
