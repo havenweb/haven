@@ -28,4 +28,4 @@
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.
-/config/master.key
+#/config/master.key #no credentials saved, so checking this in for easier deployment

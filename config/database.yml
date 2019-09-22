@@ -17,4 +17,6 @@ test:
 
 production:
   <<: *default
-  database: rails_production_db
+  database: <%= ENV['SIMPLEBLOG_DB_NAME'] %>
+  username: <%= ENV['SIMPLEBLOG_DB_ROLE'] %>
+  password: <%= ENV['SIMPLEBLOG_DB_PASSWORD'] %>
