@@ -239,13 +239,9 @@ puts "IP Address: #{ip_addr}"
 `scp -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" #{INSTALL_SCRIPT} ubuntu@#{ip_addr}:~/`
 `scp -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" #{nginx_conf_filename} ubuntu@#{ip_addr}:~/`
 `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr} 'bash #{INSTALL_SCRIPT}'`
-
+`ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr} 'sudo certbot --nginx -n --agree-tos --email dummyemail@example.com --no-eff-email --domains #{DOMAIN} --redirect'`
 
 puts "try: `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr}`"
-
-# Configure Nginx to host the app
-
-# Launch the app
 
 # Create a first login
 
