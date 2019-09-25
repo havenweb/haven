@@ -20,6 +20,7 @@ AZ = 'us-west-2a' #TODO, randomly rotate between a, b, c
 CIDR = '10.200.0.0/16'
 NAME = "SimpleBlog"
 INSTALL_SCRIPT = "ubuntu-install.sh"
+RUBY_VERION = "2.4.1"
 
 ##TODO: each of these section creates a resource, make the steps idempotent
 ec2 = Aws::EC2::Resource.new(region: REGION)
@@ -211,10 +212,32 @@ record_set = r53.change_resource_record_sets({
   hosted_zone_id: hosted_zone_id,
 })
 
+### Nginx conf file ###
+def nginx_conf_file(appname, domain, ruby_version)
+<<-HEREDOC
+# /etc/nginx/sites-enabled/#{ appname }.conf
+server {
+  listen 80;
+  server_name #{ domain };
+  root /var/www/#{ appname }/public;
+  passenger_enabled on;
+  passenger_ruby /home/ubuntu/.rbenv/versions/#{ ruby_version }/bin/ruby;
+}
+HEREDOC
+end
+
+nginx_conf_filename = "simpleblog.conf"
+File.open(nginx_conf_filename,'w') {|f| 
+  f.puts(nginx_conf_file("simpleblog",DOMAIN,RUBY_VERSION))
+}
+
+
+
 puts "Instance ID: #{instance.first.id}"
 puts "IP Address: #{ip_addr}"
 
 `scp -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" #{INSTALL_SCRIPT} ubuntu@#{ip_addr}:~/`
+`scp -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" #{nginx_conf_filename} ubuntu@#{ip_addr}:~/`
 `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr} 'bash #{INSTALL_SCRIPT}'`
 
 

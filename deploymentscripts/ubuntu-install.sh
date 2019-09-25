@@ -62,6 +62,9 @@ bin/rails db:create
 bin/rails db:migrate
 bin/rails assets:precompile
 
+# Nginx config and restart
+sudo mv ~/simpleblog.conf /etc/nginx/sites-enabled/
+sudo service nginx restart
 
 
 touch ~/imdone.txt

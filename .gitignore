@@ -31,3 +31,4 @@
 #/config/master.key #no credentials saved, so checking this in for easier deployment
 
 deploymentscripts/*.pem
+deploymentscripts/*.conf

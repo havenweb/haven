@@ -1,9 +1,7 @@
 # Next Steps
 
 ## Deployment
- * AWS: Configure DNS to point to IP
- * Nginx: config
- * Asset Pipeline: CSS not loading?
+ * apt -> apt-get
  * HTTPS: https://medium.com/@keisuke.inaba.cpa/how-to-make-ec2-ubuntu-nginx-passenger-https-with-lets-encrypt-dcb08c2e6c4b
 
 ## App

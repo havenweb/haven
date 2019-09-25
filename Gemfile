@@ -14,7 +14,7 @@ gem 'therubyracer', '~> 0.12.3' #undeclared dependency of less
 gem 'image_processing', '~> 1.9.3'
 
 # For Auth
-gem 'devise', '~> 4.7.0'
+gem 'devise', '~> 4.7.1'
 
 # Pagination
 gem 'kaminari', '~> 1.1.1'
