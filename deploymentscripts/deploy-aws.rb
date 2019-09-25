@@ -3,17 +3,25 @@
 load 'aws-helpers.rb'
 require 'aws-sdk-ec2'
 require 'aws-sdk-iam'
+require 'aws-sdk-route53'
 require 'base64'
+
+if (ARGV.length < 1)
+  puts "Please specify your domain name as a parameter to this script"
+  exit(1)
+end
+DOMAIN = ARGV[0]
+#TODO: Verify that this domain is owned, otherwise DNS update will fail
 
 AMI_ID = "ami-06f2f779464715dc5" # Ubuntu 18.04 LTS 64bit x86
 INSTANCE_TYPE = 't2.micro'
 REGION = 'us-west-2'
-AZ = 'us-west-2a'
+AZ = 'us-west-2a' #TODO, randomly rotate between a, b, c
 CIDR = '10.200.0.0/16'
 NAME = "SimpleBlog"
+INSTALL_SCRIPT = "ubuntu-install.sh"
 
 ##TODO: each of these section creates a resource, make the steps idempotent
-# provision an EC2 instace
 ec2 = Aws::EC2::Resource.new(region: REGION)
 
 ### VPC ###
@@ -137,26 +145,84 @@ ec2.client.associate_address({
   allocation_id: address_allocation.allocation_id, 
   instance_id: instance_id, 
 })
+ip_addr = address_allocation.public_ip
+
+
+### Route 53 ###
+r53 = Aws::Route53::Resource.new.client
+
+### Hosted Zone ###
+hosted_zone_id = ""
+puts "Checking if a hosted zone already exists for domain #{DOMAIN}"
+hosted_zone_list = r53.list_hosted_zones({
+  max_items: 100
+})
+hosted_zone_list.hosted_zones.each do |hosted_zone|
+  if hosted_zone.name == "#{DOMAIN}."
+    hosted_zone_id = hosted_zone.id
+    puts "  Using existing hosted zone with ID #{hosted_zone_id} for #{DOMAIN}"
+    break
+  end
+end
+if hosted_zone_id == "" && hosted_zone_list.is_truncated
+  puts "Could not find a matching hosted zone, but you have over 100 zones which this script cannot handle.  Quitting..."
+  exit(1)
+end
+
+if hosted_zone_id == ""
+  nonce = rand.to_s
+  puts "Creating a new hosted zone for domain #{DOMAIN}"
+  hosted_zone = r53.create_hosted_zone({
+    name: DOMAIN,
+    caller_reference: nonce,
+    hosted_zone_config: {
+      comment: NAME,
+      private_zone: false,
+    }
+  })
+  if (hosted_zone.change_info.status == "PENDING")
+    puts "  Waiting for new hosted zone to be ready..."
+    sleep 60 # This status never seems to change?
+  end
+  hosted_zone_id = hosted_zone.hosted_zone.id
+end
+
+### DNS Record Set ###
+puts "Creating new record set to point #{DOMAIN} to #{ip_addr}"
+record_set = r53.change_resource_record_sets({
+  change_batch: {
+    changes: [
+      {
+        action: "UPSERT",
+        resource_record_set: {
+          name: DOMAIN,
+          resource_records: [
+            {
+              value: ip_addr,
+            },
+          ],
+          ttl: 60,
+          type: "A",
+        },
+      },
+    ],
+    comment: "#{NAME} web server for #{DOMAIN}",
+  },
+  hosted_zone_id: hosted_zone_id,
+})
 
 puts "Instance ID: #{instance.first.id}"
-puts "IP Address: #{address_allocation.public_ip}"
-`scp -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu-install.sh ubuntu@#{address_allocation.public_ip}:~/`
+puts "IP Address: #{ip_addr}"
 
-puts "try: `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{address_allocation.public_ip}`"
+`scp -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" #{INSTALL_SCRIPT} ubuntu@#{ip_addr}:~/`
+`ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr} 'bash #{INSTALL_SCRIPT}'`
 
-# install:
-#  ruby (2.4.1)
-#  postgress (??)
-#  nginx (??)
-#  this repo
+
+puts "try: `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr}`"
 
 # Configure Nginx to host the app
 
-# Configure the app to talk to postgress
-
 # Launch the app
-
-# Create a DNS record to point to the app
 
 # Create a first login
 

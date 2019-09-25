@@ -1,17 +1,17 @@
 # Next Steps
 
-CSS Validation!!
-resize image to min(image width, 1600px)
-RSS token/url generation
+## Deployment
+ * AWS: Configure DNS to point to IP
+ * Nginx: config
+ * Asset Pipeline: CSS not loading?
+ * HTTPS: https://medium.com/@keisuke.inaba.cpa/how-to-make-ec2-ubuntu-nginx-passenger-https-with-lets-encrypt-dcb08c2e6c4b
 
-Control access to images
-  images controller exposes image url, proxy image from underlying storage?
-
-Configure mail dynamically from app?
-Alternate flows if mail is setup:
-  New user account is emailed to user
-  Automated password reset
-
+## App
+ * Disable Sign-Up
+ * CSS Validation!!
+ * resize image to min(image width, 1600px)
+ * RSS token/url generation
+ * Configure mail
 
 # Tech Debt
 

@@ -60,7 +60,8 @@ cd simpleblog
 bundle install --deployment --without development test
 bin/rails db:create
 bin/rails db:migrate
-## Cannot bind to port 80, root doesn't have rbenv ruby
+bin/rails assets:precompile
+
 
 
 touch ~/imdone.txt
