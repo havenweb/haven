@@ -1,3 +1,7 @@
+### Run this script to delete the deployed webserver
+### Along with all related AWS resources
+### Warning!! This is non-recoverable
+
 #`gem install aws-sdk`
 
 load 'aws-helpers.rb'

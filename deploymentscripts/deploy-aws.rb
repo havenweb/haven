@@ -1,3 +1,9 @@
+### run this script to deploy a simpleblog onto AWS
+### it takes two parameters: the domain and your email address
+### the '@' character does funny things to scripts so put
+### your email address in quotes
+
+
 #`gem install aws-sdk`
 
 load 'aws-helpers.rb'
@@ -5,16 +11,24 @@ require 'aws-sdk-ec2'
 require 'aws-sdk-iam'
 require 'aws-sdk-route53'
 require 'base64'
+require 'uri'
 
-if (ARGV.length < 1)
-  puts "Please specify your domain name as a parameter to this script"
+if (ARGV.length < 2)
+  puts "Please specify your domain name as the first parameter to this script"
+  puts "Please specify your email address (in quotes) as the second parameter to this script"
   exit(1)
 end
-DOMAIN = ARGV[0]
-#TODO: Verify that this domain is owned, otherwise DNS update will fail
+DOMAIN = ARGV[0] #TODO: Verify domain is owned, otherwise DNS update will fail
+EMAIL = ARGV[1]
+if !(EMAIL =~ URI::MailTo::EMAIL_REGEXP)
+  puts "#{EMAIL} is not a valid email address"
+  exit(1)
+end
+USER_PASS = `openssl rand -base64 18`
+
 
 AMI_ID = "ami-06f2f779464715dc5" # Ubuntu 18.04 LTS 64bit x86
-INSTANCE_TYPE = 't2.micro'
+INSTANCE_TYPE = 't3.nano'
 REGION = 'us-west-2'
 AZ = 'us-west-2a' #TODO, randomly rotate between a, b, c
 CIDR = '10.200.0.0/16'
@@ -23,6 +37,7 @@ INSTALL_SCRIPT = "ubuntu-install.sh"
 RUBY_VERION = "2.4.1"
 
 ##TODO: each of these section creates a resource, make the steps idempotent
+##      so it can resume if there is a failure
 ec2 = Aws::EC2::Resource.new(region: REGION)
 
 ### VPC ###
@@ -230,18 +245,20 @@ nginx_conf_filename = "simpleblog.conf"
 File.open(nginx_conf_filename,'w') {|f| 
   f.puts(nginx_conf_file("simpleblog",DOMAIN,RUBY_VERSION))
 }
-
-
-
-puts "Instance ID: #{instance.first.id}"
-puts "IP Address: #{ip_addr}"
+create_user_filename = "create_user.rb"
 
 `scp -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" #{INSTALL_SCRIPT} ubuntu@#{ip_addr}:~/`
 `scp -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" #{nginx_conf_filename} ubuntu@#{ip_addr}:~/`
-`ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr} 'bash #{INSTALL_SCRIPT}'`
-`ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr} 'sudo certbot --nginx -n --agree-tos --email dummyemail@example.com --no-eff-email --domains #{DOMAIN} --redirect'`
+`scp -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" #{create_user_filename} ubuntu@#{ip_addr}:~/`
+`ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr} 'bash #{INSTALL_SCRIPT} \"#{EMAIL}\" \"#{USER_PASS}\"'`
+`ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr} 'sudo certbot --nginx -n --agree-tos --email #{EMAIL} --no-eff-email --domains #{DOMAIN} --redirect'`
 
-puts "try: `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr}`"
 
 # Create a first login
 
+puts "Instance ID: #{instance.first.id}"
+puts "IP Address: #{ip_addr}"
+puts "SSH: `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr}`"
+puts "Visit: http://#{DOMAIN}"
+puts "Login email: #{EMAIL}"
+puts "Login password: #{USER_PASS}"

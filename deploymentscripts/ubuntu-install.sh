@@ -1,5 +1,8 @@
 #!/bin/bash
 
+EMAIL=$1
+RAILS_USER_PASS=$2
+
 sudo apt-get update
 sudo apt-get install -y autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm5 libgdbm-dev
 
@@ -51,6 +54,7 @@ sudo -u postgres createuser -s ubuntu
 sudo -u postgres psql -c "ALTER USER ubuntu WITH PASSWORD '$DB_PASS';"
 
 # Rails App
+sudo apt-get install -y imagemagick
 echo 'export RAILS_ENV=production' >> ~/.bashrc
 export RAILS_ENV=production
 cd /var/www
@@ -61,6 +65,7 @@ bundle install --deployment --without development test
 bin/rails db:create
 bin/rails db:migrate
 bin/rails assets:precompile
+bin/rails r ~/create_user.rb $EMAIL $RAILS_USER_PASS
 
 # Nginx config and restart
 sudo mv ~/simpleblog.conf /etc/nginx/sites-enabled/
