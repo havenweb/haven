@@ -7,8 +7,8 @@
 
 ## App
  * Disable Sign-Up
+ * Get slug from filename, not image path
  * CSS Validation!!
- * resize image to min(image width, 1600px)
  * RSS token/url generation
  * Configure mail
 
