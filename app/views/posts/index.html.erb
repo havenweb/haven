@@ -1,5 +1,10 @@
 
 <hr> 
+
+<% if @posts.empty? %>
+<p>Nobody has written anything yet.</p>
+<% end %>
+
 <% @posts.each do |post| %>
   <%= render "posts", post: post  %>
   <hr>

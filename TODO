@@ -1,9 +1,7 @@
 # Next Steps
 
 ## Deployment
- * pass email to certbot
- * HTTPS: https://medium.com/@keisuke.inaba.cpa/how-to-make-ec2-ubuntu-nginx-passenger-https-with-lets-encrypt-dcb08c2e6c4b
- * create account in app
+ * Figure out why it doesn't work with t3.nano
 
 ## App
  * Disable Sign-Up
