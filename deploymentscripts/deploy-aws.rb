@@ -28,7 +28,8 @@ USER_PASS = `openssl rand -base64 18`
 
 
 AMI_ID = "ami-06f2f779464715dc5" # Ubuntu 18.04 LTS 64bit x86
-INSTANCE_TYPE = 't3.nano'
+INSTANCE_TYPE = 't3a.micro'
+#INSTANCE_TYPE = 't2.micro'
 REGION = 'us-west-2'
 AZ = 'us-west-2a' #TODO, randomly rotate between a, b, c
 CIDR = '10.200.0.0/16'
@@ -253,12 +254,11 @@ create_user_filename = "create_user.rb"
 `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr} 'bash #{INSTALL_SCRIPT} \"#{EMAIL}\" \"#{USER_PASS}\"'`
 `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr} 'sudo certbot --nginx -n --agree-tos --email #{EMAIL} --no-eff-email --domains #{DOMAIN} --redirect'`
 
-
-# Create a first login
-
-puts "Instance ID: #{instance.first.id}"
+puts "================"
+puts "AWS Instance ID: #{instance.first.id}"
 puts "IP Address: #{ip_addr}"
 puts "SSH: `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr}`"
+puts ""
 puts "Visit: http://#{DOMAIN}"
 puts "Login email: #{EMAIL}"
 puts "Login password: #{USER_PASS}"

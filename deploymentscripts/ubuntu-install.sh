@@ -54,7 +54,6 @@ sudo -u postgres createuser -s ubuntu
 sudo -u postgres psql -c "ALTER USER ubuntu WITH PASSWORD '$DB_PASS';"
 
 # Rails App
-sudo apt-get install -y imagemagick
 echo 'export RAILS_ENV=production' >> ~/.bashrc
 export RAILS_ENV=production
 cd /var/www
@@ -78,6 +77,8 @@ sudo add-apt-repository -y ppa:certbot/certbot
 sudo apt-get update
 sudo apt-get install -y certbot python-certbot-nginx
 
+## For image processing in the app
+sudo apt-get install -y imagemagick
 
 touch ~/imdone.txt
 
