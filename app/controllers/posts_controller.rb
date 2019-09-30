@@ -53,7 +53,7 @@ class PostsController < ApplicationController
     alt_text = /\[.*\]/.match(img_pure).to_a.first.gsub(/[\[\]]/,"")
     filepath = /\(.*\)/.match(img_pure).to_a.first.gsub(/[\(\)]/,"")
     filename = filepath.split("/").last.split(".").first
-    return alt_text unless alt_text.strip.empty?
+    return alt_text unless alt_text.strip.empty? || alt_text.include?("/rails/active_storage/representations")
     return filename
   end
 

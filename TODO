@@ -4,8 +4,6 @@
  * Figure out why it doesn't work with t3.nano
 
 ## App
- * Disable Sign-Up
- * Get slug from filename, not image path
  * CSS Validation!!
  * RSS token/url generation
  * Configure mail
