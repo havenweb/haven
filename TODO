@@ -4,6 +4,8 @@
  * Figure out why it doesn't work with t3.nano
 
 ## App
+ * Add publisher role
+   * And option to display author
  * CSS Validation!!
  * RSS token/url generation
  * Configure mail
