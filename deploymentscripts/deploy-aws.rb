@@ -10,6 +10,7 @@ load 'aws-helpers.rb'
 require 'aws-sdk-ec2'
 require 'aws-sdk-iam'
 require 'aws-sdk-route53'
+require 'aws-sdk-ses'
 require 'base64'
 require 'uri'
 
@@ -218,7 +219,7 @@ record_set = r53.change_resource_record_sets({
               value: ip_addr,
             },
           ],
-          ttl: 60,
+          ttl: 300,
           type: "A",
         },
       },
@@ -227,6 +228,36 @@ record_set = r53.change_resource_record_sets({
   },
   hosted_zone_id: hosted_zone_id,
 })
+
+### DKIM for Email ###
+puts "Enabling domain for DKIM emails"
+ses = Aws::SES::Client.new(region: REGION)
+dkim_tokens = ses.verify_domain_dkim({
+  domain: DOMAIN
+}).dkim_tokens
+dkim_tokens.each do |dkim_token|
+  r53.change_resource_record_sets({
+    change_batch: {
+      changes: [
+        {
+          action: "UPSERT",
+          resource_record_set: {
+            name: "#{dkim_token}._domainkey.#{DOMAIN}",
+            resource_records: [
+              {
+                value: "#{dkim_token}.dkim.#{DOMAIN}",
+              },
+            ],
+            ttl: 60,
+            type: "CNAME",
+          },
+        },
+      ],
+      comment: "#{NAME} DKIM record for #{DOMAIN}",
+    },
+    hosted_zone_id: hosted_zone_id,
+  })
+end
 
 ### Nginx conf file ###
 def nginx_conf_file(appname, domain, ruby_version)
@@ -255,7 +286,6 @@ create_user_filename = "create_user.rb"
 `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr} 'sudo certbot --nginx -n --agree-tos --email #{EMAIL} --no-eff-email --domains #{DOMAIN} --redirect'`
 
 puts "================"
-puts "AWS Instance ID: #{instance.first.id}"
 puts "IP Address: #{ip_addr}"
 puts "SSH: `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr}`"
 puts ""

@@ -17,5 +17,3 @@ Post form has two buttons, and I have logic based on their value.  Move the valu
 Add validation to post form
 
 Add validation to settings form
-
-Settings radio button uses text with logic on it, set those values to variables/constants
