@@ -4,6 +4,7 @@
  * Figure out why it doesn't work with t3.nano
 
 ## App
+ * Only load aws creds in production
  * Add publisher role
    * And option to display author
  * CSS Validation!!
