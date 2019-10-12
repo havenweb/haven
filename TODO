@@ -4,6 +4,8 @@
  * Figure out why it doesn't work with t3.nano
 
 ## App
+ * Pass host to config/environments/production.rb (for mailer)
+ * Pass host to config/initializers/devise.rb (for mail sender)
  * Only load aws creds in production
  * Add publisher role
    * And option to display author

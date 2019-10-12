@@ -10,7 +10,7 @@ load 'aws-helpers.rb'
 require 'aws-sdk-ec2'
 require 'aws-sdk-iam'
 require 'aws-sdk-route53'
-require 'aws-sdk-ses'
+#require 'aws-sdk-ses'
 require 'base64'
 require 'uri'
 
@@ -103,15 +103,18 @@ role = iam.create_role({
   assume_role_policy_document: POLICY_DOC
 })
 ##TODO: limited access to S3 read/write from single bucket
-role.attach_policy({policy_arn: 'arn:aws:iam::aws:policy/AmazonS3FullAccess'})
+#role.attach_policy({policy_arn: 'arn:aws:iam::aws:policy/AmazonS3FullAccess'})
 ##TODO: limited SES access: https://docs.aws.amazon.com/ses/latest/DeveloperGuide/control-user-access.html
-role.attach_policy({policy_arn: 'arn:aws:iam::aws:policy/AmazonSESFullAccess'})
+#role.attach_policy({policy_arn: 'arn:aws:iam::aws:policy/AmazonSESFullAccess'})
 
 ### IAM Instance Profile ###
 puts "Creating IAM Instance Profile..."
 instanceprofile = iam.create_instance_profile({instance_profile_name: "#{NAME}InstanceProfileNameType"})
 puts "  Waiting 15 sec for instance profile to be ready..."
 sleep 15 #profile not created immediately, give it a hot second
+instanceprofile.add_role({
+  role_name: role.name
+})
 
 ### Key Pair ### (only create once, don't delete on cleanup)
 key_pair_name = "#{NAME.downcase}_key"
@@ -173,7 +176,7 @@ r53 = Aws::Route53::Resource.new.client
 hosted_zone_id = ""
 puts "Checking if a hosted zone already exists for domain #{DOMAIN}"
 hosted_zone_list = r53.list_hosted_zones({
-  max_items: 100
+  max_items: 500
 })
 hosted_zone_list.hosted_zones.each do |hosted_zone|
   if hosted_zone.name == "#{DOMAIN}."
@@ -183,7 +186,7 @@ hosted_zone_list.hosted_zones.each do |hosted_zone|
   end
 end
 if hosted_zone_id == "" && hosted_zone_list.is_truncated
-  puts "Could not find a matching hosted zone, but you have over 100 zones which this script cannot handle.  Quitting..."
+  puts "Could not find a matching hosted zone, but you have over 500 zones which this script cannot handle.  Quitting..."
   exit(1)
 end
 
@@ -230,34 +233,34 @@ record_set = r53.change_resource_record_sets({
 })
 
 ### DKIM for Email ###
-puts "Enabling domain for DKIM emails"
-ses = Aws::SES::Client.new(region: REGION)
-dkim_tokens = ses.verify_domain_dkim({
-  domain: DOMAIN
-}).dkim_tokens
-dkim_tokens.each do |dkim_token|
-  r53.change_resource_record_sets({
-    change_batch: {
-      changes: [
-        {
-          action: "UPSERT",
-          resource_record_set: {
-            name: "#{dkim_token}._domainkey.#{DOMAIN}",
-            resource_records: [
-              {
-                value: "#{dkim_token}.dkim.#{DOMAIN}",
-              },
-            ],
-            ttl: 60,
-            type: "CNAME",
-          },
-        },
-      ],
-      comment: "#{NAME} DKIM record for #{DOMAIN}",
-    },
-    hosted_zone_id: hosted_zone_id,
-  })
-end
+#puts "Enabling domain for DKIM emails"
+#ses = Aws::SES::Client.new(region: REGION)
+#dkim_tokens = ses.verify_domain_dkim({
+#  domain: DOMAIN
+#}).dkim_tokens
+#dkim_tokens.each do |dkim_token|
+#  r53.change_resource_record_sets({
+#    change_batch: {
+#      changes: [
+#        {
+#          action: "UPSERT",
+#          resource_record_set: {
+#            name: "#{dkim_token}._domainkey.#{DOMAIN}",
+#            resource_records: [
+#              {
+#                value: "#{dkim_token}.dkim.amazonses.com",
+#              },
+#            ],
+#            ttl: 60,
+#            type: "CNAME",
+#          },
+#        },
+#      ],
+#      comment: "#{NAME} DKIM record for #{DOMAIN}",
+#    },
+#    hosted_zone_id: hosted_zone_id,
+#  })
+#end
 
 ### Nginx conf file ###
 def nginx_conf_file(appname, domain, ruby_version)

@@ -150,6 +150,12 @@ iam = Aws::IAM::Resource.new(client: client)
 iam.instance_profiles({}).each do |profile|
   if profile.name == "#{NAME}InstanceProfileNameType"
     puts "Deleting instance profile #{profile.to_s}"
+    profile.roles.each do |role|
+      puts "  Removing role: #{role.name}..."
+      profile.remove_role({
+        role_name: role.name
+      })
+    end
     profile.delete()
   end
 end

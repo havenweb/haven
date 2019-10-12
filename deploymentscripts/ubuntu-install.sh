@@ -70,6 +70,7 @@ bin/rails r ~/create_user.rb $EMAIL $RAILS_USER_PASS
 sudo mv ~/simpleblog.conf /etc/nginx/sites-enabled/
 sudo service nginx restart
 
+# HTTPS with Letsencrypt
 sudo apt-get update
 sudo apt-get install -y software-properties-common
 sudo add-apt-repository -y universe
