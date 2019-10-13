@@ -2,16 +2,16 @@
 
 ## Deployment
  * Figure out why it doesn't work with t3.nano
+ * Make sure certbot is set to auto renew certs
 
 ## App
- * Pass host to config/environments/production.rb (for mailer)
- * Pass host to config/initializers/devise.rb (for mail sender)
- * Only load aws creds in production
+ * Better CSS
+ * Let users change their Name
  * Add publisher role
    * And option to display author
  * CSS Validation!!
  * RSS token/url generation
- * Configure mail
+ * Configure mail - nevermind, this is hard.
 
 # Tech Debt
 
