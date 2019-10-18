@@ -1,0 +1,43 @@
+
+.navigation {
+    background: $color-lightfill;
+    border-bottom: .1rem solid $color-accent;
+    display: block;
+    height: 5.2rem;
+    left: 0;
+    max-width: 100%;
+//    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.navigation .container {
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+.navigation .navigation-list {
+    list-style: none;
+    float: right;
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-right: 0;
+}
+
+.navigation-list li {
+    float: left;
+    margin-bottom: 0;
+    margin-left: 2.5rem;
+    position: relative;
+}
+
+.navigation-home,
+.navigation-list li a {
+    display: inline;
+    font-size: 1.2rem;
+    line-height: 5.2rem;
+    padding: 0;
+    text-decoration: none;
+}

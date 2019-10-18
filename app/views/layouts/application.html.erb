@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= ApplicationController.get_settings.title || "New Blog" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -10,37 +11,37 @@
 
   </head>
   <body>
-    <div>
     <nav class="navigation">
-      <ul class="navigation-list">
-      <li id="navigation-home"><%=link_to "Home", root_path %></li>
+      <div class="container">
+      <%=link_to "Home", root_path, class: 'navigation-home' %>
+      <ul class="navigation-list float-right">
         <% if user_signed_in? %>
-          <li><%= link_to "Logout", destroy_user_session_path, method: :delete  %></li>
-          <li><%= link_to "Profile", edit_user_registration_path %></li>
           <% if current_user.admin == 1 %>
-            <li><%= link_to "Manage Users", users_path %></li>
-            <li><%= link_to "Edit Settings", settings_edit_path(id: 1) %></li>
             <li><%= link_to "New Post", new_post_path %></li>
+            <li><%= link_to "Edit Settings", settings_edit_path(id: 1) %></li>
+            <li><%= link_to "Manage Users", users_path %></li>
           <% end %>
+          <li><%= link_to "Profile", edit_user_registration_path %></li>
+          <li><%= link_to "Logout", destroy_user_session_path, method: :delete  %></li>
         <% end %>
       </ul>
+      </div class="container">
     </nav>
-    </div>
 
-    <% if !!@settings %>
-      <% if !!@settings.title && !@settings.title.empty? %>
-        <h1 class="blog_title"><%=@settings.title%></h1>
-      <% end %>
-      <% if !!@settings.subtitle && !@settings.subtitle.empty? %>
-        <p class="lead blog_subtitle"><%=@settings.subtitle%></p>
-      <% end %>
-    <% end %>
-    
-
+    <div class="container">
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+    <% if !!@settings %>
+      <% if !!@settings.title && !@settings.title.empty? %>
+        <h1 class="title"><%=@settings.title%></h1>
+      <% end %>
+      <% if !!@settings.subtitle && !@settings.subtitle.empty? %>
+        <p class="subtitle"><%=@settings.subtitle%></p>
+      <% end %>
+    <% end %>
 
     <%= yield %>
+    </div>
 
   </body>
 </html>
