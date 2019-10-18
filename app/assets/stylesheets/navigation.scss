@@ -1,14 +1,13 @@
 
 .navigation {
-    background: $color-lightfill;
-    border-bottom: .1rem solid $color-accent;
+    background: $color-accent;
     display: block;
-    height: 5.2rem;
+    height: 3.6rem;
     left: 0;
     max-width: 100%;
-//    position: fixed;
     right: 0;
     top: 0;
+    margin-bottom: 2rem;
     width: 100%;
     z-index: 1;
 }
@@ -37,7 +36,9 @@
 .navigation-list li a {
     display: inline;
     font-size: 1.2rem;
-    line-height: 5.2rem;
+    font-weight: 500;
+    color: $color-white;
+    line-height: 3.6rem;
     padding: 0;
     text-decoration: none;
 }

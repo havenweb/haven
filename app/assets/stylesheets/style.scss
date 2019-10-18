@@ -1,8 +1,38 @@
-$color-white: #e9e9e9;
+//Manual Colors
+$color-white: #fff;
 $color-text: #50585f;
 $color-bold: #333;
-$color-lightfill: #d0d8df;
+$color-lightfill: #d0d4d8;
 $color-accent: #333;
+$color-notice: #bcfab9;
+$color-alert: #fabab6;
+
+
+//Water CSS colors
+$color-background-body: #ffffff;
+$color-background: #efefef;
+$color-background-alt: #f7f7f7;
+
+$color-selection: #9e9e9e;
+
+$color-text-main: #363636;
+$color-text-bright: #000000;
+
+$color-links: #0076d1;
+$color-focus: #444;
+$color-border: #dbdbdb;
+$color-code: #000000;
+
+$color-button-hover: #dddddd;
+
+$color-scrollbar-thumb: #d5d5d5;//3% lighter than button-hover
+$color-scrollbar-thumb-hover: #eee;//10% lighter than button-hover
+
+$color-form-placeholder: #949494;
+$color-form-text: #000000;
+
+$color-variable: #39a33c;
+$color-highlight: #ffff00;
 
 
   
@@ -12,34 +42,6 @@ $color-accent: #333;
 .container {
   margin: 0 auto;
   max-width: 50em;
-}
-
-
-// Code //
-
-code,
-pre {
-  background: #eee;
-}
-
-code {
-  padding: 0.125rem 0.25rem;
-  vertical-align: text-bottom;
-}
-
-pre {
-  padding: 1rem;
-}
-
-blockquote {
-  border-left: .2rem solid $color-accent;
-  margin-left: 0;
-  margin-right: 0;
-  padding: 0.6rem 1rem;
-
-  *:last-child {
-    margin-bottom: 0
-  }
 }
 
 // Images //

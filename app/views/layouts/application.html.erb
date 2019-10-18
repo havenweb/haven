@@ -29,8 +29,9 @@
     </nav>
 
     <div class="container">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <% if notice %> <p class="notice"><%= notice %><span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span></p> <% end %>
+    <% if alert %> <p class="alert"><%= alert %><span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span></p> <% end %>
+
     <% if !!@settings %>
       <% if !!@settings.title && !@settings.title.empty? %>
         <h1 class="title"><%=@settings.title%></h1>

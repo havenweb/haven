@@ -1,66 +1,159 @@
-input[type='number'],
-input[type='email'],
-input[type='password'],
-input[type='search'],
-input[type='tel'],
-input[type='text'],
-input[type='url'],
-input[type='color'],
-input[type='date'],
-input[type='month'],
-input[type='week'],
-input[type='datetime'],
-input[type='datetime-local'],
-input:not([type]),
-textarea,
-select {
-  appearance: none;
-  background-color: transparent;
-  border: 0.1rem solid $color-accent;
-  border-radius: 0.4rem;
-  box-shadow: none;
-  box-sizing: inherit;
-  height: 3.8rem;
-  padding: 0.6rem 1rem;
-  width: 100%;
-  &:focus {
-    border-color: $color-white;
-    outline: 0;
-  }
+button, input, textarea {
+  transition: background-color 0.07s linear,
+              border-color 0.07s linear,
+              color 0.07s linear,
+              box-shadow 0.07s linear,
+              transform 0.07s ease;
 }
 
+
+button, select,
+input[type='submit'],
+input[type='button'],
+input[type='checkbox'],
+input[type='range'],
+input[type='radio'] {
+  cursor: pointer;
+}
+
+input:not([type='checkbox']):not([type='radio']),
 select {
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 0 29 14" width="29"><path fill="%23d1d1d1" d="M9.37727 3.625l5.08154 6.93523L19.54036 3.625"/></svg>') center right no-repeat;
-  padding-right: 3rem;
-  &:focus {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 0 29 14" width="29"><path fill="%239b4dca" d="M9.37727 3.625l5.08154 6.93523L19.54036 3.625"/></svg>');
-  }
+  display: block;
+}
+
+input,
+button,
+textarea,
+select {
+  color: $color-form-text;
+  background-color: $color-background;
+
+  font-family: inherit;
+  font-size: inherit;
+
+  margin-right: 6px;
+  margin-bottom: 6px;
+  padding: 10px;
+
+  border: none;
+  border-radius: 6px;
+  outline: none;
+}
+
+input,
+select,
+button,
+textarea {
+  -webkit-appearance: none;
 }
 
 textarea {
-  min-height: 6.5rem;
+  margin-right: 0;
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
 }
 
-label,
-legend {
-  display: block;
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
+select {
+  background: $color-background; //might need position/size/repeat
+  padding-right: 35px;
 }
 
-fieldset {
-  border-width: 0;
-  padding: 0;
+select::-ms-expand {
+  display: none;
+}
+
+select[multiple] {
+  padding-right: 10px;
+  background-image: none;
+  overflow-y: auto;
+}
+
+button,
+input[type='submit'],
+input[type='button'] {
+  padding-right: 30px;
+  padding-left: 30px;
+}
+
+button:hover,
+input[type='submit']:hover,
+input[type='button']:hover {
+  background: $color-button-hover;
+}
+
+input:focus,
+select:focus,
+button:focus,
+textarea:focus {
+  box-shadow: 0 0 0 2px $color-focus;
 }
 
 input[type='checkbox'],
 input[type='radio'] {
-  display: inline;
+  position: relative;
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  margin-right: 2px;
 }
 
-.label-inline {
-  display: inline-block;
-  font-weight: normal;
-  margin-left: 0.5rem;
+input[type='radio'] {
+  border-radius: 50%;
+}
+
+input[type='checkbox']:checked,
+input[type='radio']:checked {
+  background: $color-button-hover;
+}
+
+input[type='checkbox']:checked::before,
+input[type='radio']:checked::before {
+  content: '•';
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+input[type='checkbox']:checked::before {
+  content: '✔';
+  transform: translateY(-50%) translateY(0.5px) translateX(-6px);
+}
+
+input[type='checkbox']:active,
+input[type='radio']:active,
+input[type='submit']:active,
+input[type='button']:active,
+input[type='range']:active,
+button:active {
+  transform: translateY(2px);
+}
+
+input:disabled,
+select:disabled,
+button:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+::placeholder {
+  color: $color-form-placeholder;
+}
+
+fieldset {
+  border: 1px $color-focus solid;
+  border-radius: 6px;
+  margin: 0;
+  margin-bottom: 6px;
+  padding: 10px;
+}
+
+legend {
+  font-size: 0.9em;
+  font-weight: 600;
 }
