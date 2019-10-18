@@ -12,6 +12,7 @@ input[type='submit'],
 input[type='button'],
 input[type='checkbox'],
 input[type='range'],
+input[type='file'],
 input[type='radio'] {
   cursor: pointer;
 }
@@ -31,13 +32,17 @@ select {
   font-family: inherit;
   font-size: inherit;
 
-  margin-right: 6px;
-  margin-bottom: 6px;
-  padding: 10px;
+  margin-right: 0.375rem;
+  margin-bottom: 0.375rem;
+  padding: 0.625rem;
 
   border: none;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   outline: none;
+}
+
+input[type='file'] {
+  padding: 6.75px;
 }
 
 input,
@@ -64,7 +69,7 @@ select::-ms-expand {
 }
 
 select[multiple] {
-  padding-right: 10px;
+  padding-right: 0.625rem;
   background-image: none;
   overflow-y: auto;
 }
@@ -77,6 +82,7 @@ input[type='button'] {
 }
 
 button:hover,
+input[type='file']:hover,
 input[type='submit']:hover,
 input[type='button']:hover {
   background: $color-button-hover;
@@ -129,6 +135,7 @@ input[type='radio']:active,
 input[type='submit']:active,
 input[type='button']:active,
 input[type='range']:active,
+input[type='file']:active,
 button:active {
   transform: translateY(2px);
 }
@@ -146,11 +153,11 @@ textarea:disabled {
 }
 
 fieldset {
-  border: 1px $color-focus solid;
-  border-radius: 6px;
+  border: 0.05rem $color-focus solid;
+  border-radius: 0.375rem;
   margin: 0;
-  margin-bottom: 6px;
-  padding: 10px;
+  margin-bottom: 0.375rem;
+  padding: 0.625rem;
 }
 
 legend {

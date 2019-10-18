@@ -1,9 +1,9 @@
 .alert,
 .notice {
-  padding: 1em;
-  margin-top: 1em;
-  margin-bottom: 1em;
-  border-radius: 0.5em;
+  padding: 1rem;
+  margin-top: 0rem;
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
 }
 .notice {
   background-color: $color-notice;
@@ -14,11 +14,11 @@
 }
 
 .closebtn {
-  margin-left: 1em;
+  margin-left: 1rem;
   font-weight: bold;
   float: right;
-  font-size: 1.4em;
-  line-height: 1.2em;
+  font-size: 1.4rem;
+  line-height: 1.5rem;
   cursor: pointer;
   transition: 0.07s;
 }
