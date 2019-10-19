@@ -28,6 +28,8 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
+    verify_can_modify_post(@post)
+    @post
   end
 
   def create
@@ -40,6 +42,7 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
+    verify_can_modify_post(@post)
     @post.destroy
     redirect_to posts_path
   end
@@ -85,6 +88,13 @@ class PostsController < ApplicationController
 
   private
 
+  def verify_can_modify_post(post)
+    unless current_user.admin==1 or post.author == current_user
+      flash[:alert] = "You are not authorized to edit this post"
+      redirect_to post
+    end
+  end
+
   def require_signed_in
     if !user_signed_in?
       redirect_to new_user_session_path
@@ -115,10 +125,14 @@ class PostsController < ApplicationController
 
   def post_from_form(params)
     post = Post.find_by(id: params[:id]) || Post.new
+    unless post.id.nil?
+      verify_can_modify_post(post)
+    end
     date = params[:post][:date]
     time = params[:post][:time]
     post.datetime = DateTime.parse("#{date} #{time}")
     post.content = params[:post][:content]
+    post.author = current_user
     post
   end
 
