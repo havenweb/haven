@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   GFM_EXT = [:table, :strikethrough, :autolink, :tagfilter]
   IMG_REGEX = /!\[.*\]\(.*\)/
   before_action :authenticate_user!
-  before_action :verify_admin, except: [:index, :show]
+  before_action :verify_publisher, except: [:index, :show]
 
   def index
     @posts = Post.order(datetime: :desc).page(params[:page])

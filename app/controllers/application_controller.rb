@@ -14,6 +14,12 @@ class ApplicationController < ActionController::Base
       redirect_to posts_path
     end
   end 
+  
+  def verify_publisher
+    if current_user.admin < 1
+      redirect_to posts_path
+    end
+  end
 
   protected
 
