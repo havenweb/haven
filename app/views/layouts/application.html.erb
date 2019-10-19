@@ -18,8 +18,8 @@
         <% if user_signed_in? %>
           <% if current_user.admin == 1 %>
             <li><%= link_to "New Post", new_post_path %></li>
-            <li><%= link_to "Edit Settings", settings_edit_path(id: 1) %></li>
-            <li><%= link_to "Manage Users", users_path %></li>
+            <li><%= link_to "Settings", settings_edit_path(id: 1) %></li>
+            <li><%= link_to "Users", users_path %></li>
           <% end %>
           <li><%= link_to "Profile", edit_user_registration_path %></li>
           <li><%= link_to "Logout", destroy_user_session_path, method: :delete  %></li>
