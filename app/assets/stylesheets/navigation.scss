@@ -42,3 +42,24 @@
     padding: 0;
     text-decoration: none;
 }
+
+@media screen and (max-width: 47rem) {
+.navigation {
+    height: auto;
+}
+
+.navigation .navigation-list {
+    float: none;
+    margin-bottom: initial;
+    margin-top: initial;
+    margin-right: initial;
+}
+
+.navigation-list li {
+    float: none;
+    margin-bottom: initial;
+    margin-left: initial;
+    position: relative;
+}
+
+}
