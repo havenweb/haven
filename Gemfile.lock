@@ -163,6 +163,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    rb-readline (0.5.5)
     ref (2.0.0)
     regexp_parser (1.6.0)
     responders (3.0.0)
@@ -237,6 +238,7 @@ DEPENDENCIES
   pg (~> 1.1.4)
   puma (~> 3.11)
   rails (~> 5.2.3)
+  rb-readline
   sass-rails (~> 5.0)
   spring
   spring-watcher-listen (~> 2.0.0)

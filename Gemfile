@@ -10,6 +10,8 @@ gem 'commonmarker', '~> 0.20'
 gem 'less', '~> 2.6.0'
 gem 'therubyracer', '~> 0.12.3' #undeclared dependency of less
 
+gem 'rb-readline'
+
 # Image processing
 gem 'image_processing', '~> 1.9.3'
 

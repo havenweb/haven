@@ -29,8 +29,12 @@
     </nav>
 
     <div class="container">
-    <% if notice %> <p class="notice"><%= notice %><span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span></p> <% end %>
-    <% if alert %> <p class="alert"><%= alert %><span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span></p> <% end %>
+    <% if notice and !notice.empty? %>
+      <p class="notice"><%= notice %><span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span></p>
+    <% end %>
+    <% if alert and !alert.empty? %>
+      <p class="alert"><%= alert %><span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span></p>
+    <% end %>
 
     <% if !!@settings %>
       <% if !!@settings.title && !@settings.title.empty? %>
