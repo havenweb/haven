@@ -50,6 +50,6 @@ HEREDOC
   private
 
   def setting_params
-    params.require(:setting).permit(:title, :subtitle, :author, :css)
+    params.require(:setting).permit(:title, :subtitle, :author, :css, :byline)
   end
 end

@@ -1,8 +1,12 @@
+<% if @settings.byline %>
+<span class="post-author"><%= post.author.name %></span>
+<% end %>
 <%= link_to post.datetime.strftime('%B %d, %Y'), post_path(post), :class => "post-date" %>
+
 <% if current_user.admin == 1 || (current_user.admin == 2 and post.author == current_user) %>
 <span style="float: right;">
 <%= link_to 'Edit', edit_post_path(post) %>
-<%= link_to 'Destroy', post_path(post),
+<%= link_to 'Delete', post_path(post),
               method: :delete,
               data: { confirm: 'Are you sure?' } %>
 </span>
