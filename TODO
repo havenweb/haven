@@ -5,9 +5,6 @@
  * Make sure certbot is set to auto renew certs
 
 ## App
- * Let users change their Name
- * Add publisher role
-   * And option to display author
  * CSS Validation!!
  * RSS token/url generation
  * Markdown helptext
