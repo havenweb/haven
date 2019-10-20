@@ -29,9 +29,15 @@ HEREDOC
     @setting = SettingsController.get_setting
     less = IMPORTANT_PREFIX + setting_params[:css] + IMPORTANT_SUFFIX
     less_parser = Less::Parser.new
-    compiled_css = less_parser.parse(less).to_css(:compress => true)
-    @setting.compiled_css = compiled_css
-    @setting.css_hash = Digest::MD5.hexdigest(compiled_css)
+    begin
+      compiled_css = less_parser.parse(less).to_css(:compress => true)
+      @setting.compiled_css = compiled_css
+      @setting.css_hash = Digest::MD5.hexdigest(compiled_css)
+    rescue
+      flash[:alert] = "Your CSS is not valid"
+      redirect_to settings_edit_path
+      return
+    end
     @setting.update(setting_params)
     redirect_to posts_path
   end

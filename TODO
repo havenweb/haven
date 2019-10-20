@@ -5,10 +5,12 @@
  * Make sure certbot is set to auto renew certs
 
 ## App
- * CSS Validation!!
  * RSS token/url generation
  * Markdown helptext
  * Better CSS
+   * Larger font so only 75~80 chars/line
+   * Consistent units: rem/px
+   * @media query for darkmode
  * Configure mail - nevermind, this is hard.
 
 # Tech Debt
