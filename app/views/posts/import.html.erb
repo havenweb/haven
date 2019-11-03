@@ -1,0 +1,14 @@
+  <h1>Import Posts</h1>
+  <p>This is an experimental feature for importing posts exported from Wordpress, and converted to Markdown with <a href="https://github.com/palaniraja/blog2md">blog2md</a>.  Blog2md does not extract images, and wordpress reduces the quality of images so this import assumes you have a directory with all of your original images that you can copy to the web server hosting this blog.  This is the "Local Image Directory".  You also need to copy the Markdown files to the server hosting this blog.  That is the "Local File Directory".  The import process will scan your Markdown files, insert the title as a heading and reupload the images.</p>
+
+<%= form_with(method: "post") do %>
+
+  <%= label_tag(:filedir, "Local File Directory:") %>
+  <%= text_field_tag(:filedir, '', size: 50) %>
+
+  <%= label_tag(:imgdir, "Local Image Directory") %>
+  <%= text_field_tag(:imgdir, '', size: 50) %>
+
+  <%= submit_tag("Import") %>
+
+<% end %>

@@ -47,6 +47,20 @@ class PostsController < ApplicationController
     redirect_to posts_path
   end
 
+  ## expects import of a markdown file from a wordpress export and blog2md
+  def import
+    local_file_dir = params[:filedir]
+    local_img_dir = params[:imgdir]
+    Dir["#{local_file_dir}*"].each do |local_filename|
+      import_md_file(local_filename, local_img_dir)
+    end
+    redirect_to posts_path
+  end
+
+  def new_import
+    render :import
+  end
+
   def self.sanitize(txt)
     txt.gsub(/[^0-9A-Za-z]/, '-').squeeze("-")
   end
@@ -85,6 +99,19 @@ class PostsController < ApplicationController
     make_slug(content).gsub("-"," ").titleize
   end
 
+  ## takes a saved Image object, returns the markdown content to refer to the image
+  def process_new_image(image)
+    blob_path = path_for(image.blob)
+    image_meta = ActiveStorage::Analyzer::ImageAnalyzer.new(image.blob).metadata
+    if image_meta[:width] > 1600 #resize at lower quality with link
+      variant = image.blob.variant(combine_options:{thumbnail: "1600", quality: '65%', interlace: 'plane'}).processed
+      variant_path = path_for(variant)
+      return "\n\n[![](#{variant_path})](#{blob_path})"
+    else #simple full image
+      return "\n\n![](#{blob_path})"
+    end
+  end
+
 
   private
 
@@ -107,15 +134,7 @@ class PostsController < ApplicationController
       @image = Image.new
       @image.blob.attach params[:post][:pic]
       @image.save
-      blob_path = path_for(@image.blob)
-      image_meta = ActiveStorage::Analyzer::ImageAnalyzer.new(@image.blob).metadata
-      if image_meta[:width] > 1600 #resize at lower quality with link
-        variant = @image.blob.variant(combine_options:{thumbnail: "1600", quality: '65%', interlace: 'plane'}).processed
-        variant_path = path_for(variant)
-        @post.content += "\n\n[![](#{variant_path})](#{blob_path})"
-      else #simple full image
-        @post.content += "\n\n![](#{blob_path})"
-      end
+      @post.content += process_new_image(@image)
       render view
     else
       @post.save
@@ -123,6 +142,7 @@ class PostsController < ApplicationController
     end
   end
 
+  ## Generates a Post object from form submission content, or initializes a new one
   def post_from_form(params)
     post = Post.find_by(id: params[:id]) || Post.new
     unless post.id.nil?
@@ -142,4 +162,55 @@ class PostsController < ApplicationController
     url = url_for(obj)
     "/#{url.split("/",4)[3]}"
   end
+
+  ### Methods for Import
+  
+  def parse_img_for_import(line, img_src)
+    img_file = "#{line.split("/").last.split("-").first}.jpg"
+    i = Image.new
+    i.blob.attach(io: File.open(img_src + img_file), filename: img_file)
+    i.save
+    return process_new_image(i)
+  end  
+
+  def import_md_file(filename, img_src) 
+    date = ""
+    out = ""
+    File.open(filename) do |file|
+      first = true
+      heading = true
+      file.each_line do |line|
+        if first
+          first = false
+          next
+        end
+        if heading
+          if line=="---\n"
+            heading = false
+            next
+          end
+          if line.start_with? "title: "
+            title = line.chomp.split(": ",2).last[1..-2]
+            out += "# #{title}\n"
+          elsif line.start_with? "date: "
+            d = DateTime.parse(line.split(": ",2).last)
+            date = d.in_time_zone("Pacific Time (US & Canada)").strftime("%Y-%m-%d %H:%M:%S") ##TODO: import with different timezones
+          end
+        else #not heading
+          if line.start_with? "![](http"
+            out += parse_img_for_import(line, img_src)
+          else
+            out += line
+          end
+        end
+      end
+    end
+    p = Post.new
+    p.content = out
+    p.datetime = date
+    p.author = current_user
+    p.save
+    p
+  end
+
 end

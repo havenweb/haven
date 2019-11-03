@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   post 'settings/edit', to: 'settings#update'
   get 'css/:hash/style.css', to: 'settings#style'
 
+  get 'import_posts', to: 'posts#new_import'
+  post 'import_posts', to: 'posts#import'
+
   root 'welcome#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
