@@ -1,16 +1,21 @@
 # Next Steps
 
 ## Deployment
+ * Move configs out of ENV vars and into a templated config file 
+     https://github.com/bkeepers/dotenv
  * Figure out why it doesn't work with t3.nano
- * Make sure certbot is set to auto renew certs
+ * Experiment with initialized AMI
 
 ## App
  * RSS token/url generation
  * Markdown helptext
+ * Delete user flow for deleting authors with live posts
  * Better CSS
-   * Larger font so only 75~80 chars/line
+   * Fix selectors for radio and checkbox
+   * Larger font so only 75~90 chars/line?
+   * Author byline needs different styling
    * Consistent units: rem/px
-   * @media query for darkmode
+   * @media query for darkmode?
  * Configure mail - nevermind, this is hard.
 
 # Tech Debt
