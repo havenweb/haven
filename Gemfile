@@ -3,6 +3,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.4.1'
 
+# For configuration files
+gem 'dotenv-rails', '2.7.5'
+
 # For parsing markdown
 gem 'commonmarker', '~> 0.20'
 

@@ -75,6 +75,10 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    dotenv (2.7.5)
+    dotenv-rails (2.7.5)
+      dotenv (= 2.7.5)
+      railties (>= 3.2, < 6.1)
     erubi (1.8.0)
     execjs (2.7.0)
     ffi (1.11.1)
@@ -229,6 +233,7 @@ DEPENDENCIES
   chromedriver-helper
   commonmarker (~> 0.20)
   devise (~> 4.7.1)
+  dotenv-rails (= 2.7.5)
   image_processing (~> 1.9.3)
   jbuilder (~> 2.5)
   kaminari (~> 1.1.1)
