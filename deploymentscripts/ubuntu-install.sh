@@ -44,12 +44,6 @@ sudo apt-get update && sudo apt-get install -y yarn
 ### https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-ruby-on-rails-application-on-ubuntu-18-04
 sudo apt-get install -y postgresql postgresql-contrib libpq-dev
 DB_PASS=$(openssl rand -base64 18)
-echo 'export SIMPLEBLOG_DB_NAME="ubuntu"' >> ~/.bashrc
-echo 'export SIMPLEBLOG_DB_ROLE="ubuntu"' >> ~/.bashrc
-echo "export SIMPLEBLOG_DB_PASSWORD=\"$DB_PASS\"" >> ~/.bashrc
-export SIMPLEBLOG_DB_NAME="ubuntu"
-export SIMPLEBLOG_DB_ROLE="ubuntu"
-export SIMPLEBLOG_DB_PASSWORD=\"$DB_PASS\"
 sudo -u postgres createuser -s ubuntu
 sudo -u postgres psql -c "ALTER USER ubuntu WITH PASSWORD '$DB_PASS';"
 
@@ -60,6 +54,11 @@ cd /var/www
 sudo git clone https://github.com/mawise/simpleblog.git
 sudo chown ubuntu -R simpleblog
 cd simpleblog
+
+echo 'SIMPLEBLOG_DB_NAME="ubuntu"' >> .env
+echo 'SIMPLEBLOG_DB_ROLE="ubuntu"' >> .env
+echo "SIMPLEBLOG_DB_PASSWORD=\"$DB_PASS\"" >> .env
+
 bundle install --deployment --without development test
 bin/rails db:create
 bin/rails db:migrate
@@ -82,6 +81,3 @@ sudo apt-get install -y certbot python-certbot-nginx
 sudo apt-get install -y imagemagick
 
 touch ~/imdone.txt
-
-
-

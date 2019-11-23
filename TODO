@@ -1,14 +1,15 @@
 # Next Steps
 
 ## Deployment
- * Move configs out of ENV vars and into a templated config file 
-     https://github.com/bkeepers/dotenv
+ * Migrate image storage to S3 for auto-deploy
  * Figure out why it doesn't work with t3.nano
  * Experiment with initialized AMI
+ * Auto-update script
 
 ## App
  * RSS token/url generation
  * Markdown helptext
+ * Export functionality
  * Delete user flow for deleting authors with live posts
  * Better CSS
    * Fix selectors for radio and checkbox
