@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   get 'import_posts', to: 'posts#new_import'
   post 'import_posts', to: 'posts#import'
 
+  get 'rss', to: 'posts#rss'
+
   root 'welcome#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

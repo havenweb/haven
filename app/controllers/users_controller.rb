@@ -17,7 +17,14 @@ class UsersController < ApplicationController
     admin = 2 if params[:user][:role] == "publisher"
     email = params[:user][:email]
     name = params[:user][:name]
-    @user = User.create! email: email, name: name, admin: admin, password: @password
+    @user = User.create!( 
+      email: email,
+      name: name,
+      admin: admin,
+      password: @password,
+      basic_auth_username: Devise.friendly_token.first(20),
+      basic_auth_password: Devise.friendly_token.first(20)
+    )
     @verb = "created"
     render :show
   end

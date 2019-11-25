@@ -1,12 +1,17 @@
 # Next Steps
 
+* RRS/Token
+* S3 image storage
+* S3 DB backups
+
 ## Deployment
  * Migrate image storage to S3 for auto-deploy
  * Figure out why it doesn't work with t3.nano
  * Experiment with initialized AMI
- * Auto-update script
+ * Script to upgrade code on a deployment
 
 ## App
+ * Model validations!!
  * RSS token/url generation
  * Markdown helptext
  * Export functionality

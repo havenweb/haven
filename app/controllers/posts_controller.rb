@@ -1,17 +1,35 @@
 class PostsController < ApplicationController
   GFM_EXT = [:table, :strikethrough, :autolink, :tagfilter]
   IMG_REGEX = /!\[.*\]\(.*\)/
-  before_action :authenticate_user!
-  before_action :verify_publisher, except: [:index, :show]
+  before_action :authenticate_user!, except: :rss
+  before_action :verify_publisher, except: [:index, :show, :rss]
 
   def index
     @posts = Post.order(datetime: :desc).page(params[:page])
     @settings = SettingsController.get_setting
     @css = true
-    respond_to do |format|
-      format.html
-      format.rss { render layout: false }
+  end
+
+  def rss
+    basic_auth_header = request.authorization
+    if basic_auth_header.nil?
+      head :unauthorized
+      return
     end
+    credentials = Base64.decode64(basic_auth_header.split("Basic ").last)
+    basic_auth_user, basic_auth_pass = credentials.split(":")
+    if (basic_auth_user.nil? || basic_auth_pass.nil?)
+      head :unauthorized
+      return
+    end
+    user = User.find_by(basic_auth_username: basic_auth_user)
+    if (user.nil? || user.basic_auth_password != basic_auth_pass)
+      head :unauthorized
+      return
+    end
+    @posts = Post.order(datetime: :desc).page(1)
+    @settings = SettingsController.get_setting
+    render layout: false
   end
 
   def show
