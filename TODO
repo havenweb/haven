@@ -1,6 +1,5 @@
 # Next Steps
 
-* RRS/Token
 * S3 image storage
 * S3 DB backups
 
@@ -11,9 +10,11 @@
  * Script to upgrade code on a deployment
 
 ## App
+ * On import, apostrophes in titles get doubled
  * Model validations!!
- * RSS token/url generation
  * Markdown helptext
+ * basic_auth check for images to support RSS
+ * RRS link to user-specific RSS url
  * Export functionality
  * Delete user flow for deleting authors with live posts
  * Better CSS
@@ -23,6 +24,10 @@
    * Consistent units: rem/px
    * @media query for darkmode?
  * Configure mail - nevermind, this is hard.
+
+## Reader
+ * https://selfoss.aditu.de/ - FOSS, self-hosted
+   * Try it out, add deployment
 
 # Tech Debt
 
