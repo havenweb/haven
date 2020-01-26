@@ -11,6 +11,7 @@ require 'aws-sdk-ec2'
 require 'aws-sdk-iam'
 require 'aws-sdk-route53'
 #require 'aws-sdk-ses'
+require 'aws-sdk-s3'
 require 'base64'
 require 'uri'
 
@@ -94,6 +95,17 @@ table.create_route({
 table.associate_with_subnet({subnet_id: subnet_id})
 routing_table_id = table.id
 
+### S3 Bucket
+bucket_name = "#{NAME}#{DOMAIN}"
+s3_resource = Aws::S3::Resource.new(region: REGION)
+if s3_resource.bucket(bucket_name).exists?
+  puts "S3 bucket '#{bucket_name}' already exists, using it"
+else
+  puts "Creating S3 bucket '#{bucket_name}'..."
+  s3_client = Aws::S3::Client.new(region: REGION)
+  s3_client.create_bucket(bucket: bucket_name)
+end
+
 ### IAM Role ###
 puts "Creating IAM Role..."
 client = Aws::IAM::Client.new(region: REGION)
@@ -102,10 +114,7 @@ role = iam.create_role({
   role_name: "#{NAME.downcase}_role",
   assume_role_policy_document: POLICY_DOC
 })
-##TODO: limited access to S3 read/write from single bucket
-#role.attach_policy({policy_arn: 'arn:aws:iam::aws:policy/AmazonS3FullAccess'})
-##TODO: limited SES access: https://docs.aws.amazon.com/ses/latest/DeveloperGuide/control-user-access.html
-#role.attach_policy({policy_arn: 'arn:aws:iam::aws:policy/AmazonSESFullAccess'})
+role.attach_policy(s3_policy(bucket_name))
 
 ### IAM Instance Profile ###
 puts "Creating IAM Instance Profile..."
@@ -131,9 +140,7 @@ end
 
 ### EC2 Instance ###
 puts "Creating EC2 Instance..."
-## User code that's executed when the instance starts
-#script = `cat ubuntu-install.sh`
-script = ''
+script = '' #User data script, we're not using this
 encoded_script = Base64.encode64(script)
 instance = ec2.create_instances({
   image_id: AMI_ID,
@@ -186,7 +193,7 @@ hosted_zone_list.hosted_zones.each do |hosted_zone|
   end
 end
 if hosted_zone_id == "" && hosted_zone_list.is_truncated
-  puts "Could not find a matching hosted zone, but you have over 500 zones which this script cannot handle.  Quitting..."
+  puts "Could not find a matching hosted zone, but you have over 500 zones which this script cannot handle.  Quitting..." ##TODO: handle this
   exit(1)
 end
 
@@ -283,9 +290,13 @@ File.open(nginx_conf_filename,'w') {|f|
 create_user_filename = "create_user.rb"
 
 `scp -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" #{INSTALL_SCRIPT} ubuntu@#{ip_addr}:~/`
+
 `scp -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" #{nginx_conf_filename} ubuntu@#{ip_addr}:~/`
+
 `scp -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" #{create_user_filename} ubuntu@#{ip_addr}:~/`
-`ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr} 'bash #{INSTALL_SCRIPT} \"#{EMAIL}\" \"#{USER_PASS}\"'`
+
+`ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr} 'bash #{INSTALL_SCRIPT} \"#{EMAIL}\" \"#{USER_PASS}\" \"#{bucket_name}\"'`
+
 `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{ip_addr} 'sudo certbot --nginx -n --agree-tos --email #{EMAIL} --no-eff-email --domains #{DOMAIN} --redirect'`
 
 puts "================"

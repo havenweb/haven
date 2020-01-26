@@ -51,5 +51,5 @@ def s3_policy(bucket)
       "Resource": ["arn:aws:s3:::#{bucket}/*"]
     }
   ]
-}
+}.to_json
 end

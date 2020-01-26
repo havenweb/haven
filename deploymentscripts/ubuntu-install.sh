@@ -2,6 +2,7 @@
 
 EMAIL=$1
 RAILS_USER_PASS=$2
+BUCKET_NAME=$3
 
 sudo apt-get update
 sudo apt-get install -y autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm5 libgdbm-dev
@@ -55,6 +56,7 @@ sudo git clone https://github.com/mawise/simpleblog.git
 sudo chown ubuntu -R simpleblog
 cd simpleblog
 
+echo 'AWS_BUCKET=\"$BUCKET_NAME\"' >> .env
 echo 'SIMPLEBLOG_DB_NAME="ubuntu"' >> .env
 echo 'SIMPLEBLOG_DB_ROLE="ubuntu"' >> .env
 echo "SIMPLEBLOG_DB_PASSWORD=\"$DB_PASS\"" >> .env
