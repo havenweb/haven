@@ -54,6 +54,10 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 #gem 'aws-sdk-rails', '~> 2.1.0'  #email with AWS SES
 
+group :production do
+  gem "aws-sdk-s3", require: false
+end
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

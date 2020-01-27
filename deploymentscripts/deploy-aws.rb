@@ -96,7 +96,7 @@ table.associate_with_subnet({subnet_id: subnet_id})
 routing_table_id = table.id
 
 ### S3 Bucket
-bucket_name = "#{NAME}#{DOMAIN}"
+bucket_name = "#{NAME}#{DOMAIN}".sub(".","").downcase
 s3_resource = Aws::S3::Resource.new(region: REGION)
 if s3_resource.bucket(bucket_name).exists?
   puts "S3 bucket '#{bucket_name}' already exists, using it"
@@ -114,7 +114,11 @@ role = iam.create_role({
   role_name: "#{NAME.downcase}_role",
   assume_role_policy_document: POLICY_DOC
 })
-role.attach_policy(s3_policy(bucket_name))
+client.put_role_policy({
+  role_name: "#{NAME.downcase}_role",
+  policy_name: "#{NAME}-S3-#{bucket_name}",
+  policy_document: s3_policy(bucket_name),
+})
 
 ### IAM Instance Profile ###
 puts "Creating IAM Instance Profile..."
