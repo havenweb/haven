@@ -4,10 +4,10 @@
 * S3 DB backups
 
 ## Deployment
- * Migrate image storage to S3 for auto-deploy
  * Figure out why it doesn't work with t3.nano
  * Experiment with initialized AMI
  * Script to upgrade code on a deployment
+ * Move user creation logic into model and reuse it between controller and create_user script
 
 ## App
  * On import, apostrophes in titles get doubled

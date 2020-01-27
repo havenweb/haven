@@ -13,4 +13,4 @@ if !(EMAIL =~ URI::MailTo::EMAIL_REGEXP)
   exit(1)
 end
 
-User.create! email: "#{EMAIL}", name: "", admin: 1, password: "#{PASS}"
+User.create! email: "#{EMAIL}", name: "", admin: 1, password: "#{PASS}", basic_auth_username: Devise.friendly_token.first(20), basic_auth_password: Devise.friendly_token.first(20)
