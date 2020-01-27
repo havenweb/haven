@@ -56,7 +56,7 @@ sudo git clone https://github.com/mawise/simpleblog.git
 sudo chown ubuntu -R simpleblog
 cd simpleblog
 
-echo 'AWS_BUCKET=\"$BUCKET_NAME\"' >> .env
+echo "AWS_BUCKET=\"$BUCKET_NAME\"" >> .env
 echo 'SIMPLEBLOG_DB_NAME="ubuntu"' >> .env
 echo 'SIMPLEBLOG_DB_ROLE="ubuntu"' >> .env
 echo "SIMPLEBLOG_DB_PASSWORD=\"$DB_PASS\"" >> .env
