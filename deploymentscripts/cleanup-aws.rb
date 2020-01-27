@@ -152,6 +152,12 @@ iam.instance_profiles({}).each do |profile|
     puts "Deleting instance profile #{profile.to_s}"
     profile.roles.each do |role|
       puts "  Removing role: #{role.name}..."
+      role.attached_policies().each do |policy|
+        policy.detach_role({
+          role_name: role.name
+        })
+        policy.delete
+      end
       profile.remove_role({
         role_name: role.name
       })
@@ -168,6 +174,10 @@ iam.roles({}).each do |role|
       role.detach_policy({
         policy_arn: policy.arn
       })
+      policy.delete()
+    end
+    role.policies.each do |policy|
+      policy.delete()
     end
     role.delete()
   end
