@@ -1,8 +1,8 @@
 #!/bin/bash
 
-EMAIL=$1
-RAILS_USER_PASS=$2
-BUCKET_NAME=$3
+## Prepare a clean Ubuntu installation with the pre-reqs required
+## to deploy a simple blog.  Generally this script should be used
+## to create a base AMI that can be reused for faster installs.
 
 sudo apt-get update
 sudo apt-get install -y autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm5 libgdbm-dev
@@ -44,32 +44,6 @@ sudo apt-get update && sudo apt-get install -y yarn
 # PostgreSQL
 ### https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-ruby-on-rails-application-on-ubuntu-18-04
 sudo apt-get install -y postgresql postgresql-contrib libpq-dev
-DB_PASS=$(openssl rand -base64 18)
-sudo -u postgres createuser -s ubuntu
-sudo -u postgres psql -c "ALTER USER ubuntu WITH PASSWORD '$DB_PASS';"
-
-# Rails App
-echo 'export RAILS_ENV=production' >> ~/.bashrc
-export RAILS_ENV=production
-cd /var/www
-sudo git clone https://github.com/mawise/simpleblog.git
-sudo chown ubuntu -R simpleblog
-cd simpleblog
-
-echo "AWS_BUCKET=\"$BUCKET_NAME\"" >> .env
-echo 'SIMPLEBLOG_DB_NAME="ubuntu"' >> .env
-echo 'SIMPLEBLOG_DB_ROLE="ubuntu"' >> .env
-echo "SIMPLEBLOG_DB_PASSWORD=\"$DB_PASS\"" >> .env
-
-bundle install --deployment --without development test
-bin/rails db:create
-bin/rails db:migrate
-bin/rails assets:precompile
-bin/rails r ~/create_user.rb $EMAIL $RAILS_USER_PASS
-
-# Nginx config and restart
-sudo mv ~/simpleblog.conf /etc/nginx/sites-enabled/
-sudo service nginx restart
 
 # HTTPS with Letsencrypt
 sudo apt-get update
@@ -81,5 +55,3 @@ sudo apt-get install -y certbot python-certbot-nginx
 
 ## For image processing in the app
 sudo apt-get install -y imagemagick
-
-touch ~/imdone.txt

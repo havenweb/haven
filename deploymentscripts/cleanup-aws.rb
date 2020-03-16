@@ -4,7 +4,7 @@
 
 #`gem install aws-sdk`
 
-load 'aws-helpers.rb'
+#load 'aws-helpers.rb'
 require 'aws-sdk-ec2'
 require 'aws-sdk-iam'
 require 'base64'
