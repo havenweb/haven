@@ -196,7 +196,7 @@ class PostsController < ApplicationController
             next
           end
           if line.start_with? "title: "
-            title = line.chomp.split(": ",2).last[1..-2]
+            title = line.chomp.split(": ",2).last[1..-2].gsub("''","'")
             out += "# #{title}\n"
           elsif line.start_with? "date: "
             d = DateTime.parse(line.split(": ",2).last)
