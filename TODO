@@ -4,17 +4,18 @@
 * S3 DB backups
 
 ## Deployment
+ * load a backup if present on deployment
  * Figure out why it doesn't work with t3.nano
  * Experiment with initialized AMI
  * Script to upgrade code on a deployment
  * Move user creation logic into model and reuse it between controller and create_user script
 
 ## App
- * On import, apostrophes in titles get doubled
+ * Automated Backups to S3
+ * RRS link to user-specific RSS url
  * Model validations!!
  * Markdown helptext
  * basic_auth check for images to support RSS
- * RRS link to user-specific RSS url
  * Export functionality
  * Delete user flow for deleting authors with live posts
  * Better CSS
@@ -30,9 +31,9 @@
    * Try it out, add deployment
 
 # Tech Debt
-
-Post form has two buttons, and I have logic based on their value.  Move the value of the special button to a variable/constant so I can't break the logic by renaming the text
-
-Add validation to post form
-
-Add validation to settings form
+ * import fails unless directories have trailing slash ("/")
+ * failed import doesn't display an error
+ * successful import doesn't display success on completion
+ * Post form has two buttons, and I have logic based on their value.  Move the value of the special button to a variable/constant so I can't break the logic by renaming the text
+ * Add validation to post form
+ * Add validation to settings form

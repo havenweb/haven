@@ -1,4 +1,12 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<h2>Account</h2>
+
+<% scheme, host = request.base_url.split("//") 
+   rss_user = resource.basic_auth_username
+   rss_pass = resource.basic_auth_password
+   rss_url = "#{scheme}//#{rss_user}:#{rss_pass}@#{host}/rss" 
+%>
+
+<p>RSS: <%= rss_url %></p>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>

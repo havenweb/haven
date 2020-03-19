@@ -22,8 +22,8 @@ class UsersController < ApplicationController
       name: name,
       admin: admin,
       password: @password,
-      basic_auth_username: Devise.friendly_token.first(20),
-      basic_auth_password: Devise.friendly_token.first(20)
+      basic_auth_username: Devise.friendly_token.first(10),
+      basic_auth_password: Devise.friendly_token.first(10)
     )
     @verb = "created"
     render :show
