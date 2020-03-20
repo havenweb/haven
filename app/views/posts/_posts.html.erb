@@ -11,4 +11,4 @@
               data: { confirm: 'Are you sure?' } %>
 </span>
 <% end %>
-<%= CommonMarker.render_html(post.content, :UNSAFE, PostsController::GFM_EXT).html_safe %>
+<%= CommonMarker.render_html(post.content, [:UNSAFE, :HARDBREAKS], PostsController::GFM_EXT).html_safe %>
