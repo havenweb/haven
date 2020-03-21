@@ -7,7 +7,10 @@ if (ARGV.length < 2)
   exit(1)
 end
 
-cron_line = "20 3 * * * /home/ubuntu/.rbenv/shims/ruby take_backup.rb #{bucket} #{region}"
+hour = (rand*23).to_i.to_s
+minute = (rand*59).to_i.to_s
+
+cron_line = "#{minute} #{hour} * * * /home/ubuntu/.rbenv/shims/ruby take_backup.rb #{bucket} #{region}"
 
 ## Assumes nothing else already exists in crontab
 `echo "#{cron_line}" | crontab -`

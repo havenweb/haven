@@ -5,6 +5,7 @@
 EMAIL=$1
 RAILS_USER_PASS=$2
 BUCKET_NAME=$3
+BLOG_VERSION=$4
 
 sudo apt-get update
 
@@ -19,6 +20,7 @@ cd /var/www
 sudo git clone https://github.com/mawise/simpleblog.git
 sudo chown ubuntu -R simpleblog
 cd simpleblog
+git checkout $BLOG_VERSION
 
 echo "AWS_BUCKET=\"$BUCKET_NAME\"" >> .env
 echo 'SIMPLEBLOG_DB_NAME="ubuntu"' >> .env

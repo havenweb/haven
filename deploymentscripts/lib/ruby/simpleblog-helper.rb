@@ -75,7 +75,7 @@ def prepare_instance(key_pair_name:, remote_host:)
   run_bash_script_remotely(source_path: source_path, source_file: script, remote_host: remote_host, key_pair_name: key_pair_name)
 end
 
-def install_simpleblog(key_pair_name:, remote_host:, domain:, email:, user_password:, ruby_version:, bucket_name:, region:)
+def install_simpleblog(key_pair_name:, remote_host:, domain:, email:, user_password:, ruby_version:, bucket_name:, region:, blog_version: "master")
   nginx_conf_filename = "simpleblog.conf"
   create_user_filename = "lib/ruby/create_user.rb"
 
@@ -89,7 +89,7 @@ def install_simpleblog(key_pair_name:, remote_host:, domain:, email:, user_passw
   ### Run bash install script
   script = "ubuntu-deploy.sh"
   script_path = "lib/bash"
-  parameters = "\"#{email}\" \"#{user_password}\" \"#{bucket_name}\""
+  parameters = "\"#{email}\" \"#{user_password}\" \"#{bucket_name}\" \"#{blog_version}\""
   run_bash_script_remotely(source_path: script_path, source_file: script, remote_host: remote_host, key_pair_name: key_pair_name, parameter_string: parameters)
 
   ### Schedule automated DB Backups
