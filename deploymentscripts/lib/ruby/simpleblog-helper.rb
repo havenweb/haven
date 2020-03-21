@@ -1,3 +1,24 @@
+require 'aws-sdk-s3'
+
+## version is a string, represents the git hash of the repo that is installed
+## bucket is the name of the bucket to write the version to.
+def write_version_to_bucket(version:, bucket:, region:)
+  s3 = Aws::S3::Client.new(region: region)
+  resp = s3.put_object({
+    body: StringIO.new(version), 
+    bucket: bucket, 
+    key: "version",
+  })
+end
+
+def get_version_from_bucket(bucket:, region:)
+  s3 = Aws::S3::Client.new(region: region)
+  resp = s3.get_object(bucket: bucket, key: "version")
+  resp.body.read
+rescue Aws::S3::Errors::NoSuchKey
+  return nil
+end
+
 def nginx_conf_file(appname:, domain:, ruby_version:)
 <<-HEREDOC
 # /etc/nginx/sites-enabled/#{ appname }.conf
@@ -27,6 +48,24 @@ def run_bash_script_remotely(source_path:, source_file:, remote_host:, key_pair_
   `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{remote_host} 'bash -i #{source_file} #{parameter_string}'`
 end
 
+def enable_backups(remote_host:, key_pair_name:, bucket:, region:)
+  ## Script that takes the backups
+  scp_file(
+    source_file: "lib/ruby/take_backup.rb",
+    remote_host: remote_host,
+    key_pair_name: key_pair_name)
+
+  ## Script that schedules the backups
+  scp_file(
+    source_file: "lib/ruby/schedule_backups.rb",
+    remote_host: remote_host,
+    key_pair_name: key_pair_name)
+
+  parameter_string = "#{bucket} #{region}"
+  `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{remote_host} '/home/ubuntu/.rbenv/shims/ruby schedule_backups.rb #{parameter_string}'`
+end
+
+
 ####### SimpleBlog deployment specific methods #####
 
 def prepare_instance(key_pair_name:, remote_host:)
@@ -36,7 +75,7 @@ def prepare_instance(key_pair_name:, remote_host:)
   run_bash_script_remotely(source_path: source_path, source_file: script, remote_host: remote_host, key_pair_name: key_pair_name)
 end
 
-def install_simpleblog(key_pair_name:, remote_host:, domain:, email:, user_password:, ruby_version:, bucket_name:)
+def install_simpleblog(key_pair_name:, remote_host:, domain:, email:, user_password:, ruby_version:, bucket_name:, region:)
   nginx_conf_filename = "simpleblog.conf"
   create_user_filename = "lib/ruby/create_user.rb"
 
@@ -52,6 +91,9 @@ def install_simpleblog(key_pair_name:, remote_host:, domain:, email:, user_passw
   script_path = "lib/bash"
   parameters = "\"#{email}\" \"#{user_password}\" \"#{bucket_name}\""
   run_bash_script_remotely(source_path: script_path, source_file: script, remote_host: remote_host, key_pair_name: key_pair_name, parameter_string: parameters)
+
+  ### Schedule automated DB Backups
+  enable_backups(remote_host: remote_host, key_pair_name: key_pair_name, bucket: bucket_name, region: region)
 end
 
 def run_certbot(remote_host:, domain:, key_pair_name:, email:)

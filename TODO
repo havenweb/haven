@@ -12,7 +12,6 @@
 
 ## App
  * Automated Backups to S3
- * RRS link to user-specific RSS url
  * Model validations!!
  * Markdown helptext
  * basic_auth check for images to support RSS
@@ -31,6 +30,7 @@
    * Try it out, add deployment
 
 # Tech Debt
+ * upload image link throws error if no file selected
  * import fails unless directories have trailing slash ("/")
  * failed import doesn't display an error
  * successful import doesn't display success on completion

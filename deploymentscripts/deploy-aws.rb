@@ -5,6 +5,8 @@ require 'uri'
 ## Configurable Constants
 
 ami = "ami-06f2f779464715dc5" # Ubuntu 18.04 LTS 64bit x86
+#ami = "ami-0cc5660626fe637a8" # Prepared Image
+
 instance_type = 't3a.micro'
 region = 'us-west-2'
 az = 'us-west-2a'
@@ -35,7 +37,7 @@ s3_bucket_name = instance_info["s3_bucket_name"]
 
 prepare_instance(key_pair_name: key_pair_name, remote_host: ip_address)
 
-install_simpleblog(key_pair_name: key_pair_name, remote_host: ip_address, domain: domain, email: email, user_password: user_password, ruby_version: ruby_version, bucket_name: s3_bucket_name)
+install_simpleblog(key_pair_name: key_pair_name, remote_host: ip_address, domain: domain, email: email, user_password: user_password, ruby_version: ruby_version, bucket_name: s3_bucket_name, region: region)
 
 run_certbot(remote_host: ip_address, domain: domain, key_pair_name: key_pair_name, email: email)
 
