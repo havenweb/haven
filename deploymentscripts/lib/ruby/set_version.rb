@@ -3,7 +3,20 @@
 ## future install to use the same version and reuse the
 ## database backup.
 `gem install aws-sdk-s3`
-load 'simpleblog-helper.rb'
+require 'aws-sdk-s3'
+
+def write_version_to_bucket(version:, bucket:, region: "us-west-2")
+  s3 = Aws::S3::Client.new(region: region)
+  bucket_region = s3.client.get_bucket_location({
+    bucket: bucket 
+  }).location_constraint
+  s3 = Aws::S3::Client.new(region: bucket_region) if (bucket_region != region)
+  resp = s3.put_object({
+    body: StringIO.new(version), 
+    bucket: bucket, 
+    key: "version",
+  })
+end
 
 bucket = ARGV[0]
 

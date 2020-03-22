@@ -2,18 +2,6 @@ require 'aws-sdk-s3'
 
 ## version is a string, represents the git hash of the repo that is installed
 ## bucket is the name of the bucket to write the version to.
-def write_version_to_bucket(version:, bucket:, region: "us-west-2")
-  s3 = Aws::S3::Client.new(region: region)
-  bucket_region = s3.client.get_bucket_location({
-    bucket: bucket 
-  }).location_constraint
-  s3 = Aws::S3::Client.new(region: bucket_region) if (bucket_region != region)
-  resp = s3.put_object({
-    body: StringIO.new(version), 
-    bucket: bucket, 
-    key: "version",
-  })
-end
 
 def get_version_from_bucket(bucket:, region: "us-west-2")
   s3 = Aws::S3::Client.new(region: region)
