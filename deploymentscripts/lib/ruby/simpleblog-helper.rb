@@ -5,7 +5,7 @@ require 'aws-sdk-s3'
 
 def get_version_from_bucket(bucket:, region: "us-west-2")
   s3 = Aws::S3::Client.new(region: region)
-  bucket_region = s3.client.get_bucket_location({
+  bucket_region = s3.get_bucket_location({
     bucket: bucket 
   }).location_constraint
   s3 = Aws::S3::Client.new(region: bucket_region) if (bucket_region != region)

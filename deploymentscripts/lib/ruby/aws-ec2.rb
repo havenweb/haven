@@ -97,7 +97,10 @@ def s3_policy(bucket)
   "Statement": [
     {
       "Effect": "Allow",
-      "Action": ["s3:ListBucket"],
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetBucketLocation"
+      ],
       "Resource": ["arn:aws:s3:::#{bucket}"]
     },
     {
