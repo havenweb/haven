@@ -20,7 +20,8 @@ cd /var/www
 sudo git clone https://github.com/mawise/simpleblog.git
 sudo chown ubuntu -R simpleblog
 cd simpleblog
-git checkout $BLOG_VERSION
+git checkout $BLOG_VERSION ## master if not specified
+ruby deploymentscripts/lib/ruby/set_version.rb $BUCKET_NAME
 
 echo "AWS_BUCKET=\"$BUCKET_NAME\"" >> .env
 echo 'SIMPLEBLOG_DB_NAME="ubuntu"' >> .env

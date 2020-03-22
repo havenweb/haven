@@ -1,3 +1,5 @@
+
+`/home/ubuntu/.rbenv/shims/gem install aws-sdk-s3`
 require 'aws-sdk-s3'
 
 bucket = ARGV[0]
