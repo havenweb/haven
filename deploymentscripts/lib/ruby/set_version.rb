@@ -2,7 +2,7 @@
 ## the version (git hash) to S3.  This will allow a
 ## future install to use the same version and reuse the
 ## database backup.
-
+`gem install aws-sdk-s3`
 load 'simpleblog-helper.rb'
 
 bucket = ARGV[0]
