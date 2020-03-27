@@ -14,8 +14,8 @@ echo 'eval "$(rbenv init -)"' >> ~/.bashrc
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-rbenv install 2.4.1
-rbenv global 2.4.1
+rbenv install 2.6.5
+rbenv global 2.6.5
 gem install bundler -v 1.16.1 --no-rdoc --no-ri
 
 #### Nginx And Passenger #### https://www.phusionpassenger.com/library/install/nginx/install/oss/bionic/
