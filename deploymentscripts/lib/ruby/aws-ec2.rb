@@ -84,7 +84,7 @@ def create_s3_bucket(aws_region:, bucket_name:)
     puts "S3 bucket '#{bucket_name}' already exists, using it"
   else
     puts "Creating S3 bucket '#{bucket_name}'..."
-    s3_client = Aws::S3::Client.new(region: REGION)
+    s3_client = Aws::S3::Client.new(region: aws_region)
     s3_client.create_bucket(bucket: bucket_name)
   end
 end
@@ -278,7 +278,7 @@ def shortcut_create_instance(ami_id:, instance_type:, domain:, region:, availabi
   iam_resource = Aws::IAM::Resource.new(client: iam_client)
   r53 = Aws::Route53::Resource.new.client
   vpc_cidr = '10.200.0.0/16'
-  s3_bucket_name = "#{name}#{domain}".sub(".","").downcase
+  s3_bucket_name = "#{domain}.storage".downcase
 
   vpc = create_vpc(ec2_resource: ec2, vpc_cidr: vpc_cidr, name: name)
   igw = create_internet_gateway(ec2_resource: ec2, vpc: vpc, name: name)

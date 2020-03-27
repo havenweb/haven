@@ -11,7 +11,7 @@ instance_type = 't3a.micro'
 region = 'us-west-2'
 az = 'us-west-2a'
 name = "SimpleBlog"
-ruby_version = "2.4.1"
+ruby_version = "2.6.5"
 
 ## Parameter Parsing
 

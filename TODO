@@ -1,7 +1,6 @@
 # Next Steps
 
-* S3 image storage
-* S3 DB backups
+ * Upgrade ruby version
 
 ## Deployment
  * load a backup if present on deployment
@@ -11,7 +10,6 @@
  * Move user creation logic into model and reuse it between controller and create_user script
 
 ## App
- * Automated Backups to S3
  * Model validations!!
  * Markdown helptext
  * basic_auth check for images to support RSS
@@ -23,7 +21,6 @@
    * Author byline needs different styling
    * Consistent units: rem/px
    * @media query for darkmode?
- * Configure mail - nevermind, this is hard.
 
 ## Reader
  * https://selfoss.aditu.de/ - FOSS, self-hosted
