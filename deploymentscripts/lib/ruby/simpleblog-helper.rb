@@ -24,6 +24,7 @@ server {
   root /var/www/#{ appname }/public;
   passenger_enabled on;
   passenger_ruby /home/ubuntu/.rbenv/versions/#{ ruby_version }/bin/ruby;
+  client_max_body_size 25M;
 }
 HEREDOC
 end
