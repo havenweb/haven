@@ -48,10 +48,15 @@ $color-highlight: #ffff00;
   white-space: nowrap;
 }
 
-// Images //
-
+// Media //
+video,
+audio,
 img {
   max-width: 100%;
+}
+
+audio {
+  width: 100%;
 }
 
 // App-specific //

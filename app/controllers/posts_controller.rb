@@ -54,6 +54,14 @@ class PostsController < ApplicationController
   end
 
   ## expects import of a markdown file from a wordpress export and blog2md
+  ## Example:
+  ## ---
+  ## title: 'post title'
+  ## date: Mon, 16 Sep 2019 03:51:34 +0000
+  ## ---
+  ## ![](https://path.to/image.jpg)
+  ##
+  ## Post conent
   def import
     local_file_dir = params[:filedir]
     local_img_dir = params[:imgdir]
@@ -105,6 +113,17 @@ class PostsController < ApplicationController
     make_slug(content).gsub("-"," ").titleize
   end
 
+  def process_new_video(image) ## Image model used for all media
+    blob_path = path_for(image.blob)
+    "\n\n<video controls><source src=\"#{blob_path}\" type=\"video/mp4\"></video>"
+  end
+
+  def process_new_audio(image) ## Image model used for all media
+    blob_path = path_for(image.blob)
+    "\n\n<audio controls><source src=\"#{blob_path}\" type=\"audio/mpeg\"></audio>"
+  end
+
+
   ## takes a saved Image object, returns the markdown content to refer to the image
   def process_new_image(image)
     blob_path = path_for(image.blob)
@@ -140,7 +159,14 @@ class PostsController < ApplicationController
       @image = Image.new
       @image.blob.attach params[:post][:pic]
       @image.save
-      @post.content += process_new_image(@image)
+      file_ext = path_for(@image.blob).split(".").last
+      if (file_ext == "mp3")
+        @post.content += process_new_audio(@image)
+      elsif (file_ext == "mp4")
+        @post.content += process_new_video(@image)
+      else
+        @post.content += process_new_image(@image)
+      end
       render view
     else
       @post.save
@@ -170,7 +196,8 @@ class PostsController < ApplicationController
   end
 
   ### Methods for Import
-  
+ 
+  ## TODO, support audio and video in import 
   def parse_img_for_import(line, img_src)
     img_file = "#{line.split("/").last.split("-").first}.jpg"
     i = Image.new
