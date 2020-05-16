@@ -21,4 +21,19 @@ function doRender() {
   document.getElementById("display").innerHTML = html;
 }
 doRender();
+function setTime() {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear().toString();
+  var dateString = yyyy + "-" + mm + "-" + dd;
+  var hh = String(today.getHours()).padStart(2, '0');
+  var mm = String(today.getMinutes()).padStart(2, '0');
+  var timeString = hh + ":" + mm;
+  document.getElementById("post_date").value = dateString;
+  document.getElementById("post_time").value = timeString;
+}
+if (document.getElementById("post_content").value.trim()=="") {
+  setTime();
+}
 </script>

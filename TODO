@@ -1,13 +1,15 @@
 # Next Steps
 
- * Upgrade ruby version
+## Bugs
+ * During upload of an image, the text field is still available for editing
 
 ## Deployment
+ * update script
+   * including update of version blob
  * load a backup if present on deployment
  * Figure out why it doesn't work with t3.nano
  * Experiment with initialized AMI
  * Script to upgrade code on a deployment
- * Move user creation logic into model and reuse it between controller and create_user script
 
 ## App
  * Model validations!!
@@ -31,6 +33,7 @@
  * import fails unless directories have trailing slash ("/")
  * failed import doesn't display an error
  * successful import doesn't display success on completion
+ * Move user creation logic into model and reuse it between controller and create_user script
  * Post form has two buttons, and I have logic based on their value.  Move the value of the special button to a variable/constant so I can't break the logic by renaming the text
  * Add validation to post form
  * Add validation to settings form
