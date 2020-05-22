@@ -11,25 +11,22 @@
 
   </head>
   <body>
-    <nav class="navigation">
-      <div class="container">
+    <nav>
+    <header>
       <%=link_to "Home", root_path, class: 'navigation-home' %>
-      <ul class="navigation-list float-right">
         <% if user_signed_in? %>
           <% if current_user.admin >= 1 %>
-            <li><%= link_to "New Post", new_post_path %></li>
+            <%= link_to "New Post", new_post_path %>
           <% end %>
           <% if current_user.admin == 1 %>
-            <li><%= link_to "Settings", settings_edit_path(id: 1) %></li>
-            <li><%= link_to "Users", users_path %></li>
+            <%= link_to "Settings", settings_edit_path(id: 1) %>
+            <%= link_to "Users", users_path %>
           <% end %>
-          <li><%= link_to "Account", edit_user_registration_path %></li>
-          <li><%= link_to "Logout", destroy_user_session_path, method: :delete  %></li>
+          <%= link_to "Account", edit_user_registration_path %>
+          <%= link_to "Logout", destroy_user_session_path, method: :delete  %>
         <% end %>
-      </ul>
-      </div class="container">
+    </header>
     </nav>
-
     <div class="container">
     <% if notice and !notice.empty? %>
       <p class="notice"><%= notice %><span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span></p>

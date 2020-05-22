@@ -11,3 +11,6 @@ production:
     port: <%= ENV['RDS_PORT'] %>
 
 # This requires different ENV variable for each Rails process if we want multiple blogs on the same EC2 instance.
+
+# Raspberry PI
+# https://hackaday.io/project/27725-smart-lock-with-web-interface/log/72083-update-7-ruby-on-rails-install-and-configuration
