@@ -401,7 +401,7 @@ th {
 	background: var(--nc-bg-2);
 }
 
-tr:nth-child(even) {
+tr:nth-child(odd) {
 	/* Set every other cell slightly darker. Improves readability. */
 	background: var(--nc-bg-2);
 }

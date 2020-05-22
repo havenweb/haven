@@ -1,6 +1,3 @@
-<% if @settings.byline %>
-<span class="post-author"><%= post.author.name %></span>
-<% end %>
 <%= link_to post.datetime.strftime('%B %d, %Y'), post_path(post), :class => "post-date" %>
 
 <% if current_user.admin == 1 || (current_user.admin == 2 and post.author == current_user) %>
@@ -11,4 +8,9 @@
               data: { confirm: 'Are you sure?' } %>
 </span>
 <% end %>
+
+<% if @settings.byline %>
+<div class="post-author"><%= post.author.name %></div>
+<% end %>
+
 <%= CommonMarker.render_html(post.content, [:UNSAFE, :HARDBREAKS], PostsController::GFM_EXT).html_safe %>
