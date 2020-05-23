@@ -14,3 +14,15 @@ production:
 
 # Raspberry PI
 # https://hackaday.io/project/27725-smart-lock-with-web-interface/log/72083-update-7-ruby-on-rails-install-and-configuration
+
+# Deploy Changes:
+# Source: https://www.phusionpassenger.com/library/walkthroughs/deploy/ruby/ownserver/nginx/oss/deploy_updates.html
+ssh -i <keyfile> ubuntu@<domain>
+cd /var/www/<app>
+git pull origin master
+DB MIGRATE
+bundle install --deployment --without development test
+bundle exec rake assets:precompile db:migrate RAILS_ENV=production
+passenger-config restart-app $(pwd)
+
+

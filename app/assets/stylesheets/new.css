@@ -223,9 +223,15 @@ header a {
 	padding-right: 1rem;
 }
 
-header > a:last-child {
+/* If there is only one element in the header, don't float it to the right */
+header > *:first-child:last-child {
+	float: none;
+}
+
+header > *:last-child {
 	padding-right: 0;
 }
+
 
 a button,
 button,
