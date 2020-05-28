@@ -22,7 +22,7 @@ gem 'image_processing', '~> 1.9.3'
 gem 'devise', '~> 4.7.1'
 
 # Pagination
-gem 'kaminari', '~> 1.1.1'
+gem 'kaminari', '~> 1.2.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.4.2'
