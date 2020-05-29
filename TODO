@@ -1,4 +1,8 @@
 # Next Steps
+ * Update dependencies
+ * Redirect /settings (settings#show) to settings edit page
+ * Add info on CSS variables to change colors
+ * Make custom CSS file come AFTER the system CSS file (if possible?)
 
 ## Bugs
  * During upload of an image, the text field is still available for editing

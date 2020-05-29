@@ -12,7 +12,7 @@ Simple blog application built with Ruby on Rails, some motivating philosophies:
 
 * Register an account with AWS, the included scripts deploy to an AWS EC2 instance
 * Buy a domain with AWS route 53, this is the domain that will point to the blog
-* Clone this project onto your computer (tested with Mac OS Mojave)
+* Clone this project onto your computer (tested with Mac OS Mojave and Ubuntu 18.04)
 * Go to the `deploymentscripts` folder
 * Execute `ruby deploy-aws.rb <domain> "<email>"`
   * Put your email address in quotes, this email is used for registering your HTTPS certificate
