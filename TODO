@@ -1,6 +1,6 @@
 # Next Steps
- * Update dependencies
- * Redirect /settings (settings#show) to settings edit page
+ * Deployment script to support subdomains
+ * Load a backup (and respect version) if present on deployment
  * Add info on CSS variables to change colors
  * Make custom CSS file come AFTER the system CSS file (if possible?)
 
@@ -10,7 +10,6 @@
 ## Deployment
  * script to update deployed blog to latest/specific version
    * including update of version blob
- * load a backup if present on deployment
  * Figure out why it doesn't work with t3.nano
  * Experiment with initialized AMI
 

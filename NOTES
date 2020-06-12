@@ -1,5 +1,3 @@
-DB:
-
 production:
     <<: *default
     adapter: postgresql
@@ -10,8 +8,6 @@ production:
     host: <%= ENV['RDS_HOSTNAME'] %>
     port: <%= ENV['RDS_PORT'] %>
 
-# This requires different ENV variable for each Rails process if we want multiple blogs on the same EC2 instance.
-
 # Raspberry PI
 # https://hackaday.io/project/27725-smart-lock-with-web-interface/log/72083-update-7-ruby-on-rails-install-and-configuration
 
@@ -20,9 +16,14 @@ production:
 ssh -i <keyfile> ubuntu@<domain>
 cd /var/www/<app>
 git pull origin master
-DB MIGRATE
 bundle install --deployment --without development test
 bundle exec rake assets:precompile db:migrate RAILS_ENV=production
 passenger-config restart-app $(pwd)
 
+## DB Backup and Restore
 
+pg_dump ubuntu > dumpfile
+
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+psql ubuntu < dumpfile

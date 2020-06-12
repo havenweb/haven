@@ -14,7 +14,7 @@ echo 'eval "$(rbenv init -)"' >> ~/.bashrc
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-rbenv install 2.6.5
+RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install 2.6.5
 rbenv global 2.6.5
 gem install bundler -v 1.16.1 --no-rdoc --no-ri
 
