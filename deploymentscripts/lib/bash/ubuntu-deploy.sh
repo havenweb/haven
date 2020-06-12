@@ -28,6 +28,7 @@ echo 'SIMPLEBLOG_DB_NAME="ubuntu"' >> .env
 echo 'SIMPLEBLOG_DB_ROLE="ubuntu"' >> .env
 echo "SIMPLEBLOG_DB_PASSWORD=\"$DB_PASS\"" >> .env
 
+gem install nokogiri -v '1.10.9' ## bundle sometimes fails when installing this
 bundle install --deployment --without development test
 bin/rails db:create
 bin/rails db:migrate
