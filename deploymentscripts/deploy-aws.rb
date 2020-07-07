@@ -26,7 +26,7 @@ if !(email =~ URI::MailTo::EMAIL_REGEXP)
   puts "#{email} is not a valid email address"
   exit(1) ## TODO, this might be wrong, provide a --force-email flag?
 end
-raise("only 1 level subdomain allowed") if (domain_url.split(".").count > 3)
+raise("only 1 level subdomain allowed") if (domain.split(".").count > 3)
 user_password = `openssl rand -base64 18`
 
 ## Provisioning and Deployment
