@@ -61,4 +61,4 @@ sudo dd if=/dev/zero of=/var/swapfile bs=1M count=512
 sudo chmod 600 /var/swapfile
 sudo mkswap /var/swapfile
 sudo swapon /var/swapfile
-sudo echo "/var/swapfile none swap sw 0 0" >> /etc/fstab
+echo "/var/swapfile none swap sw 0 0" | sudo tee -a /etc/fstab
