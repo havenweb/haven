@@ -55,3 +55,10 @@ sudo apt-get install -y certbot python-certbot-nginx
 
 ## For image processing in the app
 sudo apt-get install -y imagemagick
+
+## Create swap space for smaller instances
+sudo dd if=/dev/zero of=/var/swapfile bs=1M count=512
+sudo chmod 600 /var/swapfile
+sudo mkswap /var/swapfile
+sudo swapon /var/swapfile
+sudo echo "/var/swapfile none swap sw 0 0" >> /etc/fstab
