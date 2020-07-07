@@ -1,5 +1,8 @@
 # Next Steps
- * Deployment script to support subdomains
+ * ~~Deployment script to support subdomains~~
+ * Cleanup script to remove resource record set
+ * Deployment script to support multiple concurrent deployments
+ * During deploy, wait until instance_profile_exists: https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IAM/Client.html#wait_until-instance_method
  * Load a backup (and respect version) if present on deployment
  * Add info on CSS variables to change colors
  * Make custom CSS file come AFTER the system CSS file (if possible?)
@@ -12,6 +15,7 @@
    * including update of version blob
  * Figure out why it doesn't work with t3.nano
  * Experiment with initialized AMI
+   * wait for instance_profile_exists??
 
 ## App
  * Try dual local storage + S3, see if content laods faster

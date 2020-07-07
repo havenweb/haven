@@ -212,7 +212,12 @@ end
 ##############  DNS  ############
 
 #r53 = Aws::Route53::Resource.new.client
-def create_hosted_zone(r53_client:, domain:, name:)
+def create_hosted_zone(r53_client:, domain_url:, name:)
+  url_parts = domain_url.split(".")
+  if (url_parts.size > 3) or (url_parts.size < 2)
+    raise("invalid domain: #{domain_url}")
+  end
+  domain = "#{url_parts[-2]}.#{url_parts[-1]}"
   puts "Checking if a hosted zone already exists for domain #{domain}"
   hosted_zone_list = r53_client.list_hosted_zones({
     max_items: 500
@@ -291,7 +296,7 @@ def shortcut_create_instance(ami_id:, instance_type:, domain:, region:, availabi
   key_pair_name = create_key_pair(ec2_resource: ec2, name: name)
   ec2_instance = create_ec2_instance(ec2_resource: ec2, ami_id: ami_id, instance_type: instance_type, security_group: security_group, availability_zone: availability_zone, subnet: subnet, iam_instance_profile: iam_instance_profile, key_pair_name: key_pair_name, name: name)
   ip_address = create_ip_address(ec2_resource: ec2, ec2_instance: ec2_instance)
-  hosted_zone = create_hosted_zone(r53_client: r53, domain: domain, name: name)
+  hosted_zone = create_hosted_zone(r53_client: r53, domain_url: domain, name: name)
   create_dns_record_set(r53_client: r53, hosted_zone: hosted_zone, domain: domain, name: name, ip_address: ip_address)
 
   output_hash = {}
