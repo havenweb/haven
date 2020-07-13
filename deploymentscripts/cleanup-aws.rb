@@ -14,10 +14,18 @@ INSTANCE_TYPE = 't2.micro'
 REGION = 'us-west-2'
 AZ = 'us-west-2a'
 CIDR = '10.200.0.0/16'
-NAME = "SimpleBlog"
+#NAME = "SimpleBlog"
 
 ec2 = Aws::EC2::Resource.new(region: REGION)
 
+
+if (ARGV.length < 1)
+  puts "Please specify your domain name as a parameter to this script"
+  exit(1)
+end
+domain = ARGV[0] #TODO: Verify domain is owned, otherwise DNS update will fail
+raise("only 1 level subdomain allowed") if (domain.split(".").count > 3)
+NAME = domain
 
 ### EC2 Instance ###
 ec2.instances({filters: [{name: 'tag:Name', values: ["#{NAME}Instance"]}]}).each do |i|

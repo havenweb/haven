@@ -18,4 +18,4 @@ Simple blog application built with Ruby on Rails, some motivating philosophies:
   * Put your email address in quotes, this email is used for registering your HTTPS certificate
 * Wait.  Deployment can take up to 20 minutes
 * The script will show you your login information, enjoy your blog
-* Note: if anything goes wrong, you can run `ruby cleanup-aws.rb` to tear down everything the script created
+* Note: if anything goes wrong, you can run `ruby cleanup-aws.rb <domain>` to tear down everything the script created

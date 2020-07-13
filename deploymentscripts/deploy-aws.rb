@@ -10,7 +10,7 @@ ami = "ami-06f2f779464715dc5" # Ubuntu 18.04 LTS 64bit x86
 instance_type = 't3a.micro'
 region = 'us-west-2'
 az = 'us-west-2a'
-name = "SimpleBlog"
+#name = "SimpleBlog"
 ruby_version = "2.6.5"
 
 ## Parameter Parsing
@@ -28,6 +28,7 @@ if !(email =~ URI::MailTo::EMAIL_REGEXP)
 end
 raise("only 1 level subdomain allowed") if (domain.split(".").count > 3)
 user_password = `openssl rand -base64 18`
+name = domain
 
 ## Provisioning and Deployment
 
