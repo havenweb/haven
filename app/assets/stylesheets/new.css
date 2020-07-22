@@ -52,7 +52,6 @@ figure,
 form,
 input,
 iframe,
-img,
 meter,
 nav,
 ol,
@@ -474,6 +473,7 @@ video,
 audio,
 img {
 	max-width: 100%;
+        margin-bottom: 0;
 }
 
 audio {
