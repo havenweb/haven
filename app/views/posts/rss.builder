@@ -8,7 +8,7 @@ xml.rss :version => "2.0" do
     @posts.each do |post|
       xml.item do
         xml.title PostsController.make_title(post.content)
-        xml.description CommonMarker.render_html(post.content, :UNSAFE, PostsController::GFM_EXT).html_safe
+        xml.description PostsController.convert_urls(CommonMarker.render_html(post.content, :UNSAFE, PostsController::GFM_EXT).html_safe, request.base_url)
         xml.pubDate post.datetime.rfc822
         xml.link post_url(post)
         xml.guid post_url(post)

@@ -113,6 +113,12 @@ class PostsController < ApplicationController
     make_slug(content).gsub("-"," ").titleize
   end
 
+  # convert relative URLs to absolute URLs when referencing media (for RSS)
+  # prefix should be scheme://domain, eg: "https://example.com"
+  def self.convert_urls(content, prefix)
+    return content.gsub("=\"/rails/active_storage/","=\"#{prefix}/rails/active_storage/")
+  end
+
   def process_new_video(image) ## Image model used for all media
     blob_path = path_for(image.blob)
     "\n\n<video controls><source src=\"#{blob_path}\" type=\"video/mp4\"></video>"

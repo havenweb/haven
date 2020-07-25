@@ -8,7 +8,8 @@ xml.rss version: '2.0' do
     @posts.each do |post|
       xml.item do
         xml.name PostsController.make_title(post.content)
-        xml.description CommonMarker.render_html(post.content, :UNSAFE, PostsController::GFM_EXT).html_safe
+        #xml.description CommonMarker.render_html(post.content, :UNSAFE, PostsController::GFM_EXT).html_safe
+        xml.description PostsController.convert_urls("")
         xml.link post_url(post)
       end
     end

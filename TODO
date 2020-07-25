@@ -1,11 +1,10 @@
 # Next Steps
- * ~~Deployment script to support subdomains~~
- * Cleanup script to remove resource record set
- * Deployment script to support multiple concurrent deployments
  * During deploy, wait until instance_profile_exists: https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IAM/Client.html#wait_until-instance_method
  * Load a backup (and respect version) if present on deployment
+ * Use Devise Lockable to block brute-force password attempts
  * Add info on CSS variables to change colors
  * Make custom CSS file come AFTER the system CSS file (if possible?)
+ * Search: https://pganalyze.com/blog/full-text-search-ruby-rails-postgres
 
 ## Bugs
  * During upload of an image, the text field is still available for editing
