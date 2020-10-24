@@ -63,7 +63,7 @@ GEM
       aws-sigv4 (~> 1.1)
     aws-sigv4 (1.1.4)
       aws-eventstream (~> 1.0, >= 1.0.2)
-    bcrypt (3.1.13)
+    bcrypt (3.1.16)
     bindex (0.8.1)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
@@ -245,6 +245,7 @@ PLATFORMS
 
 DEPENDENCIES
   aws-sdk-s3
+  bcrypt (~> 3.1.16)
   bootsnap (>= 1.1.0)
   byebug
   capybara (>= 2.15)

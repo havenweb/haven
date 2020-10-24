@@ -20,6 +20,7 @@ gem 'image_processing', '~> 1.9.3'
 
 # For Auth
 gem 'devise', '~> 4.7.1'
+gem 'bcrypt', '~> 3.1.16'
 
 # Pagination
 gem 'kaminari', '~> 1.2.1'
@@ -40,8 +41,6 @@ gem 'uglifier', '>= 1.3.0'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

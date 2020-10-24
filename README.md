@@ -4,7 +4,7 @@ Simple blog application built with Ruby on Rails, some motivating philosophies:
 
 * Privacy-first.  This is for sharing with friends and family, not commercial endevors.  If you want a blog for your company, you probably want to use Wordpress instead
 * Easy to use.
-* Low-bandwidth friendly.  Images get downscaled to reduce page load times.  No javascript.
+* Low-bandwidth friendly.  Images get downscaled to reduce page load times.  No javascript frameworks.  No ads or trackers.
 * Customizable.  If you want to add custom CSS, you can do that
 * No spam. There is no self-signup for users so there is no place for unauthorized users to impact your life
 
@@ -16,6 +16,7 @@ Simple blog application built with Ruby on Rails, some motivating philosophies:
 * Go to the `deploymentscripts` folder
 * Execute `ruby deploy-aws.rb <domain> "<email>"`
   * Put your email address in quotes, this email is used for registering your HTTPS certificate
-* Wait.  Deployment can take up to 20 minutes
+* Wait.  Deployment can 20 minutes
 * The script will show you your login information, enjoy your blog
 * Note: if anything goes wrong, you can run `ruby cleanup-aws.rb <domain>` to tear down everything the script created
+* If you get this error: `cannot load such file -- aws-sdk-ec2 (LoadError)`, then type `gem install aws-sdk` and try again
