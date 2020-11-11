@@ -95,6 +95,7 @@ echo "  <Location />" >> 001-simpleblog.conf
 echo "    Require all granted" >> 001-simpleblog.conf
 echo "  </Location>" >> 001-simpleblog.conf
 echo "  RewriteEngine on" >> 001-simpleblog.conf
+echo "  RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}" >> 001-simpleblog.conf
 echo "  RewriteRule ^/?$ /index.html" >> 001-simpleblog.conf
 echo "  RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f" >> 001-simpleblog.conf
 echo "  RewriteRule ^/(.*)$ http://127.0.0.1:3000%{REQUEST_URI} [P,QSA,L]" >> 001-simpleblog.conf
@@ -104,7 +105,7 @@ sudo chown root /etc/apache2/sites-available/001-simpleblog.conf
 sudo chmod 644 /etc/apache2/sites-available/001-simpleblog.conf
 
 ## Enable new apache config
-sudo a2enmod rewrite proxy proxy_http
+sudo a2enmod rewrite proxy proxy_http headers
 sudo a2ensite 001-simpleblog
 sudo a2dissite 000-default
 sudo systemctl restart apache2
@@ -115,6 +116,23 @@ sudo mv certbot-auto /usr/local/bin/certbot-auto
 sudo chown root /usr/local/bin/certbot-auto
 sudo chmod 0755 /usr/local/bin/certbot-auto
 sudo /usr/local/bin/certbot-auto --apache -n --agree-tos --email "$EMAIL" --no-eff-email --domains $DOMAIN --redirect
+
+## Rewrite Apache config to fix http -> https redirect
+cd /home/pi
+echo "<VirtualHost *:80>" > 001-simpleblog.conf
+echo "  ServerName $DOMAIN" >> 001-simpleblog.conf
+echo "  DocumentRoot /home/pi/simpleblog/public" >> 001-simpleblog.conf
+echo "  <Location />" >> 001-simpleblog.conf
+echo "    Require all granted" >> 001-simpleblog.conf
+echo "  </Location>" >> 001-simpleblog.conf
+echo "  RewriteEngine on" >> 001-simpleblog.conf
+echo "  RewriteCond %{SERVER_NAME} =$DOMAIN" >> 001-simpleblog.conf
+echo "  RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]" >> 001-simpleblog.conf
+echo "</VirtualHost>" >> 001-simpleblog.conf
+sudo mv 001-simpleblog.conf /etc/apache2/sites-available/001-simpleblog.conf
+sudo chown root /etc/apache2/sites-available/001-simpleblog.conf
+sudo chmod 644 /etc/apache2/sites-available/001-simpleblog.conf
+sudo systemctl restart apache2
 
 # Create first user
 USER_PASS==$(openssl rand -base64 18)
