@@ -14,6 +14,9 @@ Rails.application.routes.draw do
 
   resources :posts
 
+  post '/posts/:post_id/comments', to: 'comments#create', as: 'create_comment'
+  delete '/comments/:comment_id', to: 'comments#destroy', as: 'destroy_comment'
+
   get 'settings', to: 'settings#show'
   get 'settings/edit', to: 'settings#edit'
   patch 'settings', to: 'settings#update'
