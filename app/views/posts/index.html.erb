@@ -5,6 +5,10 @@
 <p>Nobody has written anything yet.</p>
 <% end %>
 
+<% unless params[:page].nil? || params[:page]=="1" %>
+  <%= paginate @posts %>
+<% end %>
+
 <% @posts.each do |post| %>
   <%= render "posts", post: post  %>
   <hr>
