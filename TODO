@@ -2,7 +2,6 @@
  * During deploy, wait until instance_profile_exists: https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IAM/Client.html#wait_until-instance_method
  * Load a backup (and respect version) if present on deployment
  * Use Devise Lockable to block brute-force password attempts
- * Add info on CSS variables to change colors
  * Make custom CSS file come AFTER the system CSS file (if possible?)
  * Search: https://pganalyze.com/blog/full-text-search-ruby-rails-postgres
 
@@ -31,9 +30,10 @@
 
 # Tech Debt
  * upload image link throws error if no file selected
- * import fails unless directories have trailing slash ("/")
- * failed import doesn't display an error
- * successful import doesn't display success on completion
+ * Import issues
+   * import fails unless directories have trailing slash ("/")
+   * failed import doesn't display an error
+   * successful import doesn't display success on completion
  * Move user creation logic into model and reuse it between controller and create_user script
  * Post form has two buttons, and I have logic based on their value.  Move the value of the special button to a variable/constant so I can't break the logic by renaming the text
  * Add validation to post form
