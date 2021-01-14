@@ -26,6 +26,8 @@ class UsersController < ApplicationController
       basic_auth_password: Devise.friendly_token.first(10)
     )
     @verb = "created"
+    login_link = LoginLink.generate(@user)
+    @token = login_link.token
     render :show
   end
 
@@ -34,6 +36,9 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.update_attributes(password: @password)
     @verb = "updated"
+    @user.login_links.each {|ll| ll.destroy} ## delete old links
+    login_link = LoginLink.generate(@user)
+    @token = login_link.token
     render :show
   end
 

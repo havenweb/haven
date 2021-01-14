@@ -7,6 +7,8 @@
 <strong>Name:</strong> <%= @user.name %><br>
 <strong>Email:</strong> <%= @user.email %><br>
 <strong>Password:</strong> <%= @password %><br>
+<strong>Login Link:</strong> <%= login_link_url(token: @token) %><br>
+<p>You can use this magic login link to login directly instead of using your email and password.  Keep the link safe just like a password.
 <hr>
 Please share this login information with <%= @user.name %>.
 

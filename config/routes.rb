@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get 'login_links/validate'
   get 'markdown', to: 'static#markdown'
   get 'themes', to: 'static#themes'
 
@@ -30,6 +31,8 @@ Rails.application.routes.draw do
   post 'import_posts', to: 'posts#import'
 
   get 'rss', to: 'posts#rss'
+
+  get 'login_links/validate', as: :login_link
 
   root 'welcome#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
