@@ -1,3 +1,7 @@
+# Rename
+ * deployment scripts to use new repository
+ * favicon to use an "H"
+
 # Next Steps
  * During deploy, wait until instance_profile_exists: https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IAM/Client.html#wait_until-instance_method
  * Load a backup (and respect version) if present on deployment

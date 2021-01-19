@@ -17,16 +17,16 @@ sudo -u postgres psql -c "ALTER USER ubuntu WITH PASSWORD '$DB_PASS';"
 echo 'export RAILS_ENV=production' >> ~/.bashrc
 export RAILS_ENV=production
 cd /var/www
-sudo git clone https://github.com/mawise/simpleblog.git
-sudo chown ubuntu -R simpleblog
-cd simpleblog
+sudo git clone https://github.com/havenweb/haven.git
+sudo chown ubuntu -R haven
+cd haven
 git checkout $BLOG_VERSION ## master if not specified
 ruby deploymentscripts/lib/ruby/set_version.rb $BUCKET_NAME
 
 echo "AWS_BUCKET=\"$BUCKET_NAME\"" >> .env
-echo 'SIMPLEBLOG_DB_NAME="ubuntu"' >> .env
-echo 'SIMPLEBLOG_DB_ROLE="ubuntu"' >> .env
-echo "SIMPLEBLOG_DB_PASSWORD=\"$DB_PASS\"" >> .env
+echo 'HAVEN_DB_NAME="ubuntu"' >> .env
+echo 'HAVEN_DB_ROLE="ubuntu"' >> .env
+echo "HAVEN_DB_PASSWORD=\"$DB_PASS\"" >> .env
 
 bundle install --deployment --without development test
 bin/rails db:create
@@ -35,7 +35,7 @@ bin/rails assets:precompile
 bin/rails r ~/create_user.rb $EMAIL $RAILS_USER_PASS
 
 # Nginx config and restart
-sudo mv ~/simpleblog.conf /etc/nginx/sites-enabled/
+sudo mv ~/haven.conf /etc/nginx/sites-enabled/
 sudo service nginx restart
 
 touch ~/imdone.txt

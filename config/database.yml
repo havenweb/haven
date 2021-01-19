@@ -17,6 +17,6 @@ test:
 
 production:
   <<: *default
-  database: <%= ENV['SIMPLEBLOG_DB_NAME'] %>
-  username: <%= ENV['SIMPLEBLOG_DB_ROLE'] %>
-  password: <%= ENV['SIMPLEBLOG_DB_PASSWORD'] %>
+  database: <%= ENV['HAVEN_DB_NAME'] %>
+  username: <%= ENV['HAVEN_DB_ROLE'] %>
+  password: <%= ENV['HAVEN_DB_PASSWORD'] %>

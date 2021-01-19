@@ -4,7 +4,6 @@
 
 #`gem install aws-sdk`
 
-#load 'aws-helpers.rb'
 require 'aws-sdk-ec2'
 require 'aws-sdk-iam'
 require 'aws-sdk-route53'
@@ -15,7 +14,6 @@ INSTANCE_TYPE = 't2.micro'
 REGION = 'us-west-2'
 AZ = 'us-west-2a'
 CIDR = '10.200.0.0/16'
-#NAME = "SimpleBlog"
 
 ec2 = Aws::EC2::Resource.new(region: REGION)
 r53 = Aws::Route53::Resource.new.client

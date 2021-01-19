@@ -46,67 +46,67 @@ sudo -u postgres psql -c "ALTER USER pi WITH PASSWORD '$DB_PASS';"
 echo 'export RAILS_ENV=production' >> ~/.bashrc
 export RAILS_ENV=production
 cd /home/pi
-sudo git clone https://github.com/mawise/simpleblog.git
-sudo chown pi -R simpleblog
-cd simpleblog
+sudo git clone https://github.com/havenweb/haven.git
+sudo chown pi -R haven
+cd haven
 git checkout armv6l #TODO, check uname -m
 bundle config build.bcrypt --use-system-libraries
 bundle install --deployment --without development test
 
-echo 'SIMPLEBLOG_DB_NAME="pi"' >> .env
-echo 'SIMPLEBLOG_DB_ROLE="pi"' >> .env
-echo "SIMPLEBLOG_DB_PASSWORD=\"$DB_PASS\"" >> .env
+echo 'HAVEN_DB_NAME="pi"' >> .env
+echo 'HAVEN_DB_ROLE="pi"' >> .env
+echo "HAVEN_DB_PASSWORD=\"$DB_PASS\"" >> .env
 
 bin/rails db:create
 bin/rails db:migrate
 bin/rails assets:precompile
 
 # systemd to run the app: /etc/systemd/system/simpleblog.service 
-echo "[Unit]" > simpleblog.service
-echo "Description=SimpleBlog Web App" >> simpleblog.service
-echo "" >> simpleblog.service
-echo "[Service]" >> simpleblog.service
-echo "User=pi" >> simpleblog.service
-echo "Group=pi" >> simpleblog.service
-echo "WorkingDirectory=/home/pi/simpleblog" >> simpleblog.service
-echo "Environment=PATH=/home/pi/.rbenv/shims:/home/pi/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games" >> simpleblog.service
-echo "ExecStart=/home/pi/simpleblog/bin/rails s -e production -p 3000" >> simpleblog.service
-echo "Restart=on-failure" >> simpleblog.service
-echo "" >> simpleblog.service
-echo "[Install]" >> simpleblog.service
-echo "WantedBy=multi-user.target" >> simpleblog.service
-sudo mv simpleblog.service /etc/systemd/system/simpleblog.service
-sudo chown root /etc/systemd/system/simpleblog.service
-sudo chmod 755 /etc/systemd/system/simpleblog.service
+echo "[Unit]" > haven.service
+echo "Description=Haven Web App" >> haven.service
+echo "" >> haven.service
+echo "[Service]" >> haven.service
+echo "User=pi" >> haven.service
+echo "Group=pi" >> haven.service
+echo "WorkingDirectory=/home/pi/haven" >> haven.service
+echo "Environment=PATH=/home/pi/.rbenv/shims:/home/pi/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games" >> haven.service
+echo "ExecStart=/home/pi/haven/bin/rails s -e production -p 3000" >> haven.service
+echo "Restart=on-failure" >> haven.service
+echo "" >> haven.service
+echo "[Install]" >> haven.service
+echo "WantedBy=multi-user.target" >> haven.service
+sudo mv haven.service /etc/systemd/system/haven.service
+sudo chown root /etc/systemd/system/haven.service
+sudo chmod 755 /etc/systemd/system/haven.service
 
 ## Enable the systemd process
 sudo systemctl daemon-reload
-sudo systemctl enable simpleblog.service
-sudo systemctl start simpleblog.service
+sudo systemctl enable haven.service
+sudo systemctl start haven.service
 
 # Apache
 sudo apt install -y apache2
 
 ## Create Apache config file: /etc/apache2/sites-available/001-simpleblog.conf
-echo "<VirtualHost *:80>" > 001-simpleblog.conf
-echo "  ServerName $DOMAIN" >> 001-simpleblog.conf
-echo "  DocumentRoot /home/pi/simpleblog/public" >> 001-simpleblog.conf
-echo "  <Location />" >> 001-simpleblog.conf
-echo "    Require all granted" >> 001-simpleblog.conf
-echo "  </Location>" >> 001-simpleblog.conf
-echo "  RewriteEngine on" >> 001-simpleblog.conf
-echo "  RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}" >> 001-simpleblog.conf
-echo "  RewriteRule ^/?$ /index.html" >> 001-simpleblog.conf
-echo "  RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f" >> 001-simpleblog.conf
-echo "  RewriteRule ^/(.*)$ http://127.0.0.1:3000%{REQUEST_URI} [P,QSA,L]" >> 001-simpleblog.conf
-echo "</VirtualHost>" >> 001-simpleblog.conf
-sudo mv 001-simpleblog.conf /etc/apache2/sites-available/001-simpleblog.conf
-sudo chown root /etc/apache2/sites-available/001-simpleblog.conf
-sudo chmod 644 /etc/apache2/sites-available/001-simpleblog.conf
+echo "<VirtualHost *:80>" > 001-haven.conf
+echo "  ServerName $DOMAIN" >> 001-haven.conf
+echo "  DocumentRoot /home/pi/haven/public" >> 001-haven.conf
+echo "  <Location />" >> 001-haven.conf
+echo "    Require all granted" >> 001-haven.conf
+echo "  </Location>" >> 001-haven.conf
+echo "  RewriteEngine on" >> 001-haven.conf
+echo "  RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}" >> 001-haven.conf
+echo "  RewriteRule ^/?$ /index.html" >> 001-haven.conf
+echo "  RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f" >> 001-haven.conf
+echo "  RewriteRule ^/(.*)$ http://127.0.0.1:3000%{REQUEST_URI} [P,QSA,L]" >> 001-haven.conf
+echo "</VirtualHost>" >> 001-haven.conf
+sudo mv 001-haven.conf /etc/apache2/sites-available/001-haven.conf
+sudo chown root /etc/apache2/sites-available/001-haven.conf
+sudo chmod 644 /etc/apache2/sites-available/001-haven.conf
 
 ## Enable new apache config
 sudo a2enmod rewrite proxy proxy_http headers
-sudo a2ensite 001-simpleblog
+sudo a2ensite 001-haven
 sudo a2dissite 000-default
 sudo systemctl restart apache2
 
@@ -119,25 +119,25 @@ sudo /usr/local/bin/certbot-auto --apache -n --agree-tos --email "$EMAIL" --no-e
 
 ## Rewrite Apache config to fix http -> https redirect
 cd /home/pi
-echo "<VirtualHost *:80>" > 001-simpleblog.conf
-echo "  ServerName $DOMAIN" >> 001-simpleblog.conf
-echo "  DocumentRoot /home/pi/simpleblog/public" >> 001-simpleblog.conf
-echo "  <Location />" >> 001-simpleblog.conf
-echo "    Require all granted" >> 001-simpleblog.conf
-echo "  </Location>" >> 001-simpleblog.conf
-echo "  RewriteEngine on" >> 001-simpleblog.conf
-echo "  RewriteCond %{SERVER_NAME} =$DOMAIN" >> 001-simpleblog.conf
-echo "  RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]" >> 001-simpleblog.conf
-echo "</VirtualHost>" >> 001-simpleblog.conf
-sudo mv 001-simpleblog.conf /etc/apache2/sites-available/001-simpleblog.conf
-sudo chown root /etc/apache2/sites-available/001-simpleblog.conf
-sudo chmod 644 /etc/apache2/sites-available/001-simpleblog.conf
+echo "<VirtualHost *:80>" > 001-haven.conf
+echo "  ServerName $DOMAIN" >> 001-haven.conf
+echo "  DocumentRoot /home/pi/haven/public" >> 001-haven.conf
+echo "  <Location />" >> 001-haven.conf
+echo "    Require all granted" >> 001-haven.conf
+echo "  </Location>" >> 001-haven.conf
+echo "  RewriteEngine on" >> 001-haven.conf
+echo "  RewriteCond %{SERVER_NAME} =$DOMAIN" >> 001-haven.conf
+echo "  RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]" >> 001-haven.conf
+echo "</VirtualHost>" >> 001-haven.conf
+sudo mv 001-haven.conf /etc/apache2/sites-available/001-haven.conf
+sudo chown root /etc/apache2/sites-available/001-haven.conf
+sudo chmod 644 /etc/apache2/sites-available/001-haven.conf
 sudo systemctl restart apache2
 
 # Create first user
 USER_PASS==$(openssl rand -base64 18)
-cd /home/pi/simpleblog
-bin/rails r /home/pi/simpleblog/deploymentscripts/lib/ruby/create_user.rb $EMAIL $USER_PASS
+cd /home/pi/haven
+bin/rails r /home/pi/haven/deploymentscripts/lib/ruby/create_user.rb $EMAIL $USER_PASS
 echo "=========="
 echo ""
 echo "Visit: https://$DOMAIN"

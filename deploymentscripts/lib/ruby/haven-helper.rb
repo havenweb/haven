@@ -31,7 +31,7 @@ end
 
 def write_nginx_conf_file(filename:, domain:, ruby_version:)
   File.open(filename,'w') {|f|
-    f.puts(nginx_conf_file(appname: "simpleblog", domain: domain, ruby_version: ruby_version))
+    f.puts(nginx_conf_file(appname: "haven", domain: domain, ruby_version: ruby_version))
   }
 end
 
@@ -63,7 +63,7 @@ def enable_backups(remote_host:, key_pair_name:, bucket:, region:)
 end
 
 
-####### SimpleBlog deployment specific methods #####
+####### Haven deployment specific methods #####
 
 def prepare_instance(key_pair_name:, remote_host:)
   source_path = "lib/bash"
@@ -72,8 +72,8 @@ def prepare_instance(key_pair_name:, remote_host:)
   run_bash_script_remotely(source_path: source_path, source_file: script, remote_host: remote_host, key_pair_name: key_pair_name)
 end
 
-def install_simpleblog(key_pair_name:, remote_host:, domain:, email:, user_password:, ruby_version:, bucket_name:, region:, blog_version: "master")
-  nginx_conf_filename = "simpleblog.conf"
+def install_haven(key_pair_name:, remote_host:, domain:, email:, user_password:, ruby_version:, bucket_name:, region:, blog_version: "master")
+  nginx_conf_filename = "haven.conf"
   create_user_filename = "lib/ruby/create_user.rb"
 
   ### Create and copy Nginx Config
