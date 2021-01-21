@@ -111,11 +111,12 @@ sudo a2dissite 000-default
 sudo systemctl restart apache2
 
 ## HTTPS with Letsencrypt
-wget https://dl.eff.org/certbot-auto
+# lock certbot version: https://community.letsencrypt.org/t/certbot-auto-no-longer-works-on-debian-based-systems/139702/7
+wget https://raw.githubusercontent.com/certbot/certbot/v1.9.0/certbot-auto
 sudo mv certbot-auto /usr/local/bin/certbot-auto
 sudo chown root /usr/local/bin/certbot-auto
 sudo chmod 0755 /usr/local/bin/certbot-auto
-sudo /usr/local/bin/certbot-auto --apache -n --agree-tos --email "$EMAIL" --no-eff-email --domains $DOMAIN --redirect
+sudo /usr/local/bin/certbot-auto --apache -n --agree-tos --email "$EMAIL" --no-eff-email --domains $DOMAIN --redirect --no-self-upgrade
 
 ## Rewrite Apache config to fix http -> https redirect
 cd /home/pi
