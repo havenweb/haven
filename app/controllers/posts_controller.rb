@@ -135,7 +135,7 @@ class PostsController < ApplicationController
     blob_path = path_for(image.blob)
     image_meta = ActiveStorage::Analyzer::ImageAnalyzer.new(image.blob).metadata
     if image_meta[:width] > 1600 #resize at lower quality with link
-      variant = image.blob.variant(combine_options:{thumbnail: "1600", quality: '65%', interlace: 'plane'}).processed
+      variant = image.blob.variant(combine_options:{thumbnail: "1600", quality: '65%', interlace: 'plane', auto_orient: true}).processed
       variant_path = path_for(variant)
       return "\n\n[![](#{variant_path})](#{blob_path})"
     else #simple full image
