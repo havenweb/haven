@@ -12,6 +12,7 @@
 ## AWS
 * Register an account with AWS, the included scripts deploy to an AWS EC2 instance
 * Buy a domain with AWS route 53, this is the domain that will point to the blog
+* Setup your AWS credentials: https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html
 * Clone this project onto your computer (tested with Mac OS Mojave and Ubuntu 18.04)
 * Go to the `deploymentscripts` folder
 * Execute `ruby deploy-aws.rb <domain> "<email>"`
