@@ -1,6 +1,6 @@
 # Haven
 
-[Haven](https://havenweb.org) is a simple blog application (formerly called SimpleBlog) built with Ruby on Rails, based on some motivating philosophies:
+[Haven](https://havenweb.org) is a simple blog application (formerly called SimpleBlog) built with Ruby on Rails.  Here are some motivating philosophies:
 
 * Privacy-first.  This is for sharing with friends and family, not for commercial endevors.  If you want a blog for your company, you probably want to use WordPress instead
 * Easy to use.
