@@ -17,7 +17,7 @@
 * Go to the `deploymentscripts` folder
 * Execute `ruby deploy-aws.rb <domain> "<email>"`
   * Put your email address in quotes, this email is used for registering your HTTPS certificate
-* Wait.  Deployment can 20 minutes
+* Wait.  Deployment can take 20 minutes.
 * The script will show you your login information, enjoy your blog
 * Note: if anything goes wrong, you can run `ruby cleanup-aws.rb <domain>` to tear down everything the script created
 * If you get this error: `cannot load such file -- aws-sdk-ec2 (LoadError)`, then type `gem install aws-sdk` and try again
