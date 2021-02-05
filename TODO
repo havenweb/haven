@@ -16,12 +16,11 @@
    * wait for instance_profile_exists??
 
 ## App
- * Try dual local storage + S3, see if content laods faster
+ * Permanent sessions, with idle timeout
  * Change images to -img- tags, with width and height for placeholders
+ * Try dual local storage + S3, see if content laods faster
  * Model validations!!
- * basic_auth check for images to support RSS
  * Export functionality
- * Delete user flow for deleting authors with live posts
 
 ## Reader
  * https://selfoss.aditu.de/ - FOSS, self-hosted
