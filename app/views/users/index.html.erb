@@ -32,7 +32,7 @@
             method: :post, class: 'nowrap' %> |
           <%= link_to 'Delete', user_path(user),
             method: :delete, class: 'nowrap',
-            data: { confirm: "Are you sure you want to delete #{user.name} with email: #{user.email}?" } %>
+            data: { confirm: "Are you sure you want to delete #{user.name} with email: #{user.email}?  This will also delete any posts or comments they have made." } %>
         <% end %>
       </td>
     </tr>
