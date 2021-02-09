@@ -17,9 +17,18 @@
     <%= form.check_box :comments %>
     <%= form.label :comments, "Enable Comments on Posts" %>
   </p>
+  <% unless @setting.fonts.empty? %>
+    <p>Fonts:</p>
+    <ul>
+    <% @setting.fonts.each do |font| %>
+      <li><%= font_filename_to_name(font.filename) %></li>
+    <% end %>
+    </ul>
+  <% end %>
+  <p><%= link_to "Modify Custom Fonts", edit_fonts_path %></p>
   <p>
     <%= form.label :css, (link_to "Custom CSS", "/themes", target: "_blank" )%><br>
-    <%= form.text_area :css %>
+    <%= form.text_area :css, :style => 'display:block;width:100%;' %>
   </p>
  
   <p>

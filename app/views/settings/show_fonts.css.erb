@@ -1,0 +1,7 @@
+<% @setting.fonts.each do |font| %>
+<% font_name = font_filename_to_name(font.filename) %>
+@font-face {
+  font-family: '<%= font_name %>';
+  src: url(<%= rails_blob_path font %>);
+}
+<% end %>

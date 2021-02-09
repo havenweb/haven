@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_13_164806) do
+ActiveRecord::Schema.define(version: 2021_02_11_175433) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_164806) do
     t.string "css_hash"
     t.boolean "byline", default: false
     t.boolean "comments", default: false
+    t.string "font_hash"
   end
 
   create_table "users", force: :cascade do |t|

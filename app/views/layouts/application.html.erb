@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<% @settings = SettingsController.get_setting %>
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +10,12 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <link rel="stylesheet" type="text/css" href="/css/<%=SettingsController.get_setting.css_hash%>/style.css">
+    <% if !!@settings and !!@settings.font_hash %>
+      <link rel="stylesheet" type="text/css" href="/css/<%= @settings.font_hash %>/fonts.css" />
+    <% end %>
+    <% if !!@settings and !!@settings.css_hash %>
+      <link rel="stylesheet" type="text/css" href="/css/<%= @settings.css_hash %>/style.css" />
+    <% end %>
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
 

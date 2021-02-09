@@ -26,6 +26,11 @@ Rails.application.routes.draw do
   patch 'settings', to: 'settings#update'
   post 'settings/edit', to: 'settings#update'
   get 'css/:hash/style.css', to: 'settings#style'
+  get 'css/:hash/fonts.css', to: 'settings#show_fonts'
+
+  get 'settings/font', to: 'settings#edit_fonts', as: "edit_fonts"
+  post 'settings/font', to: 'settings#create_font', as: "create_font"
+  delete 'settings/font/:font_id', to: 'settings#destroy_font', as: "destroy_font"
 
   get 'import_posts', to: 'posts#new_import'
   post 'import_posts', to: 'posts#import'

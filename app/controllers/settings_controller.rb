@@ -1,6 +1,6 @@
 class SettingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :verify_admin, except:[:style]
+  before_action :verify_admin, except:[:style, :show_fonts]
 
   IMPORTANT_PREFIX = 
 <<-HEREDOC
@@ -42,6 +42,31 @@ HEREDOC
     redirect_to posts_path
   end
 
+  # Used to generate a CSS file that defines the fonts
+  def show_fonts
+    @setting = SettingsController.get_setting
+  end
+
+  def edit_fonts
+    @setting = SettingsController.get_setting
+  end
+
+  def create_font
+    @setting = SettingsController.get_setting
+    @setting.fonts.attach params[:font]
+    @setting.save!
+    set_font_hash
+    redirect_to edit_fonts_path
+  end
+
+  def destroy_font
+    @setting = SettingsController.get_setting
+    @setting.fonts.find(params[:font_id]).purge
+    @setting.save!
+    set_font_hash
+    redirect_to edit_fonts_path
+  end
+
   def style
     @setting = SettingsController.get_setting
   end
@@ -58,4 +83,11 @@ HEREDOC
   def setting_params
     params.require(:setting).permit(:title, :subtitle, :author, :css, :byline, :comments)
   end
+
+  def set_font_hash
+    setting = SettingsController.get_setting
+    setting.font_hash = setting.fonts.hash.to_s
+    setting.save!
+  end 
+
 end
