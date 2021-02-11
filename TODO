@@ -1,4 +1,5 @@
 # Next Steps
+ * Enable custom fonts
  * During deploy, wait until instance_profile_exists: https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IAM/Client.html#wait_until-instance_method
  * Load a backup (and respect version) if present on deployment
  * Use Devise Lockable to block brute-force password attempts
