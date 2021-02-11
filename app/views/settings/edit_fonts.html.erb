@@ -1,19 +1,5 @@
 <h1>Custom Fonts</h1>
-<% if @setting.fonts.empty? %>
-<p>You have no custom fonts</p>
-<% else %>
-  <ul>
-  <% @setting.fonts.each do |font| %>
-    <li><%= font_filename_to_name(font.filename) %>
-        <%= link_to "(Delete)",
-              destroy_font_path(font),
-              method: :delete,
-              data: { confirm: 'Are you sure?'} %>
-    </li>
-  <% end %>
-  </ul>
-<% end %>
-
+<%= render "fonts", setting: @setting, allow_remove: true %>
 <%= form_tag(create_font_path, method: "post", multipart: true) do %>
   <%= file_field_tag 'font', accept: ".ttf,.otf,.woff,.woff2" %>
   <%= submit_tag "Upload Font" %>

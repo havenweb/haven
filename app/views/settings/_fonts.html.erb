@@ -1,0 +1,17 @@
+<% if setting.fonts.empty? %>
+<ul><li>You have no custom fonts</li></ul>
+<% else %>
+  <ul>
+  <% setting.fonts.each do |font| %>
+    <% fontname = font_filename_to_name(font.filename) %>
+    <li><span style="font-family:<%=fontname%>"><%= fontname %></span>
+      <% if allow_remove %>
+        <%= link_to "(Delete)",
+              destroy_font_path(font),
+              method: :delete,
+              data: { confirm: 'Are you sure?'} %>
+      <% end %>
+    </li>
+  <% end %>
+  </ul>
+<% end %>
