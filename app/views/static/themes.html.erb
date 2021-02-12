@@ -1,26 +1,51 @@
 <h1>CSS and Themes</h1>
-CSS is the way websites control the format and style of their content.  Your blog allows you to add custom CSS code to change how it looks.  Here are a few themes you can use that demonstrate how to change colors and fonts.
+<p>CSS is the way websites control the format and style of their content.  Your blog allows you to add custom CSS code to change how it looks.  Here are a few themes you can use that demonstrate how to change colors and fonts.
 
 <h2>Default</h2>
-This theme represents the default colors used in your blog.  You can use it as a starting point to change some of the colors on your blog.
+<img src="/img/default.png" alt="Dark mode preview" width="360px" style="border: 5px solid #555" />
+<p>This theme represents the default colors used in your blog.  You can use it as a starting point to change some of the colors on your blog.  Each line defines a CSS variable for a color in hex notation.
 
 <pre>
 :root {
-    --nc-tx-1: #0d0d0d;
-    --nc-tx-2: #333333;
-    --nc-bg-1: #FFFFFF;
-    --nc-bg-2: #F6F8FA;
-    --nc-bg-3: #E5E7EB;
-    --nc-lk-1: #0070F3;
-    --nc-lk-2: #0366D6;
-    --nc-lk-tx: #FFFFFF;
-    --nc-ac-1: #b3d8ff;
-    --nc-ac-tx: #0C4047;
+    --nc-tx-1: #0d0d0d;  /* Header and bold text */
+    --nc-tx-2: #333333;  /* Text */
+    --nc-bg-1: #FFFFFF;  /* Main body background */
+    --nc-bg-2: #F6F8FA;  /* Header and text-box background */
+    --nc-bg-3: #E5E7EB;  /* Accent background */
+    --nc-lk-1: #0070F3;  /* Links and buttons */
+    --nc-lk-2: #0366D6;  /* Link hover */
+    --nc-lk-tx: #FFFFFF; /* Text on buttons */
+    --nc-ac-1: #b3d8ff;  /* Selection background */
+    --nc-ac-tx: #0C4047; /* Selection text */ 
+}
+</pre>
+
+<h2>Dark Mode</h2>
+<img src="/img/dark.png" alt="Dark mode preview" width="360px" style="border: 5px solid #555" />
+<p>Without any custom CSS, your Haven includes a different color scheme for people who prefer a dark theme and set it on their computer or phone.  If you set the colors with any of the above examples, you'll override the dark mode colors.  To set custom colors for dark mode, you can use the following default dark mode colors as a starting point.
+
+<pre>
+@media screen and (prefers-color-scheme: dark) {
+    :root {
+        --nc-tx-1: #e6e6e6;
+        --nc-tx-2: #cccccc;
+        --nc-bg-1: #1a1a1a;
+        --nc-bg-2: #262626;
+        --nc-bg-3: #333333;
+        --nc-lk-1: #3291FF;
+        --nc-lk-2: #0070F3;
+        --nc-lk-tx: #FFFFFF;
+        --nc-ac-1: #404040;
+        --nc-ac-tx: #FFFFFF;
+        --nc-notice: #0e7708;
+        --nc-alert: #771008;
+    }
 }
 </pre>
 
 <h2>Terminal</h2>
-This theme uses green text on a black background inspired by old computer terminals.
+<img src="/img/terminal.png" alt="Dark mode preview" width="360px" style="border: 5px solid #555" />
+<p>This theme uses green text on a black background inspired by old computer terminals.
 <pre>
 :root {
     --nc-font-sans: monospace;
@@ -38,19 +63,15 @@ This theme uses green text on a black background inspired by old computer termin
 }
 </pre>
 
-<h2>Material</h2>
-This is another dark theme that uses white on a black background.
+<h2>Custom Fonts</h2>
+<img src="/img/lora.png" alt="Dark mode preview" width="360px" style="border: 5px solid #555" />
+<p>This example demonstrates using a custom font.  In order to use a custom font you must first upload your font on the Settings page.  For this example, we're going to use the <a href="https://fonts.google.com/specimen/Lora">Lora</a> font from Google.  Download the <a href="/Lora.ttf">Lora font here</a>.
+
+<p>After uploading the font on the settings page, you will be able to reference it by name.  In this example, we use the Lora font for all headings.  Use the same name for the font as the settings page lists. Do not put the font name in quotes.
+
 <pre>
-:root {
-    --nc-tx-1: #FFFFFF;
-    --nc-tx-2: #B7B7B7;
-    --nc-bg-1: #1E272C;
-    --nc-bg-2: #161d21;
-    --nc-bg-3: #263238;
-    --nc-lk-1: #5E92FF;
-    --nc-lk-2: #528aff;
-    --nc-lk-tx: #FFFFFF;
-    --nc-ac-1: #C3E88D;
-    --nc-ac-tx: #263238;
+h1,h2,h3,h4,h5,h6 {
+  font-family:Lora,serif;
 }
 </pre>
+
