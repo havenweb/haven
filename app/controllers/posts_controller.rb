@@ -6,9 +6,18 @@ class PostsController < ApplicationController
 #  content_security_policy false, only: [:new, :edit]
 
   def index
-    @posts = Post.order(datetime: :desc).page(params[:page])
-    recent_comments = Comment.where('created_at >= ?', 1.week.ago).order(created_at: :desc).to_a
-    recent_likes = Like.where('created_at >= ?', 1.week.ago).order(created_at: :desc).to_a
+    @posts = nil  ## This block important for demo to restrict visibility of posts
+    if (current_user.admin == 1)
+      @posts = Post.order(datetime: :desc).page(params[:page])
+    else
+      @posts = Post.where(["author_id = ?", current_user.id])
+          .order(datetime: :desc).page(params[:page])
+    end
+    recent_comments = Comment.where('created_at >= ? AND author_id = ?',
+          1.week.ago, current_user.id).order(created_at: :desc).to_a
+    recent_likes = Like.where('created_at >= ? AND user_id = ?',
+          1.week.ago, current_user.id).order(created_at: :desc).to_a
+      ## End of demo-specific content
     @recent_comments_and_likes = []
     while recent_comments.size > 0 or recent_likes.size > 0
       if recent_comments.size == 0
@@ -35,6 +44,8 @@ class PostsController < ApplicationController
       basic_auth_user = basic_auth_creds.split(":").first
       @user = User.find_by(basic_auth_username: basic_auth_user)
       @posts = Post.order(datetime: :desc).page(1)
+      @posts = Post.where(["author_id = ?", @user.id])
+          .order(datetime: :desc).page(params[:page])
       @settings = SettingsController.get_setting
       render layout: false
     end
@@ -42,6 +53,10 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    ## For Demo, only allow people to view their own posts
+    unless (current_user.admin == 1)  or (@post.author == current_user)
+      redirect_to root_path
+    end
     @settings = SettingsController.get_setting
     @css = true
   end
