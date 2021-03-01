@@ -1,0 +1,136 @@
+class Wordlist
+@@digits = %w(0 1 2 3 4 5 6 7 8 9)
+@@words = %w(
+amber
+amethyst
+apricot
+aqua
+aquamarine
+auburn
+azure
+beige
+black
+blue
+bronze
+brown
+buff
+cardinal
+carmine
+celadon
+cerise
+cerulean
+charcoal
+chartreuse
+chocolate
+cinnamon
+color
+complementary
+copper
+coral
+cream
+crimson
+cyan
+dark
+denim
+desert
+ebony
+ecru
+eggplant
+emerald
+forest
+fuchsia
+gold
+goldenrod
+gray
+green
+grey
+hue
+indigo
+ivory
+jade
+jet
+jungle
+khaki
+lavender
+lemon
+light
+lilac
+lime
+magenta
+mahogany
+maroon
+mauve
+mustard
+navy
+ocher
+olive
+orange
+orchid
+pale
+pastel
+peach
+periwinkle
+persimmon
+pewter
+pink
+primary
+puce
+pumpkin
+purple
+rainbow
+red
+rose
+ruby
+russet
+rust
+saffron
+salmon
+sapphire
+scarlet
+sea
+secondary
+sepia
+shade
+shamrock
+sienna
+silver
+slate
+spectrum
+steel
+tan
+tangerine
+taupe
+teal
+terracotta
+thistle
+tint
+tomato
+topaz
+turquoise
+ultramarine
+umber
+vermilion
+violet
+viridian
+wheat
+white
+wisteria
+yellow
+)
+
+  def self.a_word
+    @@words.sample
+  end
+  
+  def self.two_words
+    "#{@@words.sample}_#{@@words.sample}"
+  end
+
+  def self.word_and_num(size)
+    out = @@words.sample
+    size.times do
+      out << @@digits.sample
+    end
+    out
+  end
+end
