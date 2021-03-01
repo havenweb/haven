@@ -1,6 +1,9 @@
+require 'wordlist'
+
 class UsersController < ApplicationController
-  before_action :authenticate_user!
-  before_action :verify_admin
+  skip_before_action :verify_authenticity_token, only: [:create_demo_user]
+  before_action :authenticate_user!, except: [:create_demo_user]
+  before_action :verify_admin, except: [:create_demo_user]
 
   def index
     @users = User.order(email: :asc)
@@ -8,6 +11,31 @@ class UsersController < ApplicationController
   
   def new
     @user = User.new
+  end
+
+  def create_demo_user
+    @email = params[:email]
+    if @email.nil? || @email.empty?
+      @email = Wordlist.word_and_num(3) + "@example.com"
+    end
+    @password = Devise.friendly_token.first(20)
+    admin = 2 # Publisher
+    unless @email.nil? or (@email=="")
+      @user = User.create!(
+        email: @email,
+        name: "",
+        admin: admin,
+        password: @password,
+        basic_auth_username: Devise.friendly_token.first(10),
+        basic_auth_password: Devise.friendly_token.first(10),
+        image_password: Devise.friendly_token.first(20)
+      )
+      login_link = LoginLink.generate(@user)
+      @token = login_link.token
+      render :show_demo_user
+    else
+      render :demo_no_email
+    end
   end
 
   def create

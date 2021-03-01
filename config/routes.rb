@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  post '/demouser', to: 'users#create_demo_user', as: 'create_demo_user'
+
   get 'indieauth/metadata', to: 'indieauth#metadata', as: "indie_auth_metadata"
   get 'indieauth/authorization', to: 'indieauth#authorization', as: "indie_authorization_endpoint"
   post 'indieauth/authorization', to: 'indieauth#profile', as: "indie_auth_profile"

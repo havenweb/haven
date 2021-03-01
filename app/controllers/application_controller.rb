@@ -49,6 +49,16 @@ class ApplicationController < ActionController::Base
     return Setting.first || Setting.new
   end
 
+  def basic_auth_user
+    basic_auth_header = request.authorization
+    credentials = Base64.decode64(basic_auth_header.split("Basic ").last)
+    basic_auth_user, basic_auth_pass = credentials.split(":")
+    user = User.find_by(basic_auth_username: basic_auth_user)
+    return user
+  rescue
+    return nil
+  end
+
   def check_basic_auth
     basic_auth_header = request.authorization
     if basic_auth_header.nil?
@@ -78,6 +88,8 @@ class ApplicationController < ActionController::Base
     if current_user.admin < 1 # 1 is admin, 2 is publisher
       redirect_to posts_path
     end
+  rescue
+    redirect_to posts_path
   end
 
   protected

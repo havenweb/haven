@@ -10,7 +10,7 @@
   <% end %>
 <% end %>
 
-<% if current_user.admin == 1 && @settings.comments %>
+<% if @settings.comments # for demo, let all users see their activity %>
   <%= render "activity" %>
 <% end %>
 
