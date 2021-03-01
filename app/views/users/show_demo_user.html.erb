@@ -1,0 +1,12 @@
+<h2>Welcome to the Haven Demo!</h2>
+
+<p>Here are your login credentials:</p>
+<hr>
+<strong>Email:</strong> <%= @user.email %><br>
+<strong>Password:</strong> <%= @password %><br>
+<strong>Login Link:</strong> <%= link_to login_link_url(token: @token), login_link_url(token: @token) %><br>
+
+<p>Copy your email and password and use them to <%= link_to "sign in", :root %>, or click the magic login link above.</p>
+
+
+

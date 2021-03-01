@@ -17,8 +17,8 @@ def rel_to_abs(content, link)
     .gsub("<img src=\"/","<img src=\"#{prefix}/")
     .gsub("<source src=\"/","<source src=\"#{prefix}/")
 end
+%>
 
- %>
 <p><%= link_to raw("<button type=\"button\">Manage Feeds</button>"), feeds_path %>
 
 <% if @entries.empty? %>
