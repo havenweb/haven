@@ -26,5 +26,8 @@ module Blog
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+    
+    # see: https://github.com/rails/rails/blob/v5.2.6/actionpack/CHANGELOG.md
+    config.action_controller.urlsafe_csrf_tokens = true
   end
 end
