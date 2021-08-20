@@ -1,0 +1,2 @@
+class Feed < ApplicationRecord
+end
