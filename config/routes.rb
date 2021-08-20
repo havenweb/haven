@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :feeds, only: [:index, :create, :destroy]
+
   get 'login_links/validate'
   get 'markdown', to: 'static#markdown'
   get 'themes', to: 'static#themes'
