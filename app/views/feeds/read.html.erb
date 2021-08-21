@@ -1,0 +1,9 @@
+<% safe_tags = %w(h1 h2 h3 h4 h5 h6 img figure a p span div pre code hr mark section main em i strong b blockquote cite del ul ol li table thead tbody tr th td br sup sub abbr) 
+safe_attr = %w(href src srcset sizes alt title id width height max-width max-height border object-fit style aspect-ratio) %>
+
+<% @entries.each do |entry| %>
+<h1><a href="<%= entry[FeedsController::ENTRY_LINK] %>"><%= entry[FeedsController::ENTRY_TITLE] %></a></h1>
+<p><strong><%= entry[FeedsController::FEED_TITLE] %></strong> <%= entry[FeedsController::ENTRY_DATE].strftime("%B %e, %Y") %></p>
+<%= sanitize(raw(entry[FeedsController::ENTRY_CONTENT]), tags: safe_tags, attributes: safe_attr) %>
+<hr>
+<% end %>
