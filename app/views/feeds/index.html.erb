@@ -1,3 +1,7 @@
+<% error_mark = "&#10060;"
+   warning_mark = "&#9888;"
+   success_mark = "&#10003;" %>
+
 <h1>Manage Feeds</h1>
 
 <%= form_for @new_feed, url: {action: "create"} do |f| %>
@@ -8,15 +12,23 @@
 <hr>
 <table>
   <tr>
+    <th></th>
     <th>Name</th>
     <th>Url</th>
     <th></th>
   </tr>
 <% @feeds.each do |feed| %>
   <tr>
-    <td><%= feed.name %></td>
-    <td><%= feed.url %></td>
-    <td><%= link_to 'Delete', feed_path(feed), 
+   <% if feed.last_update %>
+    <td><p title="Last Update: <%= distance_of_time_in_words(feed.last_update, DateTime.now) %> ago.">
+   <% else %>
+    <td><p title="Last Update: Never">
+   <% end %>
+      <%= raw(feed.fetch_succeeded? ? success_mark : feed.fetch_failed? ? warning_mark : error_mark) %>
+    </td>
+    <td><p><%= feed.name %></td>
+    <td><p><%= feed.url %></td>
+    <td><p><%= link_to 'Delete', feed_path(feed), 
             method: :delete,
             data: { confirm: "Are you sure you want to delete #{feed.name} with url #{feed.url}?" } %></td>
   </tr>

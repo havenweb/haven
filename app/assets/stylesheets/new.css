@@ -394,6 +394,9 @@ table {
 	border-collapse: collapse;
 	width: 100%
 }
+table p:last-child {
+	margin-bottom: 0;
+}
 
 td,
 th {

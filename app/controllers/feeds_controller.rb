@@ -6,6 +6,10 @@ class FeedsController < ApplicationController
   ENTRY_LINK = "link"
   ENTRY_DATE = "date"
   ENTRY_CONTENT = "content"  
+  ENTRY_GUID = "guid"
+
+  ERROR_UNKNOWN = "Unknown Feed Type (not RSS or Atom)"
+  ERROR_INVALID = "Invalid Feed"
 
   def index
     @feeds = Feed.all
@@ -18,6 +22,11 @@ class FeedsController < ApplicationController
     feed = Feed.new
     feed.url = feed_url
     feed.name = feed_name
+    if ([ERROR_UNKNOWN, ERROR_INVALID].include? feed_name)
+      feed.status = "feed_invalid"
+    else
+      feed.status = "fetch_succeeded"
+    end
     feed.save
     flash[:notice] = "You've added #{feed_url} to your Feeds"
     redirect_to :feeds
@@ -31,14 +40,39 @@ class FeedsController < ApplicationController
 
   # fetch content from feeds for reading
   def read
-    @entries = []
-    Feed.all.each do |feed|
-      @entries.concat fetch_feed_content(feed.url)
-    end
-    @entries = @entries.sort_by{ |e| e[ENTRY_DATE] }.reverse
+    update_feeds
+    @entries = FeedEntry.all.sort_by{|e| e.published}.reverse
   end
 
   private
+
+  def update_feeds
+    Feed.find_each do |feed|
+      entries = []
+      begin
+        entries = fetch_feed_content(feed.url)
+        feed.fetch_succeeded!
+        feed.last_update = DateTime.now
+        feed.save
+      rescue
+        feed.fetch_failed!
+      end
+      entries.each do |entry|
+        matching_entry = feed.feed_entries.find_by(guid: entry[ENTRY_GUID])
+        title = entry[ENTRY_TITLE]
+        link = entry[ENTRY_LINK]
+        published = entry[ENTRY_DATE]
+        content = entry[ENTRY_CONTENT]
+        guid = entry[ENTRY_GUID] 
+        record_data = {title: title, link: link, published: published, content: content, guid: guid}
+        if matching_entry.nil?
+          feed.feed_entries.create(record_data)
+        else
+          matching_entry.update(record_data)
+        end
+      end
+    end
+  end
 
   def parse_auth(full_url)
     scheme, rest = full_url.split("://",2)
@@ -84,6 +118,7 @@ class FeedsController < ApplicationController
           entry[ENTRY_DATE] = item.date
           entry[ENTRY_CONTENT] = item.description
           entry[ENTRY_CONTENT] = item.content_encoded if item.content_encoded
+          entry[ENTRY_GUID] = item.guid.content
           entries << entry
         end
       elsif (feed.feed_type == "atom")
@@ -94,6 +129,7 @@ class FeedsController < ApplicationController
           entry[ENTRY_LINK] = item.link.href
           entry[ENTRY_DATE] = item.published
           entry[ENTRY_CONTENT] = item.content.to_s
+          entry[ENTRY_GUID] = item.id
           entries << entry
         end
       end
