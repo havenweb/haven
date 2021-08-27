@@ -6,12 +6,21 @@ class FeedsController < ApplicationController
   end
 
   def create
-    feed_url = params[:feed][:url]
-    feed = Feed.new
-    feed.url = feed_url
-    feed.save
-    UpdateFeedJob.perform_now(feed)
-    flash[:notice] = "You've added #{feed_url} to your Feeds"
+    feed_url = params[:feed][:url].strip
+    feed_url_host = URI(feed_url).host
+    request_host = URI(request.base_url).host
+    matching_feed = Feed.find_by(url: feed_url)
+    if (feed_url_host == request_host)
+      flash[:alert] = "You cannot subscribe to yourself"
+    elsif matching_feed.nil?
+      feed = Feed.new
+      feed.url = feed_url
+      feed.save
+      UpdateFeedJob.perform_now(feed)
+      flash[:notice] = "You've added #{feed_url} to your Feeds"
+    else # feed already exists
+      flash[:notice] = "You are already subscribed to #{feed_url}"
+    end
     redirect_to :feeds
   end
 
@@ -26,4 +35,5 @@ class FeedsController < ApplicationController
     UpdateFeedJob.perform_later
     @entries = FeedEntry.order(published: :desc).page params[:page]
   end
+
 end
