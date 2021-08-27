@@ -124,17 +124,16 @@ class UpdateFeedJob < ApplicationJob
     entries
   end
 
-  ## TODO: This also exists in app/controllers/feeds_controller.rb
   def parse_auth(full_url)
     scheme, rest = full_url.split("://",2)
-    opts = {}
     if (rest.include?(":") and rest.include?("@")) # scheme://user:pass@url...
+      opts = {}
       user, rest = rest.split(":",2)
       pass, rest = rest.split("@",2)
       opts[:http_basic_authentication] = [user,pass]
       return ["#{scheme}://#{rest}", opts]
     else
-      return [full_url, opts]
+      return [full_url, {}]
     end
   end
 end
