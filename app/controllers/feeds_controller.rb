@@ -1,16 +1,5 @@
 class FeedsController < ApplicationController
 
-  # Constants for feed entry keys
-  ENTRY_TITLE = "title"
-  FEED_TITLE = "feed"
-  ENTRY_LINK = "link"
-  ENTRY_DATE = "date"
-  ENTRY_CONTENT = "content"  
-  ENTRY_GUID = "guid"
-
-  ERROR_UNKNOWN = "Unknown Feed Type (not RSS or Atom)"
-  ERROR_INVALID = "Invalid Feed"
-
   def index
     @feeds = Feed.all
     @new_feed = Feed.new # for the creation form
@@ -18,16 +7,10 @@ class FeedsController < ApplicationController
 
   def create
     feed_url = params[:feed][:url]
-    feed_name = fetch_feed_title(feed_url)
     feed = Feed.new
     feed.url = feed_url
-    feed.name = feed_name
-    if ([ERROR_UNKNOWN, ERROR_INVALID].include? feed_name)
-      feed.status = "feed_invalid"
-    else
-      feed.status = "fetch_succeeded"
-    end
     feed.save
+    UpdateFeedJob.perform_now(feed)
     flash[:notice] = "You've added #{feed_url} to your Feeds"
     redirect_to :feeds
   end
@@ -40,100 +23,7 @@ class FeedsController < ApplicationController
 
   # fetch content from feeds for reading
   def read
-    update_feeds
+    UpdateFeedJob.perform_later
     @entries = FeedEntry.all.sort_by{|e| e.published}.reverse
-  end
-
-  private
-
-  def update_feeds
-    Feed.find_each do |feed|
-      entries = []
-      begin
-        entries = fetch_feed_content(feed.url)
-        feed.fetch_succeeded!
-        feed.last_update = DateTime.now
-        feed.save
-      rescue
-        feed.fetch_failed!
-      end
-      entries.each do |entry|
-        matching_entry = feed.feed_entries.find_by(guid: entry[ENTRY_GUID])
-        title = entry[ENTRY_TITLE]
-        link = entry[ENTRY_LINK]
-        published = entry[ENTRY_DATE]
-        content = entry[ENTRY_CONTENT]
-        guid = entry[ENTRY_GUID] 
-        record_data = {title: title, link: link, published: published, content: content, guid: guid}
-        if matching_entry.nil?
-          feed.feed_entries.create(record_data)
-        else
-          matching_entry.update(record_data)
-        end
-      end
-    end
-  end
-
-  def parse_auth(full_url)
-    scheme, rest = full_url.split("://",2)
-    opts = {}
-    if (rest.include?(":") and rest.include?("@")) # scheme://user:pass@url...
-      user, rest = rest.split(":",2)
-      pass, rest = rest.split("@",2)
-      opts[:http_basic_authentication] = [user,pass]
-      return ["#{scheme}://#{rest}", opts]
-    else
-      return [full_url, opts]
-    end
-  end
-
-  def fetch_feed_title(feed_url)
-    cleanurl, auth_opts = parse_auth(feed_url)
-    open(cleanurl, auth_opts) do |rss|
-      feed = RSS::Parser.parse(rss)
-      if (feed.feed_type == "rss")
-        return feed.channel.title
-      elsif (feed.feed_type == "atom")
-        return feed.title.content
-      else
-        return "Unknown Feed Type (not RSS or Atom)"
-      end
-    end
-  rescue => e
-    STDERR.puts e.message
-    return "Invalid Feed"
-  end
-
-  def fetch_feed_content(feed_url)
-    entries = []
-    cleanurl, auth_opts = parse_auth(feed_url)
-    open(cleanurl, auth_opts) do |rss|
-      feed = RSS::Parser.parse(rss)
-      if (feed.feed_type == "rss")
-        feed.items.each do |item|
-          entry = {}
-          entry[FEED_TITLE] = feed.channel.title
-          entry[ENTRY_TITLE] = item.title
-          entry[ENTRY_LINK] = item.link
-          entry[ENTRY_DATE] = item.date
-          entry[ENTRY_CONTENT] = item.description
-          entry[ENTRY_CONTENT] = item.content_encoded if item.content_encoded
-          entry[ENTRY_GUID] = item.guid.content
-          entries << entry
-        end
-      elsif (feed.feed_type == "atom")
-        feed.entries.each do |item|
-          entry = {}
-          entry[FEED_TITLE] = feed.title.content
-          entry[ENTRY_TITLE] = item.title.content
-          entry[ENTRY_LINK] = item.link.href
-          entry[ENTRY_DATE] = item.published
-          entry[ENTRY_CONTENT] = item.content.to_s
-          entry[ENTRY_GUID] = item.id
-          entries << entry
-        end
-      end
-    end
-    entries
   end
 end
