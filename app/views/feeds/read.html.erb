@@ -7,3 +7,4 @@ safe_attr = %w(href src srcset sizes alt title id width border object-fit aspect
 <%= sanitize(raw(entry.content), tags: safe_tags, attributes: safe_attr) %>
 <hr>
 <% end %>
+<%= paginate @entries %>

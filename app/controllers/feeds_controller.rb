@@ -24,6 +24,6 @@ class FeedsController < ApplicationController
   # fetch content from feeds for reading
   def read
     UpdateFeedJob.perform_later
-    @entries = FeedEntry.all.sort_by{|e| e.published}.reverse
+    @entries = FeedEntry.order(published: :desc).page params[:page]
   end
 end
