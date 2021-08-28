@@ -30,7 +30,7 @@
     <% end %>
     <br/><%= comment.body %><br/>
   <% end %>
-  <br/>
+  <br<%= show_page ? raw(' id="comment_form"') : "" %>/>
   <%= form_tag("/posts/#{post.id}/comments", method: "post") do %>
     <%= text_field_tag(:comment_body, nil, {placeholder: "Write a comment..."}) %>
     <%= submit_tag("Post Comment") %>
