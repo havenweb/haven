@@ -10,7 +10,7 @@
 <% end %>
 
 <% @posts.each do |post| %>
-  <%= render "posts", post: post  %>
+  <%= render "posts", post: post, show_page: false %>
   <hr>
 <% end %>
 <%= paginate @posts %>
