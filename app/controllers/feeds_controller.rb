@@ -9,6 +9,9 @@ class FeedsController < ApplicationController
 
   def create
     feed_url = params[:feed][:url].strip
+    unless (feed_url.start_with? "http")
+      feed_url = "https://" + feed_url
+    end
     feed_url_host = URI(feed_url).host
     request_host = URI(request.base_url).host
     matching_feed = Feed.find_by(url: feed_url)
