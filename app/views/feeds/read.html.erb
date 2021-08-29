@@ -2,6 +2,10 @@
 safe_attr = %w(href src srcset sizes alt title id width border object-fit aspect-ratio) %>
 <p><%= link_to raw("<button type=\"button\">Manage Feeds</button>"), feeds_path %>
 
+<% if @entries.empty? %>
+  <p>You haven't added any RSS or Atom feeds.  Click the Manage Feeds button above to add your first feed.
+<% end %>
+
 <% @entries.each do |entry| %>
 <h1><a href="<%= entry.link %>"><%= entry.title %></a></h1>
 <p><strong><%= entry.feed.name %></strong> <%= entry.published.strftime("%B %e, %Y") %></p>

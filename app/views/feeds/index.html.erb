@@ -9,6 +9,7 @@
   <%= f.submit "Add New Feed" %>
 <% end %>
 
+<% if @feeds.size > 0 %>
 <hr>
 <table>
   <tr>
@@ -32,4 +33,7 @@
             method: :delete,
             data: { confirm: "Are you sure you want to delete #{feed.name} with url #{feed.url}?" } %></td>
   </tr>
+<% end %>
+<% else # no feeds added yet %>
+<p>Add your first feed by pasting it into the form above and clicking the Add New Feed button.</p>
 <% end %>
