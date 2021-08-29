@@ -1,4 +1,6 @@
-
+<% if current_user.admin >= 1 %>
+<p><%= link_to raw("<button type=\"button\">New Post</button>"), new_post_path %>
+<% end %>
 <hr> 
 
 <% if @posts.empty? %>
