@@ -41,4 +41,11 @@ class FeedsController < ApplicationController
     @entries = FeedEntry.order(published: :desc).page params[:page]
   end
 
+  def read_feed
+    @feed = Feed.find(params[:id])
+    UpdateFeedJob.perform_later(@feed)
+    @entries = @feed.feed_entries.order(published: :desc).page params[:page]
+    render :read
+  end
+
 end

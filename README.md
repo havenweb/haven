@@ -1,6 +1,6 @@
 # Haven
 
-[Haven](https://havenweb.org) is a private blog application built with Ruby on Rails. Write what you want, create accounts for people you want to share with.  The following are some motivating philosophies:
+[Haven](https://havenweb.org) is a private blog application built with Ruby on Rails. Write what you want, create accounts for people you want to share with, keep up with each other using built-in RSS  The following are some motivating philosophies:
 
 * Open-source. MIT License
 * Privacy-first.  This is for sharing with friends and family, not commercial endevors.  If you want a blog for your company, you probably want to use WordPress instead

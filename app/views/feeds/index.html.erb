@@ -27,7 +27,7 @@
    <% end %>
       <%= raw(feed.fetch_succeeded? ? success_mark : feed.fetch_failed? ? warning_mark : error_mark) %>
     </td>
-    <td><p><%= feed.name %></td>
+    <td><p><%= link_to feed.name, read_feed_path(feed) %></td>
     <td><p><%= feed.url %></td>
     <td><p><%= link_to 'Delete', feed_path(feed), 
             method: :delete,

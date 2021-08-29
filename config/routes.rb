@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resources :feeds, only: [:index, :create, :destroy]
   get 'read', to: 'feeds#read'
+  get 'read/:id', to: 'feeds#read_feed', as: 'read_feed'
 
   get 'login_links/validate'
   get 'markdown', to: 'static#markdown'
