@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_25_230143) do
+ActiveRecord::Schema.define(version: 2021_08_30_223255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(version: 2021_08_25_230143) do
     t.datetime "updated_at", null: false
     t.datetime "last_update"
     t.integer "status", default: 0
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_feeds_on_user_id"
   end
 
   create_table "images", force: :cascade do |t|
@@ -125,6 +127,7 @@ ActiveRecord::Schema.define(version: 2021_08_25_230143) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users", column: "author_id"
   add_foreign_key "feed_entries", "feeds"
+  add_foreign_key "feeds", "users"
   add_foreign_key "login_links", "users"
   add_foreign_key "posts", "users", column: "author_id"
 end

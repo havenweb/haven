@@ -3,7 +3,7 @@ class FeedsController < ApplicationController
   before_action :verify_admin
 
   def index
-    @feeds = Feed.all
+    @feeds = current_user.feeds
     @new_feed = Feed.new # for the creation form
   end
 
@@ -14,13 +14,11 @@ class FeedsController < ApplicationController
     end
     feed_url_host = URI(feed_url).host
     request_host = URI(request.base_url).host
-    matching_feed = Feed.find_by(url: feed_url)
+    matching_feed = Feed.find_by(url: feed_url, user: current_user)
     if (feed_url_host == request_host)
       flash[:alert] = "You cannot subscribe to yourself"
     elsif matching_feed.nil?
-      feed = Feed.new
-      feed.url = feed_url
-      feed.save
+      feed = current_user.feeds.create!(url: feed_url)
       UpdateFeedJob.perform_now(feed)
       flash[:notice] = "You've added #{feed_url} to your Feeds"
     else # feed already exists
@@ -31,21 +29,31 @@ class FeedsController < ApplicationController
 
   def destroy
     @feed = Feed.find(params[:id])
-    @feed.destroy!
+    if ( (!@feed.nil?) and (current_user == @feed.user) )
+      @feed.destroy!
+    else
+      flash[:alert] = "You cannot do that"
+    end
     redirect_to :feeds
   end
 
   # fetch content from feeds for reading
   def read
     UpdateFeedJob.perform_later
-    @entries = FeedEntry.order(published: :desc).page params[:page]
+    @entries = current_user.feed_entries.order(published: :desc).page params[:page]
   end
 
   def read_feed
     @feed = Feed.find(params[:id])
-    UpdateFeedJob.perform_later(@feed)
-    @entries = @feed.feed_entries.order(published: :desc).page params[:page]
-    render :read
+    @entries=[]
+    if ( (!@feed.nil?) and (current_user == @feed.user) )
+      @entries = @feed.feed_entries.order(published: :desc).page params[:page]
+      UpdateFeedJob.perform_later(@feed)
+      render :read
+    else
+      flash[:alert] = "That does not exist"
+      redirect_to :root
+    end
   end
 
 end

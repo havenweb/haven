@@ -7,6 +7,9 @@ class User < ApplicationRecord
   has_many :comments, foreign_key: :author_id, dependent: :destroy
   has_many :login_links, dependent: :destroy
 
+  has_many :feeds, dependent: :destroy
+  has_many :feed_entries, through: :feeds
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
