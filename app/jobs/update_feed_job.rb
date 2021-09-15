@@ -46,35 +46,37 @@ class UpdateFeedJob < ApplicationJob
 
     # fetch feed content
     return unless feed.last_update.nil? or feed.last_update < 10.minutes.ago
-    entries = []
-    begin
-      entries = fetch_feed_content(feed.url)
+    feed.with_lock do
+      entries = []
+      begin
+        entries = fetch_feed_content(feed.url)
+        feed.fetch_succeeded!
+        feed.last_update = DateTime.now
+        feed.save
+      rescue
+        feed.fetch_failed!
+      end
+      entries.each do |entry|
+        title = entry[ENTRY_TITLE]
+        link = entry[ENTRY_LINK]
+        published = entry[ENTRY_DATE]
+        if published.nil?
+          published = Time.zone.now
+        end
+        content = entry[ENTRY_CONTENT]
+        guid = entry[ENTRY_GUID]
+        matching_entry = feed.feed_entries.find_by(guid: guid)
+        record_data = {title: title, link: link, published: published, content: content, guid: guid}
+        if matching_entry.nil?
+          feed.feed_entries.create(record_data)
+        else
+          matching_entry.update(record_data) #Consider: exclude changes to published?
+        end
+      end
       feed.fetch_succeeded!
       feed.last_update = DateTime.now
       feed.save
-    rescue
-      feed.fetch_failed!
-    end
-    entries.each do |entry|
-      title = entry[ENTRY_TITLE]
-      link = entry[ENTRY_LINK]
-      published = entry[ENTRY_DATE]
-      if published.nil?
-        published = Time.zone.now
-      end
-      content = entry[ENTRY_CONTENT]
-      guid = entry[ENTRY_GUID]
-      matching_entry = feed.feed_entries.find_by(guid: guid)
-      record_data = {title: title, link: link, published: published, content: content, guid: guid}
-      if matching_entry.nil?
-        feed.feed_entries.create(record_data)
-      else
-        matching_entry.update(record_data) #Consider: exclude changes to published?
-      end
-    end
-    feed.fetch_succeeded!
-    feed.last_update = DateTime.now
-    feed.save
+    end # release lock
   end
 
   def fetch_feed_title(feed_url)
