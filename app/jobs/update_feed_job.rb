@@ -117,9 +117,13 @@ class UpdateFeedJob < ApplicationJob
           entry[FEED_TITLE] = feed.title.content
           entry[ENTRY_TITLE] = item.title.content
           entry[ENTRY_LINK] = item.link.href
-          entry[ENTRY_DATE] = item.published
-          entry[ENTRY_CONTENT] = item.content.to_s
-          entry[ENTRY_GUID] = item.id
+          begin
+            entry[ENTRY_DATE] = item.published.content
+          rescue
+            entry[ENTRY_DATE] = item.published
+          end
+          entry[ENTRY_CONTENT] = CGI.unescapeHTML(item.content.to_s)
+          entry[ENTRY_GUID] = item.id.to_s
           entries << entry
         end
       end
