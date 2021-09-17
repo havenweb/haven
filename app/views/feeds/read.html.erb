@@ -1,5 +1,10 @@
-<% safe_tags = %w(h1 h2 h3 h4 h5 h6 img figure a p span div pre code hr mark section main em i strong b blockquote cite del ul ol li table thead tbody tr th td br sup sub abbr style) 
-safe_attr = %w(href src srcset sizes alt title id width border object-fit aspect-ratio) %>
+<% safe_tags = %w(h1 h2 h3 h4 h5 h6 img figure a p span div pre code hr mark section main em i strong b blockquote cite del ul ol li table thead tbody tr th td br sup sub abbr) 
+safe_attr = %w(href src srcset sizes alt title id width border object-fit aspect-ratio) 
+no_style_or_scripts = Loofah::Scrubber.new do |node|
+  if node.name == "style" or node.name == "script"
+    node.remove
+  end
+end %>
 <p><%= link_to raw("<button type=\"button\">Manage Feeds</button>"), feeds_path %>
 
 <% if @entries.empty? %>
@@ -7,9 +12,9 @@ safe_attr = %w(href src srcset sizes alt title id width border object-fit aspect
 <% end %>
 
 <% @entries.each do |entry| %>
-<h1><%= link_to entry.title, entry.link %></h1>
+<h1><%= link_to entry.title, entry.link, rel: "nofollow" %></h1>
 <p><strong><%= entry.feed.name %></strong> <%= entry.published.strftime("%B %e, %Y") %></p>
-<%= sanitize(raw(entry.content), tags: safe_tags, attributes: safe_attr) %>
+<%= sanitize(sanitize(entry.content, scrubber: no_style_or_scripts), tags: safe_tags, attributes: safe_attr) %>
 <hr>
 <% end %>
 <%= paginate @entries %>
