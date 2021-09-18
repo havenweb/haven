@@ -1,5 +1,5 @@
 <% safe_tags = %w(h1 h2 h3 h4 h5 h6 img figure a p span div pre code hr mark section main em i strong b blockquote cite del ul ol li table thead tbody tr th td br sup sub abbr) 
-safe_attr = %w(href src srcset sizes alt title id width border object-fit aspect-ratio) 
+safe_attr = %w(href src srcset sizes alt title id width border object-fit aspect-ratio start) 
 no_style_or_scripts = Loofah::Scrubber.new do |node|
   if node.name == "style" or node.name == "script"
     node.remove
