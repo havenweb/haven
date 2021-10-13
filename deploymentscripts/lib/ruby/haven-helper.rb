@@ -45,6 +45,15 @@ def run_bash_script_remotely(source_path:, source_file:, remote_host:, key_pair_
   `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{remote_host} 'bash -i #{source_file} #{parameter_string}'`
 end
 
+def schedule_feed_fetches(remote_host:, key_pair_name:)
+  scp_file(
+    source_file: "lib/ruby/schedule_fetch.rb",
+    remote_host: remote_host,
+    key_pair_name: key_pair_name)
+
+    `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{remote_host} '/home/ubuntu/.rbenv/shims/ruby schedule_fetch.rb'`
+end
+
 def enable_backups(remote_host:, key_pair_name:, bucket:, region:)
   ## Script that takes the backups
   scp_file(
@@ -91,6 +100,9 @@ def install_haven(key_pair_name:, remote_host:, domain:, email:, user_password:,
 
   ### Schedule automated DB Backups
   enable_backups(remote_host: remote_host, key_pair_name: key_pair_name, bucket: bucket_name, region: region)
+
+  ### Schedule automated fetch for RSS/Atom feed
+  schedule_feed_fetches(remote_host: remote_host, key_pair_name: key_pair_name)
 end
 
 def run_certbot(remote_host:, domain:, key_pair_name:, email:)

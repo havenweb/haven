@@ -12,5 +12,7 @@ minute = (rand*59).to_i.to_s
 
 cron_line = "#{minute} #{hour} * * * /home/ubuntu/.rbenv/shims/ruby take_backup.rb #{bucket} #{region}"
 
-## Assumes nothing else already exists in crontab
-`echo "#{cron_line}" | crontab -`
+## Append to existing crontab
+`crontab -l > /tmp/my.cron`
+`echo "#{cron_line}" >> /tmp/my.cron`
+`crontab < /tmp/my.cron`
