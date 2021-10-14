@@ -40,14 +40,14 @@ class FeedsController < ApplicationController
   # fetch content from feeds for reading
   def read
     UpdateFeedJob.perform_later
-    @entries = current_user.feed_entries.order(published: :desc).page params[:page]
+    @entries = current_user.feed_entries.order(sort_date: :desc).page params[:page]
   end
 
   def read_feed
     @feed = Feed.find(params[:id])
     @entries=[]
     if ( (!@feed.nil?) and (current_user == @feed.user) )
-      @entries = @feed.feed_entries.order(published: :desc).page params[:page]
+      @entries = @feed.feed_entries.order(sort_date: :desc).page params[:page]
       UpdateFeedJob.perform_later(@feed)
       render :read
     else

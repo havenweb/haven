@@ -13,20 +13,25 @@ class UpdateFeedJob < ApplicationJob
   ERROR_INVALID = "Invalid Feed"
 
   def perform(*feeds)
-    if feeds.empty?
+    latest_time = Time.zone.now # latest a new feed_entry can be
+    earliest_time = nil
+    if FeedEntry.count > 0
+      earliest_time = FeedEntry.order(sort_date: :desc).first.sort_date # earliest a new feed_entry can be
+    end
+    if feeds.empty? # updating all feeds, enforce sort_date restrictions
       Feed.find_each do |feed|
-        update_feed(feed)
+        update_feed(feed, earliest_time, latest_time)
       end
-    else
+    else # updating a single feed on creation, allow older sort_dates
       feeds.each do |feed|
-        update_feed(feed)
+        update_feed(feed, nil, latest_time)
       end
     end
   end
 
   private
 
-  def update_feed(feed)
+  def update_feed(feed, earliest_time, latest_time)
     # update feed title if not yet set
     if feed.name.nil?
       begin
@@ -63,14 +68,26 @@ class UpdateFeedJob < ApplicationJob
         if published.nil?
           published = Time.zone.now
         end
+        sort_date = published
+        unless earliest_time.nil?
+          if sort_date < earliest_time
+            sort_date = earliest_time
+          end
+        end
+        unless latest_time.nil?
+          if sort_date > latest_time
+            sort_date = latest_time
+          end
+        end
         content = entry[ENTRY_CONTENT]
         guid = entry[ENTRY_GUID]
         matching_entry = feed.feed_entries.find_by(guid: guid)
-        record_data = {title: title, link: link, published: published, content: content, guid: guid}
+        record_data = {title: title, link: link, published: published, sort_date: sort_date, content: content, guid: guid}
+        update_data = {title: title, link: link, content: content}
         if matching_entry.nil?
           feed.feed_entries.create(record_data)
         else
-          matching_entry.update(record_data) #Consider: exclude changes to published?
+          matching_entry.update(update_data)
         end
       end
       feed.fetch_succeeded!

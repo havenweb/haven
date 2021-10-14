@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_30_223255) do
+ActiveRecord::Schema.define(version: 2021_10_13_212351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,9 +55,11 @@ ActiveRecord::Schema.define(version: 2021_08_30_223255) do
     t.bigint "feed_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "sort_date"
     t.index ["feed_id"], name: "index_feed_entries_on_feed_id"
     t.index ["guid"], name: "index_feed_entries_on_guid"
     t.index ["published"], name: "index_feed_entries_on_published"
+    t.index ["sort_date"], name: "index_feed_entries_on_sort_date"
   end
 
   create_table "feeds", force: :cascade do |t|
