@@ -16,7 +16,12 @@ class UpdateFeedJob < ApplicationJob
     latest_time = Time.zone.now # latest a new feed_entry can be
     earliest_time = nil
     if FeedEntry.count > 0
-      earliest_time = FeedEntry.order(sort_date: :desc).first.sort_date # earliest a new feed_entry can be
+      # some feeds will publish updates late, for example, publishing an entry
+      # on Jan 2 with a date of Jan 1.  To prevent these from getting lost in 
+      # the feed, we keep track of the earliest time an entry can be on each
+      # fetch.  It must be no earlier than one second after the most recent
+      # entry.  This is the sole purpose of the `sort_date` field.
+      earliest_time = FeedEntry.order(sort_date: :desc).first.sort_date + 1
     end
     if feeds.empty? # updating all feeds, enforce sort_date restrictions
       Feed.find_each do |feed|
