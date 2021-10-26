@@ -28,8 +28,8 @@
 Note, this requires a little bit more technical knowledge.  You know know how to flash an SD card and how to use the tools `ssh` and `scp`.  You should also be able to configure your own DNS and port forwarding. We're doing this fully headless, not plugging in a display or mouse/keybord to the Raspberry Pi.
 * Configure your DNS to point to your home IP address.
   * If you're using AWS Route53 for your DNS, this script might be useful: https://github.com/havenweb/r53_dynamic_dns
-* Flash a micro SD card with Raspbian-Lite (Feb 2020)
-  * http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/
+* Flash a micro SD card with Raspberry Pi OS Lite (May 2021)
+  * http://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-05-28/
 * Enable SSH and Wifi: https://raspberrytips.com/raspberry-pi-wifi-setup/
 * Insert the card into the Pi, and turn it on
 * Make sure you can SSH to the Pi, then copy `deploymentscripts/deploy-pi.sh` from this repository to the Pi's home directory
