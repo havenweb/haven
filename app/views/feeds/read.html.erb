@@ -15,6 +15,11 @@ end %>
 <h1><%= link_to entry.title, entry.link, rel: "nofollow" %></h1>
 <p><strong><%= entry.feed.name %></strong> <%= entry.published.strftime("%B %e, %Y") %></p>
 <%= sanitize(sanitize(entry.content, scrubber: no_style_or_scripts), tags: safe_tags, attributes: safe_attr) %>
+<% unless entry.audio.nil? %>
+  <audio controls>
+    <source src="<%= entry.audio %>" type="audio/mpeg">
+  </audio> 
+<% end %>
 <hr>
 <% end %>
 <%= paginate @entries %>

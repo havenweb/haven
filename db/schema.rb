@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_13_212351) do
+ActiveRecord::Schema.define(version: 2021_10_30_133754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 2021_10_13_212351) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "sort_date"
+    t.string "audio"
     t.index ["feed_id"], name: "index_feed_entries_on_feed_id"
     t.index ["guid"], name: "index_feed_entries_on_guid"
     t.index ["published"], name: "index_feed_entries_on_published"

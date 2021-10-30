@@ -8,6 +8,7 @@ class UpdateFeedJob < ApplicationJob
   ENTRY_DATE = "date"
   ENTRY_CONTENT = "content"
   ENTRY_GUID = "guid"
+  ENTRY_AUDIO = "audio"
 
   ERROR_UNKNOWN = "Unknown Feed Type (not RSS or Atom)"
   ERROR_INVALID = "Invalid Feed"
@@ -86,9 +87,10 @@ class UpdateFeedJob < ApplicationJob
         end
         content = entry[ENTRY_CONTENT]
         guid = entry[ENTRY_GUID]
+        audio = entry[ENTRY_AUDIO]
         matching_entry = feed.feed_entries.find_by(guid: guid)
-        record_data = {title: title, link: link, published: published, sort_date: sort_date, content: content, guid: guid}
-        update_data = {title: title, link: link, content: content}
+        record_data = {title: title, link: link, published: published, sort_date: sort_date, content: content, audio: audio, guid: guid}
+        update_data = {title: title, link: link, audio: audio, content: content}
         if matching_entry.nil?
           feed.feed_entries.create(record_data)
         else
@@ -133,6 +135,11 @@ class UpdateFeedJob < ApplicationJob
           entry[ENTRY_CONTENT] = item.description
           entry[ENTRY_CONTENT] = item.content_encoded if item.content_encoded
           entry[ENTRY_GUID] = item.guid.content
+          if item.enclosure && item.enclosure.type == "audio/mpeg"
+            entry[ENTRY_AUDIO] = item.enclosure.url
+          else
+            entry[ENTRY_AUDIO] = nil
+          end
           entries << entry
         end
       elsif (feed.feed_type == "atom")
@@ -148,6 +155,7 @@ class UpdateFeedJob < ApplicationJob
           end
           entry[ENTRY_CONTENT] = CGI.unescapeHTML(item.content.to_s)
           entry[ENTRY_GUID] = item.id.to_s
+          entry[ENTRY_AUDIO] = nil # TODO podcast support for Atom feeds
           entries << entry
         end
       end
