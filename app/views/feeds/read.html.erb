@@ -12,7 +12,7 @@ end %>
 <% end %>
 
 <% @entries.each do |entry| %>
-<h1><%= link_to entry.title, entry.link, rel: "nofollow" %></h1>
+<h1><%= link_to sanitize(entry.title, tags:[], attributes:[]), entry.link, rel: "nofollow" %></h1>
 <p><strong><%= entry.feed.name %></strong> <%= entry.published.strftime("%B %e, %Y") %></p>
 <%= sanitize(sanitize(entry.content, scrubber: no_style_or_scripts), tags: safe_tags, attributes: safe_attr) %>
 <% unless entry.audio.nil? %>
