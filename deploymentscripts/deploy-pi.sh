@@ -49,7 +49,7 @@ cd /home/pi
 sudo git clone https://github.com/havenweb/haven.git
 sudo chown pi -R haven
 cd haven
-git checkout armv6l #TODO, check uname -m
+git checkout $(uname -m)
 bundle config build.bcrypt --use-system-libraries
 bundle install --deployment --without development test
 
