@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+
+./bin/rails db:create
+./bin/rails db:migrate
+
+/home/pi/haven/bin/rails s -e production -p 3000
