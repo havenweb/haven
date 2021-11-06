@@ -8,9 +8,16 @@
 ## * SSH to pi, username: pi, password: raspberry
 ## * copy this script to the pi's home directory and execute it there
 
+die () {
+    echo >&2 "$@"
+    exit 1
+}
+
+[ "$#" -eq 2 ] || die "Specify domain as first parameter, and email (in quotes) as second parameter"
+
+
 DOMAIN=$1
 EMAIL=$2
-
 sudo apt-get update
 sudo apt-get upgrade -y
 sudo apt-get install -y autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm-dev git libgdbm6 libreadline-dev bcrypt
@@ -49,7 +56,7 @@ cd /home/pi
 sudo git clone https://github.com/havenweb/haven.git
 sudo chown pi -R haven
 cd haven
-git checkout $(uname -m)
+git checkout local
 bundle config build.bcrypt --use-system-libraries
 bundle install --deployment --without development test
 
