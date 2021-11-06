@@ -9,9 +9,11 @@ gem 'dotenv-rails', '2.7.5'
 # For parsing markdown
 gem 'commonmarker', '~> 0.20'
 
+# For validating CSS
+gem 'sassc', '~> 2.4.0'
+
 # For making user stylesheet !important
-gem 'less', '~> 2.6.0'
-gem 'therubyracer', '~> 0.12.3' #undeclared dependency of less
+gem 'css_parser', '~> 1.10.0'
 
 gem 'rb-readline'
 

@@ -2,21 +2,6 @@ class SettingsController < ApplicationController
   before_action :authenticate_user!
   before_action :verify_admin, except:[:style, :show_fonts]
 
-  IMPORTANT_PREFIX = 
-<<-HEREDOC
-#csscontent()
-  {
-HEREDOC
-
-  IMPORTANT_SUFFIX = 
-<<-HEREDOC   
-  }
-
-& {
-  #csscontent() !important
-}
-HEREDOC
-
   def show
     @setting = SettingsController.get_setting
   end
@@ -27,19 +12,31 @@ HEREDOC
 
   def update
     @setting = SettingsController.get_setting
-    less = IMPORTANT_PREFIX + setting_params[:css] + IMPORTANT_SUFFIX
-    less_parser = Less::Parser.new
-    begin
-      compiled_css = less_parser.parse(less).to_css(:compress => true)
+    unless setting_params[:css].nil? or setting_params[:css].empty?
+      begin
+        validate_css(setting_params[:css])
+      rescue
+        flash[:alert] = "Your CSS is not valid"
+        redirect_to settings_edit_path
+        return
+      end
+      parser = CssParser::Parser.new
+      parser.load_string! setting_params[:css]
+      parser.each_rule_set do |ruleset|
+        d = ruleset.instance_eval{declarations}
+        dd = d.instance_eval{declarations}
+        dd.each do |k,v|
+          v.important = true
+        end
+      end
+      compiled_css = parser.to_s
       @setting.compiled_css = compiled_css
       @setting.css_hash = Digest::MD5.hexdigest(compiled_css)
-    rescue
-      flash[:alert] = "Your CSS is not valid"
-      redirect_to settings_edit_path
-      return
+      @setting.save
     end
     @setting.update(setting_params)
-    redirect_to posts_path
+    flash[:notice] = "Settings Saved"
+    redirect_to settings_edit_path
   end
 
   # Used to generate a CSS file that defines the fonts
@@ -90,4 +87,8 @@ HEREDOC
     setting.save!
   end 
 
+  # ignore output, throws error on validation issues
+  def validate_css(css_string)
+    SassC::Engine.new(css_string, style: :compressed).render
+  end
 end
