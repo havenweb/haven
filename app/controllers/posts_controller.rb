@@ -120,12 +120,12 @@ class PostsController < ApplicationController
   end
 
   def process_new_video(image) ## Image model used for all media
-    blob_path = path_for(image.blob)
+    blob_path = image_path(image)
     "\n\n<video controls><source src=\"#{blob_path}\" type=\"video/mp4\"></video>"
   end
 
   def process_new_audio(image) ## Image model used for all media
-    blob_path = path_for(image.blob)
+    blob_path = image_path(image)
     "\n\n<audio controls><source src=\"#{blob_path}\" type=\"audio/mpeg\"></audio>"
   end
 
