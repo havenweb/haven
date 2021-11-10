@@ -247,7 +247,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   chromedriver-helper
   commonmarker (~> 0.20)
-  css_parser (~> 1.10.0)
+  css_parser (= 1.10.0)
   devise (~> 4.7.1)
   dotenv-rails (= 2.7.5)
   image_processing (~> 1.9.3)
