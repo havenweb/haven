@@ -1,6 +1,10 @@
 # Haven
 
-[Haven](https://havenweb.org) is a private blog application built with Ruby on Rails. Write what you want, create accounts for people you want to share with, keep up with each other using built-in RSS  The following are some motivating philosophies:
+[Haven](https://havenweb.org) is a private blog application built with Ruby on Rails. Write what you want, create accounts for people you want to share with, keep up with each other using built-in RSS.
+
+Try out a live demo at https://havenweb.org/demo.html
+
+The following are some motivating philosophies:
 
 * Open-source. MIT License
 * Privacy-first.  This is for sharing with friends and family, not commercial endevors.  If you want a blog for your company, you probably want to use WordPress or Ghost instead.
@@ -42,6 +46,9 @@ Note, this requires a little bit more technical knowledge.  You know know how to
 * Wait.  On the Raspberry Pi Zero W, installation can take over three hours.
 * The script will give you your initial login information, enjoy your new blog!
 * Note, there are no backups setup.  You may want to backup the database (PostgreSQL) and uploaded images (`/home/pi/simpleblog/storage`).
+
+## Docker
+Docker deployment is a work-in-progress and untested.  Feel free to checkout the `local` branch which has a Dockerfile you can experiment with.
 
 ## Other Linux Systems
 
