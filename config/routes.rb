@@ -21,9 +21,9 @@ Rails.application.routes.draw do
   end
 
   resources :posts
-  get '/images/raw/:image_id/:filename', to: 'images#show', as: 'show_image'
+  get '/images/raw/:image_id/*filename', to: 'images#show', as: 'show_image'
   get '/images/raw/:image_id', to: 'images#show'
-  get '/images/resized/:image_id/:filename', to: 'images#show_variant', as: 'show_image_variant'
+  get '/images/resized/:image_id/*filename', to: 'images#show_variant', as: 'show_image_variant'
   get '/images/resized/:image_id', to: 'images#show_variant'
 
   post '/posts/:post_id/comments', to: 'comments#create', as: 'create_comment'
