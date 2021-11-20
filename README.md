@@ -47,10 +47,15 @@ Note, this requires a little bit more technical knowledge.  You know know how to
 * The script will give you your initial login information, enjoy your new blog!
 * Note, there are no backups setup.  You may want to backup the database (PostgreSQL) and uploaded images (`/home/pi/simpleblog/storage`).
 
+## Paid Hosting
+
+Fully managed hosting of your personal Haven is available too, check out: https://havenweb.org/order.html
+
 ## Docker
 Docker deployment is a work-in-progress and untested.  Feel free to checkout the `local` branch which has a Dockerfile you can experiment with.
 
 ## Other Linux Systems
 
 Given the differences between Linux platforms I can't give fool-proof deployment instructions for every platform but take a look at the two bash scripts in `deploymentscripts/lib/bash/`.  They are the steps used for installing dependencies and the Haven application in the automated AWS deployment.  There may be differences depending on your distribution.
+
 
