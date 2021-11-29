@@ -30,7 +30,7 @@ The following are some motivating philosophies:
 * Note: if anything goes wrong, you can run `ruby cleanup-aws.rb <domain>` to tear down everything the script created
 * If you get this error: `cannot load such file -- aws-sdk-ec2 (LoadError)`, then type `gem install aws-sdk` and try again
 ## Raspberry Pi
-Note, this requires a little bit more technical knowledge.  You know know how to flash an SD card and how to use the tools `ssh` and `scp`.  You should also be able to configure your own DNS and port forwarding. We're doing this fully headless, not plugging in a display or mouse/keybord to the Raspberry Pi.
+Note, this requires a little bit more technical knowledge.  You should know how to flash an SD card and how to use the tools `ssh` and `scp`.  You should also be able to configure your own DNS and port forwarding. We're doing this fully headless, not plugging in a display or mouse/keybord to the Raspberry Pi.
 * Configure your DNS to point to your home IP address.
   * If you're using AWS Route53 for your DNS, this script might be useful: https://github.com/havenweb/r53_dynamic_dns
 * Flash a micro SD card with Raspberry Pi OS Lite (May 2021)
