@@ -38,4 +38,13 @@ bin/rails r ~/create_user.rb $EMAIL $RAILS_USER_PASS
 sudo mv ~/haven.conf /etc/nginx/sites-enabled/
 sudo service nginx restart
 
+# Setup logrotate
+sudo echo "/var/www/haven/log/*.log {" >> /etc/logrotate.conf
+sudo echo "  daily" >> /etc/logrotate.conf
+sudo echo "  missingok" >> /etc/logrotate.conf
+sudo echo "  rotate 7" >> /etc/logrotate.conf
+sudo echo "  notifempty" >> /etc/logrotate.conf
+sudo echo "  copytruncate" >> /etc/logrotate.conf
+sudo echo "}" >> /etc/logrotate.conf
+
 touch ~/imdone.txt
