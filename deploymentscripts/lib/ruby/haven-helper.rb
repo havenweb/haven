@@ -40,9 +40,11 @@ def scp_file(source_file:, destination_path: "~/", remote_user: "ubuntu", remote
 end
 
 ## Assumes remote user is "ubuntu" and we're running from the home directory
-def run_bash_script_remotely(source_path:, source_file:, remote_host:, key_pair_name:, parameter_string: "")
+def run_bash_script_remotely(source_path:, source_file:, remote_host:, key_pair_name:, parameter_string: "", as_sudo: false)
   scp_file(source_file: "#{source_path}/#{source_file}", remote_host: remote_host, key_pair_name: key_pair_name)
-  `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{remote_host} 'bash -i #{source_file} #{parameter_string}'`
+  sudo_prefix = ""
+  sudo_prefix = "sudo " if as_sudo
+  `ssh -i #{key_pair_name}.pem -o \"StrictHostKeyChecking=no\" ubuntu@#{remote_host} '#{sudo_prefix}bash -i #{source_file} #{parameter_string}'`
 end
 
 def schedule_feed_fetches(remote_host:, key_pair_name:)
@@ -103,6 +105,11 @@ def install_haven(key_pair_name:, remote_host:, domain:, email:, user_password:,
 
   ### Schedule automated fetch for RSS/Atom feed
   schedule_feed_fetches(remote_host: remote_host, key_pair_name: key_pair_name)
+
+  ### Enable logrotate
+  run_bash_script_remotely(source_path: "lib/bash", source_file: "logrotate.sh", remote_host: remote_host, key_pair_name: key_pair_name, as_sudo: true)
+
+
 end
 
 def run_certbot(remote_host:, domain:, key_pair_name:, email:)
