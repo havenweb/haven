@@ -37,6 +37,15 @@ class UpdateFeedJob < ApplicationJob
 
   private
 
+  def truncate_feed(feed, max_count)
+    entries = feed.feed_entries.order(sort_date: :desc).page(2).per(max_count)
+    entries.each do |e|
+      e.destroy!
+    end
+  rescue
+    puts "Error truncating feed: #{feed.name}"
+  end
+
   def update_feed(feed, earliest_time, latest_time)
     # update feed title if not yet set
     if feed.name.nil?
@@ -100,6 +109,7 @@ class UpdateFeedJob < ApplicationJob
       feed.fetch_succeeded!
       feed.last_update = DateTime.now
       feed.save
+      truncate_feed(feed, 100)
     end # release lock
   end
 
