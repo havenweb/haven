@@ -109,7 +109,7 @@ class UpdateFeedJob < ApplicationJob
       feed.fetch_succeeded!
       feed.last_update = DateTime.now
       feed.save
-      truncate_feed(feed, 100)
+      # truncate_feed(feed, 100)
     end # release lock
   end
 
