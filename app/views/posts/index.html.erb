@@ -10,6 +10,10 @@
   <% end %>
 <% end %>
 
+<% if current_user.admin == 1 %>
+<%= render "activity" %>
+<% end %>
+
 <% unless params[:page].nil? || params[:page]=="1" %>
   <%= paginate @posts %>
 <% end %>

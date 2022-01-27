@@ -1,0 +1,9 @@
+<% if @recent_comments.size > 0 %>
+<h2>Recent Activity</h2>
+<div>
+<% @recent_comments.each do |comment| %>
+  <p><%= time_ago_in_words(comment.created_at) %> ago, <%= comment.author.name %> commented on <%= link_to PostsController.make_slug(comment.post.content).titleize, comment.post %></p>
+<% end %>
+</div>
+<hr>
+<% end %>

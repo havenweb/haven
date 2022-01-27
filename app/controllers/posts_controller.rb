@@ -6,6 +6,7 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.order(datetime: :desc).page(params[:page])
+    @recent_comments = Comment.where('created_at >= ?', 1.week.ago).order(created_at: :desc)
     @settings = SettingsController.get_setting
     @css = true
   end
