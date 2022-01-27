@@ -3,7 +3,7 @@
   <%= form.date_field :date, :style => 'display:inline;', :value => @post.datetime.strftime("%Y-%m-%d") %>
   <%= form.time_field :time, :style => 'display:inline;', :value => @post.datetime.strftime("%H:%M") %>
   <%= form.text_area :content, :rows => 10, :style => 'display:block;width:100%;', :oninput => "doRender();", :value => @post.content %>
-  <%= form.file_field :pic, :accept => "image/*,.mp4,.mp3", :style => "display:inline;", :multiple => true %>
+  <%= form.file_field :pic, :accept => "image/*,.mp4,.mp3", :style => "display:inline;" %>
   <%= form.submit :value => "Upload Selected Image", :style => "display:inline;" %>
   <%= form.submit :value => "Save Post", :style => "display:block;" %>
 <% end %>

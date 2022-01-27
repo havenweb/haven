@@ -169,18 +169,16 @@ class PostsController < ApplicationController
   def handle_form_submit(params, view)
     @post = post_from_form(params)
     if params[:commit] == "Upload Selected Image"
-      params[:post][:pic].each do |pic|
-        @image = Image.new
-        @image.blob.attach pic
-        @image.save
-        file_ext = path_for(@image.blob).split(".").last
-        if (file_ext == "mp3")
-          @post.content += process_new_audio(@image)
-        elsif (file_ext == "mp4")
-          @post.content += process_new_video(@image)
-        else
-          @post.content += process_new_image(@image)
-        end
+      @image = Image.new
+      @image.blob.attach params[:post][:pic]
+      @image.save
+      file_ext = path_for(@image.blob).split(".").last
+      if (file_ext == "mp3")
+        @post.content += process_new_audio(@image)
+      elsif (file_ext == "mp4")
+        @post.content += process_new_video(@image)
+      else
+        @post.content += process_new_image(@image)
       end
       render view
     else
