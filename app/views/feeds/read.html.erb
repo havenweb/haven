@@ -1,20 +1,34 @@
-<% safe_tags = %w(h1 h2 h3 h4 h5 h6 img figure a p span div pre code hr mark section main em i strong b blockquote cite del ul ol li table thead tbody tr th td br sup sub abbr) 
-safe_attr = %w(href src srcset sizes alt title id width border object-fit aspect-ratio start) 
+<% safe_tags = %w(h1 h2 h3 h4 h5 h6 img video audio source type figure a p span div pre code hr mark section main em i strong b blockquote cite del ul ol li table thead tbody tr th td br sup sub abbr) 
+safe_attr = %w(href src srcset sizes alt title id width border object-fit aspect-ratio start controls) 
 no_style_or_scripts = Loofah::Scrubber.new do |node|
   if node.name == "style" or node.name == "script"
     node.remove
   end
-end %>
+end
+
+## Convert relative urls for images/media/links to absolute urls
+## content is a string, which is the HTML for the entry to be displayed
+## link is the source URL for the entry or feed (as a string)
+def rel_to_abs(content, link)
+  prefix = link.split("/")[0..2].join("/")
+  content
+    .gsub("<a href=\"/","<a href=\"#{prefix}/")
+    .gsub("<img src=\"/","<img src=\"#{prefix}/")
+    .gsub("<source src=\"/","<source src=\"#{prefix}/")
+end
+
+ %>
 <p><%= link_to raw("<button type=\"button\">Manage Feeds</button>"), feeds_path %>
 
 <% if @entries.empty? %>
-  <p>You haven't added any RSS or Atom feeds.  Click the Manage Feeds button above to add your first feed.
+  <p>This is your feed reader.  You can add RSS feeds from different websites or other Havens to read them all here.</p>
+  <p>You haven't added any feeds yet.  Click the 'Manage Feeds' button above to add your first.
 <% end %>
 
 <% @entries.each do |entry| %>
 <h1><%= link_to sanitize(entry.title, tags:[], attributes:[]), entry.link, rel: "nofollow" %></h1>
 <p><strong><%= entry.feed.name %></strong> <%= entry.published.strftime("%B %e, %Y") %></p>
-<%= sanitize(sanitize(entry.content, scrubber: no_style_or_scripts), tags: safe_tags, attributes: safe_attr) %>
+<%= rel_to_abs(sanitize(sanitize(entry.content, scrubber: no_style_or_scripts), tags: safe_tags, attributes: safe_attr), entry.feed.url).html_safe %>
 <% unless entry.audio.nil? %>
   <audio controls>
     <source src="<%= entry.audio %>" type="audio/mpeg">

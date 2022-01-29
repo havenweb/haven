@@ -26,7 +26,7 @@
       <%=link_to "Home", root_path, class: 'navigation-home' %>
         <% if user_signed_in? %>
           <% if current_user.admin == 1 %>
-            <%= link_to "Feed", read_path %>
+            <%= link_to "Read", read_path %>
             <%= link_to "Settings", settings_edit_path(id: 1) %>
             <%= link_to "Users", users_path %>
           <% end %>
