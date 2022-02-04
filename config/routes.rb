@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   get 'read', to: 'feeds#read'
   get 'read/:id', to: 'feeds#read_feed', as: 'read_feed'
 
+  get 'opml.xml', to: 'feeds#opml'
+  get 'opml/new', to: 'feeds#new_opml'
+  post 'opml/new', to: 'feeds#ingest_opml'
+
   get 'login_links/validate'
   get 'markdown', to: 'static#markdown'
   get 'themes', to: 'static#themes'

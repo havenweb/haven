@@ -21,8 +21,12 @@ end
 <p><%= link_to raw("<button type=\"button\">Manage Feeds</button>"), feeds_path %>
 
 <% if @entries.empty? %>
-  <p>This is your feed reader.  You can add RSS feeds from different websites or other Havens to read them all here.</p>
-  <p>You haven't added any feeds yet.  Click the 'Manage Feeds' button above to add your first.
+  <% if current_user.feeds.count == 0 %>
+    <p>This is your feed reader.  You can add RSS feeds from different websites or other Havens to read them all here.</p>
+    <p>You haven't added any feeds yet.  Click the 'Manage Feeds' button above to add your first.
+  <% else %>
+    <p>There are no feed entries for the feed(s) you're trying to look at.  There may be a problem getting the feed content.</p>
+  <% end %>
 <% end %>
 
 <% @entries.each do |entry| %>

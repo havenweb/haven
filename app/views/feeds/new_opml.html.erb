@@ -1,0 +1,8 @@
+<h2>OPML Upload</h2>
+
+<p>OPML is a fle format for RSS feeds.  Many feed readers let you export your feeds as an OPML file.  You can use this form to upload an OPML file and add all of those feeds at once to your Haven feed reader.</p>
+
+<%= form_tag({action: :ingest_opml}, multipart: true) do %>
+  <%= file_field_tag 'opml' %><br/>
+  <%= submit_tag("Upload OPML file") %>
+<% end %>

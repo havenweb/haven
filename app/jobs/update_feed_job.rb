@@ -115,8 +115,8 @@ class UpdateFeedJob < ApplicationJob
 
   def fetch_feed_title(feed_url)
     cleanurl, auth_opts = parse_auth(feed_url)
-    open(cleanurl, auth_opts) do |rss|
-      feed = RSS::Parser.parse(rss)
+    URI.open(cleanurl, auth_opts) do |rss|
+      feed = RSS::Parser.parse(rss, validate: false)
       if (feed.feed_type == "rss")
         return feed.channel.title
       elsif (feed.feed_type == "atom")
@@ -126,15 +126,15 @@ class UpdateFeedJob < ApplicationJob
       end
     end
   rescue => e
-    STDERR.puts e.message
+    logger.error "ERROR when fetching feed #{feed_url} #{e.class} #{e.message}"
     return "Invalid Feed"
   end
 
   def fetch_feed_content(feed_url)
     entries = []
     cleanurl, auth_opts = parse_auth(feed_url)
-    open(cleanurl, auth_opts) do |rss|
-      feed = RSS::Parser.parse(rss)
+    URI.open(cleanurl, auth_opts) do |rss|
+      feed = RSS::Parser.parse(rss, validate: false)
       if (feed.feed_type == "rss")
         feed.items.each do |item|
           entry = {}
@@ -175,14 +175,15 @@ class UpdateFeedJob < ApplicationJob
 
   def parse_auth(full_url)
     scheme, rest = full_url.split("://",2)
+    opts = {}
+    opts["User-Agent"] = "haven"
     if (rest.include?(":") and rest.include?("@")) # scheme://user:pass@url...
-      opts = {}
       user, rest = rest.split(":",2)
       pass, rest = rest.split("@",2)
       opts[:http_basic_authentication] = [user,pass]
       return ["#{scheme}://#{rest}", opts]
     else
-      return [full_url, {}]
+      return [full_url, opts]
     end
   end
 end
