@@ -28,12 +28,12 @@ gem 'bcrypt', '~> 3.1.16'
 gem 'kaminari', '~> 1.2.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.6'
+gem 'rails', '~> 5.2.6.2'
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
 gem 'pg', '~> 1.1.4'
 # Use Puma as the app server
-gem 'puma', '~> 4.3'
+gem 'puma', '~> 4.3.11'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
