@@ -1,5 +1,4 @@
 # Next Steps
- * Enable custom fonts
  * During deploy, wait until instance_profile_exists: https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IAM/Client.html#wait_until-instance_method
  * Load a backup (and respect version) if present on deployment
  * Use Devise Lockable to block brute-force password attempts
@@ -12,23 +11,16 @@
 ## Deployment
  * script to update deployed blog to latest/specific version
    * including update of version blob
- * Figure out why it doesn't work with t3.nano
  * Experiment with initialized AMI
    * wait for instance_profile_exists??
 
 ## App
  * Permanent sessions, with idle timeout
- * Change images to -img- tags, with width and height for placeholders
- * Try dual local storage + S3, see if content laods faster
  * Model validations!!
  * Export functionality
 
-## Reader
- * https://selfoss.aditu.de/ - FOSS, self-hosted
-   * Try it out, add deployment
- * https://github.com/Ranchero-Software/NetNewsWire - FOSS, mac/ios, local.  No support for private feeds (yet?)
-
 # Tech Debt
+ * add user throws error if user already exists
  * upload image link throws error if no file selected
  * Import issues
    * import fails unless directories have trailing slash ("/")

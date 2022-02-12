@@ -1,3 +1,7 @@
 .post-author {
   font-size: smaller;
 }
+
+form.comments {
+  display: inline-block;
+}

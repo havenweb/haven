@@ -16,8 +16,11 @@
 <%= CommonMarker.render_html(post.content, [:UNSAFE, :HARDBREAKS], PostsController::GFM_EXT).html_safe %>
 
 <% if @settings.comments %>
-  <% if post.comments.size > 0 %>
-    <p><strong>Comments:</strong></p>
+  <% if post.likes.size > 0 or post.comments.size > 0 %>
+    <p><strong>Reactions:</strong></p>
+  <% end %>
+  <% if post.likes.size > 0 %>
+     </p><%= post.like_text %></p>
   <% end %>
   <% post.comments.each do |comment| %>
     <small><%=comment.author.name%></small>
@@ -30,9 +33,18 @@
     <% end %>
     <br/><%= comment.body %><br/>
   <% end %>
-  <br<%= show_page ? raw(' id="comment_form"') : "" %>/>
-  <%= form_tag("/posts/#{post.id}/comments", method: "post") do %>
-    <%= text_field_tag(:comment_body, nil, {placeholder: "Write a comment..."}) %>
-    <%= submit_tag("Post Comment") %>
-  <% end %>
+  <br<%= show_page ? raw(' id="comment_form"') : raw(" id=\"comment_form_#{post.id}\"") %>/>
+  <div>
+    <% if (post.likes_from current_user).size > 0 %>
+      <%= link_to raw("<button>You liked this</button>"), destroy_like_path(post.likes_from(current_user).first), method: :delete %>
+    <% else %>
+      <%= form_tag("/posts/#{post.id}/likes", method: "post", class: "comments") do %>
+        <%= submit_tag("👍 Like") %>
+      <% end %>
+    <% end %>
+    <%= form_tag("/posts/#{post.id}/comments", method: "post", class: "comments") do %>
+      <%= text_field_tag(:comment_body, nil, {placeholder: "Write a comment..."}) %>
+      <%= submit_tag("Post Comment") %>
+    <% end %>
+  </div>
 <% end %>

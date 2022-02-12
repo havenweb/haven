@@ -32,6 +32,8 @@ Rails.application.routes.draw do
 
   post '/posts/:post_id/comments', to: 'comments#create', as: 'create_comment'
   delete '/comments/:comment_id', to: 'comments#destroy', as: 'destroy_comment'
+  post '/posts/:post_id/likes', to: 'likes#create', as: 'create_like'
+  delete '/likes/:like_id', to: 'likes#destroy', as: 'destroy_like'
 
   get 'settings', to: 'settings#show'
   get 'settings/edit', to: 'settings#edit'

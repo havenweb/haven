@@ -1,8 +1,12 @@
-<% if @recent_comments.size > 0 %>
+<% if @recent_comments_and_likes.size > 0 %>
 <h2>Recent Activity</h2>
 <div>
-<% @recent_comments.each do |comment| %>
-  <p><%= time_ago_in_words(comment.created_at) %> ago, <%= comment.author.name %> commented on <%= link_to PostsController.make_slug(comment.post.content).titleize, comment.post %></p>
+<% @recent_comments_and_likes.each do |reaction| %>
+  <% if reaction.is_a? Like %>
+    <p><%= time_ago_in_words(reaction.created_at) %> ago, <%= reaction.reaction %> from <%= reaction.user.name %> on <%= link_to PostsController.make_slug(reaction.post.content).titleize, reaction.post %></p>
+  <% elsif reaction.is_a? Comment %>
+    <p><%= time_ago_in_words(reaction.created_at) %> ago, <%= reaction.author.name %> commented on <%= link_to PostsController.make_slug(reaction.post.content).titleize, reaction.post %></p>
+  <% end %>
 <% end %>
 </div>
 <hr>

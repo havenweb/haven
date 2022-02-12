@@ -11,15 +11,15 @@
   </p>
   <p>
     <%= form.check_box :byline %>
-    <%= form.label :byline, "Display Author Bylines" %>
+    <%= form.label :byline, "Display author bylines" %>
   </p>
   <p>
     <%= form.check_box :comments %>
-    <%= form.label :comments, "Enable Comments on Posts" %>
+    <%= form.label :comments, "Enable comments and likes on posts" %>
   </p>
   <p>Custom Fonts:</p>
   <%= render "fonts", setting: @setting, allow_remove: false %>
-  <p><%= link_to "Modify Custom Fonts", edit_fonts_path %></p>
+  <p><%= link_to "Modify custom fonts", edit_fonts_path %></p>
   <p>
     <%= form.label :css, (link_to "Custom CSS", "/themes", target: "_blank" )%><br>
     <%= form.text_area :css, :style => 'display:block;width:100%;' %>

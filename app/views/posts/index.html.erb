@@ -10,8 +10,8 @@
   <% end %>
 <% end %>
 
-<% if current_user.admin == 1 %>
-<%= render "activity" %>
+<% if current_user.admin == 1 && @settings.comments %>
+  <%= render "activity" %>
 <% end %>
 
 <% unless params[:page].nil? || params[:page]=="1" %>
