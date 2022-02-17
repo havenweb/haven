@@ -18,6 +18,7 @@ cd /var/www/<app>
 git pull origin master
 bundle install --deployment --without development test
 bundle exec rake assets:precompile db:migrate RAILS_ENV=production
+bundle clean # Optional, clean up old gem versions
 passenger-config restart-app $(pwd)
 
 ## DB Backup and Restore
