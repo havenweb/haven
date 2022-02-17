@@ -29,15 +29,22 @@ end
   <% end %>
 <% end %>
 
+<% entry_number = 0 %>
 <% @entries.each do |entry| %>
-<h1><%= link_to sanitize(entry.title, tags:[], attributes:[]), entry.link, rel: "nofollow" %></h1>
-<p><strong><%= entry.feed.name %></strong> <%= entry.published.strftime("%B %e, %Y") %></p>
-<%= rel_to_abs(sanitize(sanitize(entry.content, scrubber: no_style_or_scripts), tags: safe_tags, attributes: safe_attr), entry.feed.url).html_safe %>
-<% unless entry.audio.nil? %>
-  <audio controls>
-    <source src="<%= entry.audio %>" type="audio/mpeg">
-  </audio> 
+  <div id="feed_entry_<%= entry_number %>">
+    <h1><%= link_to sanitize(entry.title, tags:[], attributes:[]), entry.link, rel: "nofollow" %></h1>
+    <a href="#feed_entry_<%= entry_number+1 %>" class="feed_entry_skip">[next]</a>
+  </div>
+  <p><strong><%= entry.feed.name %></strong> <%= entry.published.strftime("%B %e, %Y") %></p>
+  <%= rel_to_abs(sanitize(sanitize(entry.content, scrubber: no_style_or_scripts), tags: safe_tags, attributes: safe_attr), entry.feed.url).html_safe %>
+  <% unless entry.audio.nil? %>
+    <audio controls>
+      <source src="<%= entry.audio %>" type="audio/mpeg">
+    </audio> 
+  <% end %>
+  <hr>
+  <% entry_number += 1 %>
 <% end %>
-<hr>
-<% end %>
-<%= paginate @entries %>
+<div id="feed_entry_<%= entry_number %>">
+  <%= paginate @entries %>
+</div>

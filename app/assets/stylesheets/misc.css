@@ -5,3 +5,7 @@
 form.comments {
   display: inline-block;
 }
+
+a.feed_entry_skip {
+  float: right;
+}
