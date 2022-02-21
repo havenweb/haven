@@ -1,3 +1,4 @@
+require 'feedbag'
 class FeedsController < ApplicationController
   before_action :authenticate_user!
   before_action :verify_admin
@@ -84,8 +85,11 @@ class FeedsController < ApplicationController
   private
 
   def normalize_feed_url(feed_in)
-    ## TODO: rss autodiscovery
     feed_url = feed_in.strip
+    discovered_urls = Feedbag.find(feed_url) ## RSS Autodiscovery.  see lib/feedbag.rb
+    if discovered_urls.size > 0
+      feed_url = discovered_urls.first
+    end
     unless (feed_url.start_with? "http")
       feed_url = "https://" + feed_url
     end
