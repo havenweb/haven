@@ -158,12 +158,16 @@ class UpdateFeedJob < ApplicationJob
           entry[FEED_TITLE] = feed.title.content
           entry[ENTRY_TITLE] = item.title.content
           entry[ENTRY_LINK] = item.link.href
-          begin
+          if !item.published.nil?
             entry[ENTRY_DATE] = item.published.content
-          rescue
-            entry[ENTRY_DATE] = item.published
+          else
+            entry[ENTRY_DATE] = item.updated.content
+          end 
+          if !item.content.nil?
+            entry[ENTRY_CONTENT] = CGI.unescapeHTML(item.content.to_s)
+          else
+            entry[ENTRY_CONTENT] = CGI.unescapeHTML(item.summary.to_s)
           end
-          entry[ENTRY_CONTENT] = CGI.unescapeHTML(item.content.to_s)
           entry[ENTRY_GUID] = item.id.to_s
           entry[ENTRY_AUDIO] = nil # TODO podcast support for Atom feeds
           entries << entry
