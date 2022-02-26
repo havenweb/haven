@@ -10,6 +10,7 @@ end
 ## content is a string, which is the HTML for the entry to be displayed
 ## link is the source URL for the entry or feed (as a string)
 def rel_to_abs(content, link)
+  return "" if content.nil?
   prefix = link.split("/")[0..2].join("/")
   content
     .gsub("<a href=\"/","<a href=\"#{prefix}/")
