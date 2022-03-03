@@ -7,7 +7,7 @@ ruby '2.7.2'
 gem 'dotenv-rails', '2.7.5'
 
 # For parsing markdown
-gem 'commonmarker', '~> 0.20'
+gem 'commonmarker', '~> 0.23'
 
 # For validating CSS
 gem 'sassc', '~> 2.4.0'
