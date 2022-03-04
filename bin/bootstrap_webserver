@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+
+bin/rails db:create db:migrate
+
+bin/rails s -e production -p 3000

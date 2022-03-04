@@ -48,12 +48,10 @@ Note, this requires a little bit more technical knowledge.  You should know how 
 * Note, there are no backups setup.  You may want to backup the database (PostgreSQL) and uploaded images (`/home/pi/simpleblog/storage`).
 
 ## Paid Hosting
-
 Fully managed hosting of your personal Haven is available too, check out: https://havenweb.org/order.html
 
 ## Docker
-Docker deployment is a work-in-progress and untested.  Feel free to checkout the `local` branch which has a Dockerfile you can experiment with.
-
+There is experimental Docker support. It currently does not work with a production environment, will not save files after a restart and is generally not ready for production. Feel free to open up a PR and improve on it. 
 ## Other Linux Systems
 
 Given the differences between Linux platforms I can't give fool-proof deployment instructions for every platform but take a look at the two bash scripts in `deploymentscripts/lib/bash/`.  They are the steps used for installing dependencies and the Haven application in the automated AWS deployment.  There may be differences depending on your distribution.

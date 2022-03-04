@@ -3,20 +3,27 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
   encoding: unicode
+  host: <%= ENV['HAVEN_DB_HOST'] %>
+  database: <%= ENV['HAVEN_DB_NAME'] %>
+  username: <%= ENV['HAVEN_DB_ROLE'] %>
+  password: <%= ENV['HAVEN_DB_PASSWORD'] %>
 
 development:
   <<: *default
-  database: rails_development_db
+  database: haven_development_db
+
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: rails_test_db
+  database: haven_test_db
 
 production:
   <<: *default
+  host: <%= ENV['HAVEN_DB_HOST'] %>
   database: <%= ENV['HAVEN_DB_NAME'] %>
   username: <%= ENV['HAVEN_DB_ROLE'] %>
   password: <%= ENV['HAVEN_DB_PASSWORD'] %>
+
