@@ -16,7 +16,14 @@ class ImagesController < ApplicationController
   private
     def set_blob
       image = Image.find(params[:image_id])
+      request_filename = params[:filename]
       @blob = image.blob_blob
+      request_filename = params[:filename]
+      blob_filename = @blob.filename.base
+      unless (request_filename == blob_filename)
+        @blob = nil
+        head :not_found
+      end
     rescue ActiveSupport::MessageVerifier::InvalidSignature
       head :not_found
     end
