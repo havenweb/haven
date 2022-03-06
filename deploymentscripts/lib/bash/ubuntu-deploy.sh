@@ -24,6 +24,7 @@ git checkout $BLOG_VERSION ## master if not specified
 ruby deploymentscripts/lib/ruby/set_version.rb $BUCKET_NAME
 
 echo "AWS_BUCKET=\"$BUCKET_NAME\"" >> .env
+echo 'HAVEN_DB_HOST="postgresql"' >> .env
 echo 'HAVEN_DB_NAME="ubuntu"' >> .env
 echo 'HAVEN_DB_ROLE="ubuntu"' >> .env
 echo "HAVEN_DB_PASSWORD=\"$DB_PASS\"" >> .env

@@ -60,6 +60,7 @@ git checkout local
 bundle config build.bcrypt --use-system-libraries
 bundle install --deployment --without development test
 
+echo 'HAVEN_DB_HOST="postgresql"' >> .env
 echo 'HAVEN_DB_NAME="pi"' >> .env
 echo 'HAVEN_DB_ROLE="pi"' >> .env
 echo "HAVEN_DB_PASSWORD=\"$DB_PASS\"" >> .env
@@ -68,7 +69,7 @@ bin/rails db:create
 bin/rails db:migrate
 bin/rails assets:precompile
 
-# systemd to run the app: /etc/systemd/system/simpleblog.service 
+# systemd to run the app: /etc/systemd/system/simpleblog.service
 echo "[Unit]" > haven.service
 echo "Description=Haven Web App" >> haven.service
 echo "" >> haven.service
