@@ -132,7 +132,9 @@ class PostsController < ApplicationController
   # convert relative URLs to absolute URLs when referencing media (for RSS)
   # prefix should be scheme://domain, eg: "https://example.com"
   def self.convert_urls(content, prefix)
-    return content.gsub("=\"/rails/active_storage/","=\"#{prefix}/rails/active_storage/")
+    return content
+      .gsub("=\"/rails/active_storage/","=\"#{prefix}/rails/active_storage/")
+      .gsub("=\"/images/","=\"#{prefix}/images/")
   end
 
   def process_new_video(image) ## Image model used for all media

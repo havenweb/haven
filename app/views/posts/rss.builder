@@ -1,8 +1,8 @@
 xml.instruct! :xml, :version => "1.0"
 xml.rss :version => "2.0" do
   xml.channel do
-    xml.title !!@settings ? @settings.title : "New Blog"
-    xml.description !!@settings ? @settings.subtitle : "Blog Description"
+    xml.title !!@settings ? @settings.title : "Haven Blog"
+    xml.description !!@settings ? @settings.subtitle : "My Private Haven Blog"
     xml.link root_url
 
     @posts.each do |post|
