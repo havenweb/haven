@@ -6,7 +6,7 @@
    rss_url = "#{scheme}//#{rss_user}:#{rss_pass}@#{host}/rss" 
 %>
 
-<p title="RSS is a computer-readable web feed of a web site.  You can use this RSS link in a feed-reader app to follow this blog.  Since this blog is private and requires you to login to access the blog, the URL provided here is unique to you and includes secret credentials that provide access to the blog.">RSS: <%= rss_url %></p>
+<p title="RSS is feed of a web site.  You can use this RSS link in a feed-reader app or your own Haven to follow updates from this Haven.  Since Haven is private and requires you to login, the URL provided here is unique to you and includes secret credentials."><img src="/feed-icon.svg" style="width:1em"/> <%= rss_url %></p>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
