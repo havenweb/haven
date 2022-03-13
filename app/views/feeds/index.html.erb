@@ -6,7 +6,7 @@
 
 <%= form_for @new_feed, url: {action: "create"} do |f| %>
   <%= f.text_field :url %>
-  <%= f.submit "Add New Feed" %>
+  <%= f.submit "Add Feed" %>
 <% end %>
 
 <% if @feeds.size > 0 %>

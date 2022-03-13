@@ -55,8 +55,10 @@ class FeedsController < ApplicationController
 
   def destroy
     @feed = Feed.find(params[:id])
+    feed_name = @feed.name
     if ( (!@feed.nil?) and (current_user == @feed.user) )
       @feed.destroy!
+      flash[:notice] = "You have removed #{feed_name} from your feeds"
     else
       flash[:alert] = "You cannot do that"
     end
@@ -110,10 +112,10 @@ class FeedsController < ApplicationController
       if feed.feed_invalid?
         alerts << "Error adding #{feed_url} to your feeds"
       else
-        notices << "You've added #{feed_url} to your feeds"
+        notices << "You've added #{feed.name} to your feeds"
       end
     else # feed already exists
-      notices << "You are already subscribed to #{feed_url}"
+      notices << "You are already subscribed to #{matching_feed.name}"
     end
     return {alerts: alerts, notices: notices}
   end
