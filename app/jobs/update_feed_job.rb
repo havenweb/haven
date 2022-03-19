@@ -145,8 +145,12 @@ class UpdateFeedJob < ApplicationJob
           entry[ENTRY_CONTENT] = item.description
           entry[ENTRY_CONTENT] = item.content_encoded if item.content_encoded
           entry[ENTRY_GUID] = item.guid.content
-          if item.enclosure && item.enclosure.type == "audio/mpeg"
-            entry[ENTRY_AUDIO] = item.enclosure.url
+          if item.enclosure 
+            if item.enclosure.type == "audio/mpeg"
+              entry[ENTRY_AUDIO] = item.enclosure.url
+            elsif item.enclosure.type.start_with? "image/"
+              entry[ENTRY_CONTENT] = "<img src=\"#{item.enclosure.url}\" /><br/>" + entry[ENTRY_CONTENT]
+            end
           else
             entry[ENTRY_AUDIO] = nil
           end
