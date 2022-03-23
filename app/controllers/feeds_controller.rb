@@ -42,13 +42,17 @@ class FeedsController < ApplicationController
   end
 
   def create
-    feed_url = normalize_feed_url(params[:feed][:url])
-    flashes = add_feed(feed_url)
-    flashes[:notices].each do |n|
-      flash[:notice] = n
-    end
-    flashes[:alerts].each do |a|
-      flash[:alert] = a 
+    if params[:feed][:url].nil? or params[:feed][:url].empty?
+      flash[:alert] = "You didn't enter an address for a web feed"
+    else
+      feed_url = normalize_feed_url(params[:feed][:url])
+      flashes = add_feed(feed_url)
+      flashes[:notices].each do |n|
+        flash[:notice] = n
+      end
+      flashes[:alerts].each do |a|
+        flash[:alert] = a 
+      end
     end
     redirect_to :feeds
   end
