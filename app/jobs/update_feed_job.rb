@@ -148,8 +148,10 @@ class UpdateFeedJob < ApplicationJob
           if item.enclosure 
             if item.enclosure.type == "audio/mpeg"
               entry[ENTRY_AUDIO] = item.enclosure.url
-            elsif item.enclosure.type.start_with? "image/"
-              entry[ENTRY_CONTENT] = "<img src=\"#{item.enclosure.url}\" /><br/>" + entry[ENTRY_CONTENT]
+            elsif item.enclosure.type.start_with? "image/" # If there is an image in the enclosure
+              unless entry[ENTRY_CONTENT].include? "<img " # and no images in the content
+                entry[ENTRY_CONTENT] = "<img src=\"#{item.enclosure.url}\" /><br/>" + entry[ENTRY_CONTENT] # then include the enclosure image
+              end
             end
           else
             entry[ENTRY_AUDIO] = nil
