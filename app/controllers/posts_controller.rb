@@ -186,16 +186,20 @@ class PostsController < ApplicationController
   def handle_form_submit(params, view)
     @post = post_from_form(params)
     if params[:commit] == "Upload Selected Image"
-      @image = Image.new
-      @image.blob.attach params[:post][:pic]
-      @image.save
-      file_ext = path_for(@image.blob).split(".").last
-      if (file_ext == "mp3")
-        @post.content += process_new_audio(@image)
-      elsif (file_ext == "mp4")
-        @post.content += process_new_video(@image)
-      else
-        @post.content += process_new_image(@image)
+      if  !(params[:post][:pic].nil?)
+        @image = Image.new
+        @image.blob.attach params[:post][:pic]
+        @image.save
+        file_ext = path_for(@image.blob).split(".").last
+        if (file_ext == "mp3")
+          @post.content += process_new_audio(@image)
+        elsif (file_ext == "mp4")
+          @post.content += process_new_video(@image)
+        else
+          @post.content += process_new_image(@image)
+        end
+      else # attachment does not exist
+        flash.now[:alert] = "You did not choose a file to upload"
       end
       render view
     else
