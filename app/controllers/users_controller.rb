@@ -23,7 +23,8 @@ class UsersController < ApplicationController
       admin: admin,
       password: @password,
       basic_auth_username: Devise.friendly_token.first(10),
-      basic_auth_password: Devise.friendly_token.first(10)
+      basic_auth_password: Devise.friendly_token.first(10),
+      image_password: Devise.friendly_token.first(10)
     )
     @verb = "created"
     login_link = LoginLink.generate(@user)
@@ -34,7 +35,10 @@ class UsersController < ApplicationController
   def resetpassword
     @password = Devise.friendly_token.first(20)
     @user = User.find(params[:id])
-    @user.update_attributes(password: @password)
+    auth_user = Devise.friendly_token.first(10)
+    auth_pass = Devise.friendly_token.first(10)
+    image_pass = Devise.friendly_token.first(10)
+    @user.update_attributes(password: @password, basic_auth_username: auth_user, basic_auth_password: auth_pass, image_password: image_pass)
     @verb = "updated"
     @user.login_links.each {|ll| ll.destroy} ## delete old links
     login_link = LoginLink.generate(@user)
