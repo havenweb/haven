@@ -43,12 +43,14 @@ class PostsController < ApplicationController
   end
 
   def new
+    @settings = SettingsController.get_setting
     @post ||= Post.new
     @post.datetime = DateTime.now if @post.datetime.nil?
     @post.content = "" if @post.content.nil?
   end
 
   def edit
+    @settings = SettingsController.get_setting
     @post = Post.find(params[:id])
     verify_can_modify_post(@post)
     @post
