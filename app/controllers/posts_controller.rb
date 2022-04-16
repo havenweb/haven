@@ -57,14 +57,17 @@ class PostsController < ApplicationController
   end
 
   def create
+    @settings = SettingsController.get_setting
     handle_form_submit(params, 'new')
   end
 
   def update
+    @settings = SettingsController.get_setting
     handle_form_submit(params, 'edit')
   end
 
   def destroy
+    @settings = SettingsController.get_setting
     @post = Post.find(params[:id])
     verify_can_modify_post(@post)
     @post.destroy
