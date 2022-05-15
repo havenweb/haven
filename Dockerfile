@@ -9,6 +9,10 @@ RUN apt-get update -yqq && \
 
 ADD Gemfile Gemfile.lock Rakefile config.ru .ruby-version ./
 
+# Setting MALLOC_ARENA_MAX to 2 can greatly reduce memory usage
+ENV MALLOC_ARENA_MAX='2'
+ENV HAVEN_DEPLOY="docker"
+
 ENV RAILS_ENV=production
 RUN bundle update --bundler && \
     bundle config build.bcrypt --use-system-libraries && \
