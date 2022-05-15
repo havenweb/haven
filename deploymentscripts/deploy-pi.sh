@@ -56,10 +56,11 @@ cd /home/pi
 sudo git clone https://github.com/havenweb/haven.git
 sudo chown pi -R haven
 cd haven
-git checkout local
+#git checkout local
 bundle config build.bcrypt --use-system-libraries
 bundle install --deployment --without development test
 
+echo 'HAVEN_DEPLOY="local"' >> .env
 echo 'HAVEN_DB_NAME="pi"' >> .env
 echo 'HAVEN_DB_ROLE="pi"' >> .env
 echo "HAVEN_DB_PASSWORD=\"$DB_PASS\"" >> .env
