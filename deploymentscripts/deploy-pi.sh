@@ -43,26 +43,29 @@ sudo apt-get update && sudo apt-get install -y yarn
 ## For image processing in the app
 sudo apt-get install -y imagemagick
 
+# Apache
+sudo apt install -y apache2
+
 # PostgreSQL
 sudo apt-get install -y postgresql postgresql-contrib libpq-dev
 DB_PASS=$(openssl rand -base64 18)
-sudo -u postgres createuser -s pi
-sudo -u postgres psql -c "ALTER USER pi WITH PASSWORD '$DB_PASS';"
+sudo -u postgres createuser -s $(whoami)
+sudo -u postgres psql -c "ALTER USER $(whoami) WITH PASSWORD '$DB_PASS';"
 
 # Rails App
 echo 'export RAILS_ENV=production' >> ~/.bashrc
 export RAILS_ENV=production
-cd /home/pi
+cd /var/www
 sudo git clone https://github.com/havenweb/haven.git
-sudo chown pi -R haven
+sudo chown $(whoami) -R haven
 cd haven
 #git checkout local
 bundle config build.bcrypt --use-system-libraries
 bundle install --deployment --without development test
 
 echo 'HAVEN_DEPLOY="local"' >> .env
-echo 'HAVEN_DB_NAME="pi"' >> .env
-echo 'HAVEN_DB_ROLE="pi"' >> .env
+echo "HAVEN_DB_NAME=\"$(whoami)\"" >> .env
+echo "HAVEN_DB_ROLE=\"$(whoami)\"" >> .env
 echo "HAVEN_DB_PASSWORD=\"$DB_PASS\"" >> .env
 
 bin/rails db:create
@@ -74,11 +77,11 @@ echo "[Unit]" > haven.service
 echo "Description=Haven Web App" >> haven.service
 echo "" >> haven.service
 echo "[Service]" >> haven.service
-echo "User=pi" >> haven.service
-echo "Group=pi" >> haven.service
-echo "WorkingDirectory=/home/pi/haven" >> haven.service
-echo "Environment=PATH=/home/pi/.rbenv/shims:/home/pi/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games" >> haven.service
-echo "ExecStart=/home/pi/haven/bin/rails s -e production -p 3000" >> haven.service
+echo "User=$(whoami)" >> haven.service
+echo "Group=$(whoami)" >> haven.service
+echo "WorkingDirectory=/var/www/haven" >> haven.service
+echo "Environment=PATH=/home/$(whoami)/.rbenv/shims:/home/$(whoami)/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games" >> haven.service
+echo "ExecStart=/var/www/haven/bin/rails s -e production -p 3000" >> haven.service
 echo "Restart=on-failure" >> haven.service
 echo "" >> haven.service
 echo "[Install]" >> haven.service
@@ -92,13 +95,10 @@ sudo systemctl daemon-reload
 sudo systemctl enable haven.service
 sudo systemctl start haven.service
 
-# Apache
-sudo apt install -y apache2
-
 ## Create Apache config file: /etc/apache2/sites-available/001-simpleblog.conf
 echo "<VirtualHost *:80>" > 001-haven.conf
 echo "  ServerName $DOMAIN" >> 001-haven.conf
-echo "  DocumentRoot /home/pi/haven/public" >> 001-haven.conf
+echo "  DocumentRoot /var/www/haven/public" >> 001-haven.conf
 echo "  <Location />" >> 001-haven.conf
 echo "    Require all granted" >> 001-haven.conf
 echo "  </Location>" >> 001-haven.conf
@@ -127,10 +127,10 @@ sudo chmod 0755 /usr/local/bin/certbot-auto
 sudo /usr/local/bin/certbot-auto --apache -n --agree-tos --email "$EMAIL" --no-eff-email --domains $DOMAIN --redirect --no-self-upgrade
 
 ## Rewrite Apache config to fix http -> https redirect
-cd /home/pi
+cd
 echo "<VirtualHost *:80>" > 001-haven.conf
 echo "  ServerName $DOMAIN" >> 001-haven.conf
-echo "  DocumentRoot /home/pi/haven/public" >> 001-haven.conf
+echo "  DocumentRoot /var/www/haven/public" >> 001-haven.conf
 echo "  <Location />" >> 001-haven.conf
 echo "    Require all granted" >> 001-haven.conf
 echo "  </Location>" >> 001-haven.conf
@@ -145,8 +145,8 @@ sudo systemctl restart apache2
 
 # Create first user
 USER_PASS==$(openssl rand -base64 18)
-cd /home/pi/haven
-bin/rails r /home/pi/haven/deploymentscripts/lib/ruby/create_user.rb $EMAIL $USER_PASS
+cd /var/www/haven
+bin/rails r /var/www/haven/deploymentscripts/lib/ruby/create_user.rb $EMAIL $USER_PASS
 echo "=========="
 echo ""
 echo "Visit: https://$DOMAIN"
