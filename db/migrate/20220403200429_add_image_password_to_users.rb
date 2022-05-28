@@ -3,7 +3,7 @@ class AddImagePasswordToUsers < ActiveRecord::Migration[5.2]
     add_column :users, :image_password, :string
 
     User.all.each do |u|
-      password = Devise.friendly_token.first(10)
+      password = Devise.friendly_token.first(20)
       u.update!(image_password: password)
     end
 

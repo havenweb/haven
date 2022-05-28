@@ -1,5 +1,5 @@
 class ImagesController < ApplicationController
-  before_action :authenticate_user!, :set_blob, :set_host
+  before_action :verify_auth!, :set_blob, :set_host
   protect_from_forgery with: :exception
 
   def show
@@ -14,6 +14,22 @@ class ImagesController < ApplicationController
   end
 
   private
+    def verify_auth!
+      basic_auth_user = params[:u]
+      credential = params[:c]
+      if user.nil? || credential.nil?
+        authenticate_user!
+      else
+        filename = params[:filename]
+        user = User.find_by(basic_auth_username: basic_auth_user)
+        image_key = user.image_password
+        hmac = OpenSSL::HMAC.hexdigest("SHA256", image_key, filename)
+        unless hmac == credential
+          not_found
+        end
+      end
+    end
+
     def set_blob
       image = Image.find(params[:image_id])
       request_filename = params[:filename]

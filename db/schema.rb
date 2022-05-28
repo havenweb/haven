@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(version: 2022_04_08_213003) do
     t.integer "admin"
     t.string "basic_auth_username", null: false
     t.string "basic_auth_password", null: false
+    t.string "image_password", null: false
     t.index ["basic_auth_username"], name: "index_users_on_basic_auth_username", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
