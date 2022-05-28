@@ -30,6 +30,9 @@ class PostsController < ApplicationController
     if !check_basic_auth
       head :unauthorized
     else
+      basic_auth_creds = Base64.decode64(request.authorization.split("Basic ").last)
+      basic_auth_user = basic_auth_creds.split(":").first
+      @user = User.find_by(basic_auth_username: basic_auth_user)
       @posts = Post.order(datetime: :desc).page(1)
       @settings = SettingsController.get_setting
       render layout: false

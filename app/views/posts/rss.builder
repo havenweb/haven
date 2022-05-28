@@ -7,6 +7,16 @@ xml.rss :version => "2.0" do
 
     @posts.each do |post|
       rss_content = CommonMarker.render_html(post.content, [:UNSAFE, :HARDBREAKS], PostsController::GFM_EXT)
+      image_key = @user.image_password
+      basic_auth_user = @user.basic_auth_username
+
+      ## embed HMAC image credentials as query parameters
+      rss_content.gsub!(/\/images\/(\w*)\/(\d*)\/([^"]*)"/) do |m|
+        file = $3
+        hmac = OpenSSL::HMAC.hexdigest("SHA256", image_key, file)
+        "/images/#{$1}/#{$2}/#{$3}?u=#{basic_auth_user}&c=#{hmac}\""
+      end
+
       if @settings.comments 
         if post.comments.size > 0
           rss_content += "\n<p><strong>Comments:</strong></p>"

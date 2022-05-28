@@ -20,12 +20,12 @@ class ImagesController < ApplicationController
       if basic_auth_user.nil? || credential.nil?
         authenticate_user!
       else
-        filename = params[:filename]
+        filename = params[:filename] + "." + params[:format]
         user = User.find_by(basic_auth_username: basic_auth_user)
         image_key = user.image_password
         hmac = OpenSSL::HMAC.hexdigest("SHA256", image_key, filename)
         unless hmac == credential
-          not_found
+          raise ActiveRecord::RecordNotFound
         end
       end
     end
