@@ -17,7 +17,7 @@ class ImagesController < ApplicationController
     def verify_auth!
       basic_auth_user = params[:u]
       credential = params[:c]
-      if user.nil? || credential.nil?
+      if basic_auth_user.nil? || credential.nil?
         authenticate_user!
       else
         filename = params[:filename]
