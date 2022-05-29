@@ -56,6 +56,6 @@ Docker deployment is a work-in-progress and untested.  Feel free to checkout the
 
 ## Other Linux Systems
 
-Given the differences between Linux platforms I can't give fool-proof deployment instructions for every platform but take a look at the two bash scripts in `deploymentscripts/lib/bash/`.  They are the steps used for installing dependencies and the Haven application in the automated AWS deployment.  There may be differences depending on your distribution.
+Given the differences between Linux platforms I can't give fool-proof deployment instructions for every platform but take a look at the Raspberry PI deployment script.  It is not universal, but it should be pretty close for most debian-based systems.
 
 
