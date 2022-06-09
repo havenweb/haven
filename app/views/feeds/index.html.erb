@@ -5,7 +5,7 @@
 <h1>Manage Feeds</h1>
 
 <%= form_for @new_feed, url: {action: "create"} do |f| %>
-  <%= f.text_field :url %>
+  <%= f.text_field :url, required: :true %>
   <%= f.submit "Add Feed" %>
 <% end %>
 
