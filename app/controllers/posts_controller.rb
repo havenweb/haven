@@ -28,7 +28,7 @@ class PostsController < ApplicationController
 
   def rss
     if !check_basic_auth
-      head :unauthorized
+      request_http_basic_authentication("Haven RSS Feed")
     else
       basic_auth_creds = Base64.decode64(request.authorization.split("Basic ").last)
       basic_auth_user = basic_auth_creds.split(":").first
