@@ -17,7 +17,7 @@
 
 <% if @settings.comments %>
   <% if post.likes.size > 0 or post.comments.size > 0 %>
-    <p><strong>Reactions:</strong></p>
+    <h4 class="reactions-header">Reactions</h4>
   <% end %>
   <% if post.likes.size > 0 %>
      </p><%= post.like_text %></p>
