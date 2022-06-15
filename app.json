@@ -22,7 +22,7 @@
       "value": "ChangeMeN0W!"
     }
   },
-  "scripts": { "postdeploy": "deploymentscripts/lib/bash/heroku-postdeploy.sh" },
+  "scripts": { "postdeploy": "bin/rails r deploymentscripts/lib/ruby/create_user.rb $USER_EMAIL $USER_PASS" },
 
   "keywords": ["haven", "private", "blog", "rss", "ruby", "rails"]
 }
