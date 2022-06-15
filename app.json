@@ -1,6 +1,7 @@
 {
   "name": "Haven",
   "description": "Run your own private blog instead of using Facebook",
+  "website": "https://havenweb.org",
   "repository": "https://github.com/havenweb/haven",
   "logo": "https://havenweb.org/512.png",
   "buildpacks": [
@@ -11,10 +12,18 @@
     "HAVEN_DEPLOY":{
       "description": "Where to store uploaded images (set to 'local' for Heroku)",
       "value": "local"
+    },
+    "USER_EMAIL":{
+      "description": "Your email, used create the first user account on your Haven",
+      "value": "you@example.com"
+    },
+    "USER_PASS":{
+      "description": "The initial password for the first user account",
+      "value": "ChangeMe"
     }
   },
-  "scripts": { "postdeploy": "bin/rails db:migrate" },
+  "scripts": { "postdeploy": "deploymentscripts/lib/bash/heroku-postdeploy.sh" },
 
-  "keywords": ["haven", "ruby", "rails"]
+  "keywords": ["haven", "private", "blog", "rss", "ruby", "rails"]
 }
 
