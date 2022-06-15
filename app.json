@@ -19,7 +19,7 @@
     },
     "USER_PASS":{
       "description": "The initial password for the first user account",
-      "value": "ChangeMe"
+      "value": "ChangeMeN0W!"
     }
   },
   "scripts": { "postdeploy": "deploymentscripts/lib/bash/heroku-postdeploy.sh" },

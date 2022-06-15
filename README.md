@@ -22,6 +22,8 @@ The following are some motivating philosophies:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/havenweb/haven/tree/deploy_to_heroku)
 
+Note that the Heroku install is only for exploration and experimentation.  It will be difficult to update your Haven when installed in this method and images uploaded to your Haven will usually disapear within 24 hours.
+
 ## AWS
 * Register an account with AWS, the included scripts deploy to an AWS EC2 instance
 * Buy a domain with AWS route 53, this is the domain that will point to the blog
