@@ -3,6 +3,16 @@
   "description": "Run your own private blog instead of using Facebook",
   "repository": "https://github.com/havenweb/haven",
   "logo": "https://havenweb.org/512.png",
+  "buildpacks": [
+    { "url": "heroku/nodejs" },
+    { "url": "heroku/ruby" }
+  ],
+  "env": {
+    "HAVEN_DEPLOY":{
+      "description": "Where to store uploaded images",
+      "value": "local"
+    }
+  },
   "keywords": ["haven", "ruby", "rails"]
 }
 
