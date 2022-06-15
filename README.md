@@ -17,6 +17,11 @@ The following are some motivating philosophies:
 * Build-in RSS reader to follow your favorite blogs.
 
 # Deployment
+
+## Heroku
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/havenweb/haven/tree/deploy_to_heroku)
+
 ## AWS
 * Register an account with AWS, the included scripts deploy to an AWS EC2 instance
 * Buy a domain with AWS route 53, this is the domain that will point to the blog

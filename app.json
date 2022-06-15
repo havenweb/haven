@@ -1,0 +1,8 @@
+{
+  "name": "Haven",
+  "description": "Run your own private blog instead of using Facebook",
+  "repository": "https://github.com/havenweb/haven",
+  "logo": "https://havenweb.org/512.png",
+  "keywords": ["haven", "ruby", "rails"]
+}
+
