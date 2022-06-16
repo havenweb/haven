@@ -10,6 +10,12 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <% unless current_user.nil? %>
+      <% rss_user = current_user.basic_auth_username
+         rss_pass = current_user.basic_auth_password
+         scheme, host = request.base_url.split("//") %>
+      <link rel="alternate" type="application/rss+xml" title="<%=@settings.title%> RSS" href="<%="#{scheme}//#{rss_user}:#{rss_pass}@#{host}/rss"%>">
+    <% end %>
     <% if !!@settings and !!@settings.font_hash %>
       <link rel="stylesheet" type="text/css" href="/css/<%= @settings.font_hash %>/fonts.css" />
     <% end %>
