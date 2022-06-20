@@ -41,6 +41,23 @@ class FeedsController < ApplicationController
     redirect_to :feeds
   end
 
+  ## called by browser extensions that identify a feed
+  def external_subscribe
+    feed_url = params[:feed]
+    if feed_url.nil? or feed_url.empty?
+      flash[:alert] = "No feed was specified"
+    else
+      flashes = add_feed(feed_url)
+      flashes[:notices].each do |n|
+        flash[:notice] = n
+      end
+      flashes[:alerts].each do |a|
+        flash[:alert] = a
+      end
+    end
+    redirect_to :feeds
+  end
+
   def create
     if params[:feed][:url].nil? or params[:feed][:url].empty?
       flash[:alert] = "You didn't enter an address for a web feed"
