@@ -14,9 +14,9 @@ echo 'eval "$(rbenv init -)"' >> ~/.bashrc
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install 2.7.2
-rbenv global 2.7.2
-gem install bundler -v 1.17.2 --no-document
+RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install 2.7.6
+rbenv global 2.7.6
+gem install bundler -v 1.17.3 --no-document
 
 #### Nginx And Passenger #### https://www.phusionpassenger.com/library/install/nginx/install/oss/bionic/
 sudo apt-get install -y nginx

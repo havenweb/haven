@@ -10,7 +10,7 @@ ami = "ami-06f2f779464715dc5" # Ubuntu 18.04 LTS 64bit x86
 instance_type = 't3a.micro'
 region = 'us-west-2'
 az = 'us-west-2a'
-ruby_version = "2.7.2"
+ruby_version = "2.7.6"
 
 ## Parameter Parsing
 
