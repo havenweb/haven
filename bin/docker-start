@@ -1,0 +1,9 @@
+#!/bin/bash
+set -e
+
+bin/rails db:create db:migrate
+bin/rails assets:precompile
+
+bin/rails r ./deploymentscripts/lib/ruby/create_user.rb "admin@havenweb.org" ChangeMeN0W
+
+bin/rails s -e production -p 3000

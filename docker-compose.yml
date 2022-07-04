@@ -1,0 +1,44 @@
+version: '3.7'
+services:
+  haven:
+    build:
+      dockerfile: Dockerfile
+    depends_on:
+      - postgresql
+    ports:
+      - "3000:3000"
+    volumes:
+      - haven_storage:/storage
+    environment:
+      - RAILS_ENV=production
+      - HAVEN_DB_HOST=postgresql
+      - HAVEN_DB_NAME=haven
+      - HAVEN_DB_ROLE=haven
+      - HAVEN_DB_PASSWORD=supersecretrandomstring
+
+  postgresql:
+    image: postgres:13.2-alpine
+    ports:
+      - "5432:5432"
+    # https://www.postgresql.org/docs/current/static/non-durability.html
+    command: [
+      "postgres",
+      "-c", "max_connections=1000",
+      "-c", "synchronous_commit=off",
+      "-c", "fsync=off",
+      "-c", "full_page_writes=off",
+      "-c", "max_wal_size=4GB",
+      "-c", "checkpoint_timeout=30min",
+      "-c", "wal_level=logical"
+    ]
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: haven
+    volumes:
+      - postgresqldata:/var/lib/postgresql/data
+
+volumes:
+  postgresqldata:
+    external: false
+  haven_storage:
+    external: false
