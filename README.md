@@ -59,7 +59,8 @@ Note, this requires a little bit more technical knowledge.  You should know how 
 Fully managed hosting of your personal Haven is available too, check out: https://havenweb.org/order.html
 
 ## Docker
-Docker deployment is a work-in-progress and untested.  Feel free to checkout the `local` branch which has a Dockerfile you can experiment with.
+
+Docker deployment is a work-in-progress.  Feel free to experiment with the included `Dockerfile` and `docker-compose.yml`.
 
 ## Other Linux Systems
 
