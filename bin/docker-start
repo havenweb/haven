@@ -4,6 +4,6 @@ set -e
 bin/rails db:create db:migrate
 bin/rails assets:precompile
 
-bin/rails r ./deploymentscripts/lib/ruby/create_user.rb "admin@havenweb.org" ChangeMeN0W
+bin/rails r ./deploymentscripts/lib/ruby/create_user.rb "$HAVEN_USER_EMAIL" $HAVEN_USER_PASS
 
 bin/rails s -e production -p 3000

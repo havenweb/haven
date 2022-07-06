@@ -13,4 +13,9 @@ if !(EMAIL =~ URI::MailTo::EMAIL_REGEXP)
   exit(1)
 end
 
-User.create! email: "#{EMAIL}", name: "", admin: 1, password: "#{PASS}", basic_auth_username: Devise.friendly_token.first(10), basic_auth_password: Devise.friendly_token.first(10), image_password: Devise.friendly_token.first(20)
+existing_user = User.find_by(email: "#{EMAIL}")
+if existing_user.nil?
+  User.create! email: "#{EMAIL}", name: "", admin: 1, password: "#{PASS}", basic_auth_username: Devise.friendly_token.first(10), basic_auth_password: Devise.friendly_token.first(10), image_password: Devise.friendly_token.first(20)
+else
+  puts "User with email #{EMAIL} already exists, skipping user creation"
+end

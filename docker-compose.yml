@@ -15,6 +15,8 @@ services:
       - HAVEN_DB_NAME=haven
       - HAVEN_DB_ROLE=haven
       - HAVEN_DB_PASSWORD=supersecretrandomstring
+      - HAVEN_USER_EMAIL=changeme@havenweb.org
+      - HAVEN_USER_PASS=ChangeMeN0W
 
   postgresql:
     image: postgres:13.2-alpine

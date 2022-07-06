@@ -60,7 +60,7 @@ Fully managed hosting of your personal Haven is available too, check out: https:
 
 ## Docker
 
-Docker deployment is a work-in-progress.  Feel free to experiment with the included `Dockerfile` and `docker-compose.yml`.
+Feel free to use the included `Dockerfile` and `docker-compose.yml`.  You probably want to modify the env vars in `docker-compose.yml` to specify a different `HAVEN_USER_EMAIL` and `HAVEN_USER_PASS`.  These will be used to create you initial user (and password) on startup.
 
 ## Other Linux Systems
 
