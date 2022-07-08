@@ -2,6 +2,7 @@ version: '3.7'
 services:
   haven:
     build:
+      context: .
       dockerfile: Dockerfile
     depends_on:
       - postgresql
