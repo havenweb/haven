@@ -25,7 +25,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
           
     - name: Push image to GitHub
-      if: github.ref == 'refs/heads/main'
+      if: github.ref == 'refs/heads/master'
       run: |
         docker push ghcr.io/havenweb/haven:$(date +%s)
         docker push ghcr.io/havenweb/haven:latest
