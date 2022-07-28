@@ -1,0 +1,4 @@
+SHELL=/bin/bash
+BASH_ENV=/root/container.env
+
+7 * * * * /bin/rails r UpdateFeedJob.perform_now >> /var/log/cron.log 2>&1

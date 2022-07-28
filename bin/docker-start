@@ -1,9 +1,14 @@
 #!/bin/bash
 set -e
 
+
 bin/rails db:create db:migrate
 bin/rails assets:precompile
 
 bin/rails r ./deploymentscripts/lib/ruby/create_user.rb "$HAVEN_USER_EMAIL" $HAVEN_USER_PASS
+
+chmod +x /deploymentscripts/lib/docker/copy_env.sh
+/deploymentscripts/lib/docker/copy_env.sh
+cron
 
 bin/rails s -e production -p 3000
