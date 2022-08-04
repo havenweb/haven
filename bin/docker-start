@@ -1,8 +1,9 @@
 #!/bin/bash
+
+set +e ## allow startup to continue if operating in a shared DB without creation permissions
+bin/rails db:create 
 set -e
-
-
-bin/rails db:create db:migrate
+bin/rails db:migrate
 bin/rails assets:precompile
 
 bin/rails r ./deploymentscripts/lib/ruby/create_user.rb "$HAVEN_USER_EMAIL" $HAVEN_USER_PASS
