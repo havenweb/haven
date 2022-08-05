@@ -36,6 +36,7 @@ The Heroku install is meant for exploration and experimentation as images upload
 * The script will show you your login information, enjoy your blog
 * Note: if anything goes wrong, you can run `ruby cleanup-aws.rb <domain>` to tear down everything the script created
 * If you get this error: `cannot load such file -- aws-sdk-ec2 (LoadError)`, then type `gem install aws-sdk` and try again
+
 ## Raspberry Pi
 Note, this requires a little bit more technical knowledge.  You should know how to flash an SD card and how to use the tools `ssh` and `scp`.  You should also be able to configure your own DNS and port forwarding. We're doing this fully headless, not plugging in a display or mouse/keybord to the Raspberry Pi.
 * Configure your DNS to point to your home IP address.
@@ -61,6 +62,8 @@ Fully managed hosting of your personal Haven is available too, check out: https:
 ## Docker
 
 Feel free to use the included `Dockerfile` and `docker-compose.yml`.  You probably want to modify the env vars in `docker-compose.yml` to specify a different `HAVEN_USER_EMAIL` and `HAVEN_USER_PASS`.  These will be used to create you initial user (and password) on startup.
+
+Docker images are published to the [GitHub Container Registry](https://github.com/havenweb/haven/pkgs/container/haven)
 
 ## Other Linux Systems
 
