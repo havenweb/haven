@@ -22,7 +22,7 @@ The following are some motivating philosophies:
 
 [![Run on PikaPods](https://www.pikapods.com/static/run-button.svg)](https://www.pikapods.com/pods?run=haven)
 
-PikaPods is a great platform for hosting open source apps. They currently offer a $5 credit for new members and it costs as little as $1.64/month to host your Haven on PikaPods.
+PikaPods is a great platform for hosting open source apps. They currently offer a $5 credit for new members and it costs as little as $1.64/month to host your Haven on PikaPods.  You don't even need to give them a credit card to get the $5 credit and try out Haven for a couple of months.
 
 ## Heroku
 
