@@ -24,11 +24,9 @@ The following are some motivating philosophies:
 
 PikaPods is a great platform for hosting open source apps. They currently offer a $5 credit for new members and it costs as little as $1.64/month to host your Haven on PikaPods.  You don't even need to give them a credit card to get the $5 credit and try out Haven for a couple of months.
 
-## Heroku
+## KubeSail
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/havenweb/haven)
-
-The Heroku install is meant for exploration and experimentation as images uploaded to your Haven will usually disapear within 24 hours and the reader will not automatically update until you visit the reader page.  The Heroku install requires a Heroku account and should fall under Heroku's free-tier.
+[KubeSail](https://kubesail.com/) is a self-hosting platform that makes it easier to run a server in your home or office that runs websites & apps.  You can install Haven on Kubesail with the following Kubesail template: https://kubesail.com/template/jphj/haven
 
 ## AWS
 * Register an account with AWS, the included scripts deploy to an AWS EC2 instance
@@ -60,6 +58,12 @@ Note, this requires a little bit more technical knowledge.  You should know how 
 * Wait.  On the Raspberry Pi Zero W, installation can take over three hours.
 * The script will give you your initial login information, enjoy your new blog!
 * Note, there are no backups setup.  You may want to backup the database (PostgreSQL) and uploaded images (`/home/pi/simpleblog/storage`).
+
+## Heroku
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/havenweb/haven)
+
+The Heroku install is meant for exploration and experimentation as images uploaded to your Haven will usually disapear within 24 hours and the reader will not automatically update until you visit the reader page.  The Heroku install requires a Heroku account ~and should fall under Heroku's free-tier~. Update: Heroku is [eliminating their free tier](https://help.heroku.com/RSBRUH58/removal-of-heroku-free-product-plans-faq), Haven on Heroku will probably cost ~$16/month.
 
 ## Paid Hosting
 
