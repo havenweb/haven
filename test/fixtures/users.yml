@@ -4,8 +4,24 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+washington: 
+  id: 1
+  name: George Washington
+  email: george@washington.com
+  admin: 1 # is an admin
+  basic_auth_username: gkx9ZsPhaC
+  basic_auth_password: eyv96EFFz7
+  image_password: uRtK_yw1S5_Q5ufbyyUx
+#  password: georgepass
+  encrypted_password: <%= User.new.send(:password_digest, 'georgepass') %>
+
+lincoln: 
+  id: 2
+  name: Abraham Lincoln
+  email: abraham@lincoln.com
+  admin: 0 # is a subscriber
+  basic_auth_username: akx9ZsPhaC
+  basic_auth_password: gyv96EFFz7
+  image_password: tRtK_yw1S5_Q5ufbyyUx
+#  password: lincolnpass
+  encrypted_password: <%= User.new.send(:password_digest, 'lincolnpass') %>

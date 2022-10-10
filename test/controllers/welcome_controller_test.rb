@@ -1,9 +1,9 @@
 require 'test_helper'
 
 class WelcomeControllerTest < ActionDispatch::IntegrationTest
-  test "should get index" do
-    get welcome_index_url
-    assert_response :success
+  test "should redirec to login" do
+    get '/'
+    assert_redirected_to posts_url
   end
 
 end

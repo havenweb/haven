@@ -1,15 +1,12 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  subtitle: MyString
-  author: MyString
-  visibility: MyString
-  css: MyText
-
-two:
-  title: MyString
-  subtitle: MyString
-  author: MyString
-  visibility: MyString
-  css: MyText
+  title: TestHavenTitle
+  subtitle: TestHavenSubtitle
+  visibility: private
+  css: 
+  compiled_css:
+  byline: true
+  comments: true
+  font_hash:
+  show_post_date: false
