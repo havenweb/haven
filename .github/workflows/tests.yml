@@ -39,17 +39,12 @@ jobs:
 
     - name: Build App
       env:
-        PGHOST: localhost
-        PGUSER: postgres
-        PGPASSWORD: postgres
         RAILS_ENV: test
       run: |
         bin/rails db:setup
 
     - name: Run Tests
       env:
-        PG_USER: postgres
-        PG_PASSWORD: postgres
         RAILS_ENV: test
       run: |
         bin/rails test
