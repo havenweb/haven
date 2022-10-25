@@ -29,6 +29,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - run: sudo apt-get -qqy install google-chrome-stable
+
     - name: Setup chrome driver (for Selenium)
       uses: nanasess/setup-chromedriver@v1
 
@@ -48,8 +50,6 @@ jobs:
     - name: Build App
       env:
         PGHOST: localhost
-        PGUSER: postgres
-        PGPASSWORD: postgres
         RAILS_ENV: test
       run: |
         bin/rails db:setup
@@ -57,8 +57,6 @@ jobs:
     - name: Run Tests
       env:
         PGHOST: localhost
-        PGUSER: postgres
-        PGPASSWORD: postgres
         RAILS_ENV: test
       run: |
         bin/rails test
