@@ -64,5 +64,5 @@ jobs:
         RAILS_ENV: test
       run: |
         bin/rails test
-        bin/rails test:system
+  #      bin/rails test:system
 
