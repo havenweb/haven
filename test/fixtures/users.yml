@@ -12,7 +12,6 @@ washington:
   basic_auth_username: gkx9ZsPhaC
   basic_auth_password: eyv96EFFz7
   image_password: uRtK_yw1S5_Q5ufbyyUx
-#  password: georgepass
   encrypted_password: <%= User.new.send(:password_digest, 'georgepass') %>
 
 lincoln: 
@@ -23,5 +22,14 @@ lincoln:
   basic_auth_username: akx9ZsPhaC
   basic_auth_password: gyv96EFFz7
   image_password: tRtK_yw1S5_Q5ufbyyUx
-#  password: lincolnpass
   encrypted_password: <%= User.new.send(:password_digest, 'lincolnpass') %>
+
+Jackson: 
+  id: 3
+  name: Andrew Jackson
+  email: andrew@jackson.com
+  admin: 2 # is a publisher
+  basic_auth_username: bkx9ZsPhaC
+  basic_auth_password: hyv96EFFz7
+  image_password: vRtK_yw1S5_Q5ufbyyUx
+  encrypted_password: <%= User.new.send(:password_digest, 'jacksonpass') %>
