@@ -1,16 +1,10 @@
 require "application_system_test_case"
+require_relative 'systemtest_helpers.rb'
 
 class ActionsTest < ApplicationSystemTestCase
   test_users = {washington: {email: "george@washington.com", pass: "georgepass"}, # admin
                 jackson: {email: "andrew@jackson.com", pass: "jacksonpass"},      # publisher
                 lincoln: {email: "abraham@lincoln.com", pass: "lincolnpass"}}     # subscriber
-
-  def log_in_with(u) # u is a hash with fields email: and pass:
-    visit root_url
-    fill_in "user_email", with: u[:email]
-    fill_in "user_password", with: u[:pass]
-    click_on "Log in"
-  end
 
   test "visiting the index" do
     visit root_url
