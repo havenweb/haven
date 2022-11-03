@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   end 
   
   def verify_publisher
-    if current_user.admin < 1
+    if current_user.admin < 1 # 1 is admin, 2 is publisher
       redirect_to posts_path
     end
   end
