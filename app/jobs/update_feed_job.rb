@@ -114,17 +114,20 @@ class UpdateFeedJob < ApplicationJob
   end
 
   def fetch_feed_title(feed_url)
-    cleanurl, auth_opts = parse_auth(feed_url)
-    URI.open(cleanurl, auth_opts) do |rss|
-      feed = RSS::Parser.parse(rss, validate: false)
-      if (feed.feed_type == "rss")
-        return feed.channel.title
-      elsif (feed.feed_type == "atom")
-        return feed.title.content
-      else
-        return "Unknown Feed Type (not RSS or Atom)"
+    if ActivityPub.is_actor? feed_url
+      return ActivityPub.fetch_name feed_url
+    else #RSS or Atom
+      cleanurl, auth_opts = parse_auth(feed_url)
+      URI.open(cleanurl, auth_opts) do |rss|
+        feed = RSS::Parser.parse(rss, validate: false)
+        if (feed.feed_type == "rss")
+          return feed.channel.title
+        elsif (feed.feed_type == "atom")
+          return feed.title.content
+        end
       end
     end
+    return "Unknown Feed Type (not RSS, Atom, or ActivityPub)"
   rescue => e
     logger.error "ERROR when fetching feed #{feed_url} #{e.class} #{e.message}"
     return "Invalid Feed"
@@ -132,6 +135,22 @@ class UpdateFeedJob < ApplicationJob
 
   def fetch_feed_content(feed_url)
     entries = []
+    if ActivityPub.is_actor? feed_url
+      actor_name = ActivityPub.fetch_name(feed_url)
+      ActivityPub.fetch_notes(feed_url).each do |note|
+        entry = {}
+        entry[FEED_TITLE] = actor_name
+        entry[ENTRY_TITLE] = note["type"] # should be "Note"
+        entry[ENTRY_LINK] = note["url"]
+        entry[ENTRY_DATE] = DateTime.iso8601(note["published"]).rfc822
+        entry[ENTRY_CONTENT] = ActivityPub.transform_content(note)
+        entry[ENTRY_GUID] = note["id"]
+        entries << entry
+      end
+      return entries
+    end
+    
+    # otherwise, fetch it as an RSS or Atom feed
     cleanurl, auth_opts = parse_auth(feed_url)
     URI.open(cleanurl, auth_opts) do |rss|
       feed = RSS::Parser.parse(rss, validate: false)

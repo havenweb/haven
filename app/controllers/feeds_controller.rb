@@ -1,4 +1,5 @@
 require 'feedbag'
+require 'activitypub'
 class FeedsController < ApplicationController
   before_action :authenticate_user!
   before_action :verify_admin
@@ -110,9 +111,13 @@ class FeedsController < ApplicationController
   def normalize_feed_url(feed_in)
     feed_url = feed_in.strip
     discovered_urls = Feedbag.find(feed_url) ## RSS Autodiscovery.  see lib/feedbag.rb
-    if discovered_urls.size > 0
+    
+    if ActivityPub.is_actor? feed_url ## see lib/activitypub.rb
+      feed_url = ActivityPub.discover_actor_url feed_url
+    elsif discovered_urls.size > 0
       feed_url = discovered_urls.first
     end
+
     unless (feed_url.start_with? "http")
       feed_url = "https://" + feed_url
     end
@@ -120,14 +125,18 @@ class FeedsController < ApplicationController
   end
 
   def add_feed(feed_url)
-    feed_url_host = URI(feed_url).host
+    feed_url_host = ""
+    begin
+      feed_url_host = URI(feed_url).host
+    rescue
+      # fail silently, if there is no valid host in the URL, then it isn't the current server's url
+      # see "You cannot subscribe to yourself" alert below
+    end
     request_host = URI(request.base_url).host
     matching_feed = Feed.find_by(url: feed_url, user: current_user)
     alerts = []
     notices = []
-    if (feed_url_host == request_host)
-      alerts << "You cannot subscribe to yourself"
-    elsif matching_feed.nil?
+    if matching_feed.nil?
       feed = current_user.feeds.create!(url: feed_url)
       UpdateFeedJob.perform_now(feed)
       if feed.feed_invalid?
@@ -135,6 +144,8 @@ class FeedsController < ApplicationController
       else
         notices << "You've added #{feed.name} to your feeds"
       end
+    elsif (feed_url_host == request_host)
+      alerts << "You cannot subscribe to yourself"
     else # feed already exists
       notices << "You are already subscribed to #{matching_feed.name}"
     end
