@@ -32,11 +32,11 @@ end
 
 <% entry_number = 0 %>
 <% @entries.each do |entry| %>
-  <div id="feed_entry_<%= entry_number %>">
+  <div id="entry_<%= entry_number %>">
     <h1><%= link_to sanitize(entry.title, tags:[], attributes:[]), entry.link, rel: "nofollow", target: "_blank" %></h1>
-    <a href="#feed_entry_<%= entry_number+1 %>" class="feed_entry_skip">[next]</a>
+    <a href="#entry_<%= entry_number+1 %>" class="feed_entry_skip">[next]</a>
   </div>
-  <p><strong><%= entry.feed.name %></strong> <%= entry.published.strftime("%B %e, %Y") %></p>
+  <p><strong><%= link_to sanitize(entry.feed.name, tags:[], attributes:[]), read_feed_path(entry.feed) %></strong> <%= entry.published.strftime("%B %e, %Y") %></p>
   <%= rel_to_abs(sanitize(sanitize(entry.content, scrubber: no_style_or_scripts), tags: safe_tags, attributes: safe_attr), entry.feed.url).html_safe %>
   <% unless entry.audio.nil? %>
     <audio controls>
@@ -46,6 +46,6 @@ end
   <hr>
   <% entry_number += 1 %>
 <% end %>
-<div id="feed_entry_<%= entry_number %>">
+<div id="entry_<%= entry_number %>">
   <%= paginate @entries %>
 </div>
