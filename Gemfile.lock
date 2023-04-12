@@ -77,7 +77,7 @@ GEM
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
     childprocess (4.1.0)
-    commonmarker (0.23.7)
+    commonmarker (0.23.9)
     concurrent-ruby (1.1.10)
     crass (1.0.6)
     css_parser (1.10.0)
