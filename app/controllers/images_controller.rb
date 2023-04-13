@@ -3,12 +3,12 @@ class ImagesController < ApplicationController
   protect_from_forgery with: :exception
 
   def show
-    expires_in ActiveStorage::Blob.service.url_expires_in
+    expires_in ActiveStorage.service_urls_expire_in
     redirect_to @blob.service_url(disposition: params[:disposition])
   end
 
   def show_variant
-    expires_in ActiveStorage::Blob.service.url_expires_in
+    expires_in ActiveStorage.service_urls_expire_in
     variant = @blob.variant(combine_options:{thumbnail: "1600", quality: '65%', interlace: 'plane', auto_orient: true}).processed
     redirect_to variant.service_url(disposition: params[:disposition])
   end
