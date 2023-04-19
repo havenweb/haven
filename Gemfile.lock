@@ -59,7 +59,7 @@ GEM
     addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
     aws-eventstream (1.2.0)
-    aws-partitions (1.746.0)
+    aws-partitions (1.749.0)
     aws-sdk-core (3.171.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
@@ -208,7 +208,7 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rb-readline (0.5.5)
-    regexp_parser (2.7.0)
+    regexp_parser (2.8.0)
     responders (3.1.0)
       actionpack (>= 5.2)
       railties (>= 5.2)
@@ -308,4 +308,4 @@ RUBY VERSION
    ruby 2.7.6p219
 
 BUNDLED WITH
-   1.17.3
+   2.4.12

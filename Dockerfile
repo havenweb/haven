@@ -7,7 +7,7 @@ RUN apt-get update -yqq && \
 	nginx nodejs dirmngr gnupg apt-transport-https ca-certificates npm imagemagick \
         postgresql postgresql-contrib libpq-dev cron && \
 	npm install --global yarn && \
- 	gem install bundler -v 1.17.3 --no-document
+ 	gem install bundler -v 2.4.12 --no-document
 
 ADD Gemfile Gemfile.lock Rakefile config.ru .ruby-version ./
 
@@ -17,9 +17,10 @@ ENV HAVEN_DEPLOY="local"
 ENV RAILS_ENV=production
 ENV RAILS_SERVE_STATIC_FILES=true
 
-RUN bundle update --bundler && \
-    bundle config build.bcrypt --use-system-libraries && \
-    bundle install --deployment --without development test
+RUN bundle config build.bcrypt --use-system-libraries && \
+    bundle config set --local deployment 'true' && \
+    bundle config set --local without 'development test'
+RUN bundle install
 
 # Cron to automatically update feeds
 COPY deploymentscripts/lib/docker/feed-fetch-cron /etc/cron.d/feed-fetch-cron
