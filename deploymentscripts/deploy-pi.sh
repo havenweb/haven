@@ -32,7 +32,7 @@ eval "$(rbenv init -)"
 git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 CONFIGURE_OPTS="--disable-install-doc" rbenv install 2.7.6 --verbose
 rbenv global 2.7.6
-gem install bundler -v 1.17.3 --no-document
+gem install bundler -v 2.4.12 --no-document
 
 # NodeJS and Yarn
 sudo apt-get install -y nodejs && sudo ln -sf /usr/bin/nodejs /usr/local/bin/node

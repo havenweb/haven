@@ -16,7 +16,7 @@ eval "$(rbenv init -)"
 git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install 2.7.6
 rbenv global 2.7.6
-gem install bundler -v 1.17.3 --no-document
+gem install bundler -v 2.4.12 --no-document
 
 #### Nginx And Passenger #### https://www.phusionpassenger.com/library/install/nginx/install/oss/bionic/
 sudo apt-get install -y nginx
