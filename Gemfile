@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.6'
 
 # For configuration files
-gem 'dotenv-rails', '2.7.5'
+gem 'dotenv-rails', '2.7.6'
 
 # For parsing markdown
 gem 'commonmarker', '~> 0.23'
@@ -28,7 +28,7 @@ gem 'bcrypt', '~> 3.1.16'
 gem 'kaminari', '~> 1.2.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.6.1'
+gem 'rails', '~> 6.1.7.3'
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
 gem 'pg', '~> 1.1.4'
@@ -43,9 +43,6 @@ gem 'uglifier', '>= 1.3.0'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
-
-# Use ActiveStorage variant
-# gem 'mini_magick', '~> 4.8'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

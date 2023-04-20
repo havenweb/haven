@@ -9,7 +9,7 @@ class ImagesController < ApplicationController
 
   def show_variant
     expires_in ActiveStorage.service_urls_expire_in
-    variant = @blob.variant(combine_options:{thumbnail: "1600", quality: '65%', interlace: 'plane', auto_orient: true}).processed
+    variant = @blob.variant(thumbnail: "1600", quality: '65%', interlace: 'plane', auto_orient: true).processed
     redirect_to variant.service_url(disposition: params[:disposition])
   end
 
