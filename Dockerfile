@@ -1,4 +1,4 @@
-FROM ruby:2.7.6-slim-buster
+FROM ruby:3.1.4-slim-bullseye
 
 RUN apt-get update -yqq && \
     apt-get install -yqq \
