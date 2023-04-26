@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.6'
+ruby '3.1.4'
 
 # For configuration files
 gem 'dotenv-rails', '2.7.6'
@@ -20,6 +20,8 @@ gem 'rb-readline'
 # Image processing
 gem 'image_processing', '~> 1.12.2'
 
+gem 'rss', '~> 0.2.9'
+
 # For Auth
 gem 'devise', '~> 4.7.1'
 gem 'bcrypt', '~> 3.1.16'
@@ -31,7 +33,7 @@ gem 'kaminari', '~> 1.2.1'
 gem 'rails', '~> 6.1.7.4'
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
-gem 'pg', '~> 1.1.4'
+gem 'pg', '~> 1.2.3'
 # Use Puma as the app server
 gem 'puma', '~> 4.3.12'
 # Use SCSS for stylesheets
@@ -74,9 +76,9 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 3.39'
-  gem 'selenium-webdriver', '~> 4.9.0'
+  gem 'selenium-webdriver', '~> 4.11.0'
   # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'webdrivers', '~> 5.2'
+#  gem 'webdrivers', '~> 5.2'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -30,8 +30,8 @@ echo 'eval "$(rbenv init -)"' >> ~/.bashrc
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-CONFIGURE_OPTS="--disable-install-doc" rbenv install 2.7.6 --verbose
-rbenv global 2.7.6
+CONFIGURE_OPTS="--disable-install-doc" rbenv install 3.1.4 --verbose
+rbenv global 3.1.4
 gem install bundler -v 2.4.12 --no-document
 
 # NodeJS and Yarn
