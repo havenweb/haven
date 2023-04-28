@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+	<channel>
+		<title>Haven Blog</title>
+		<description>All the latest updates and tips for Haven</description>		
+		<link>https://havenweb.org</link>
+		<lastBuildDate>Mon, 10 Apr 2023 00:00:00 +0000</lastBuildDate>
+		
+		
+			<item>
+				<title>Private Comments, or Why I’m Down On Webmentions</title>
+				<description>&lt;p&gt;&lt;img class=&quot;default&quot; src=&quot;https://havenweb.org/assets/images/locked_conversation.jpg&quot; alt=&quot;A speech bubble with a padlock on it.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I love the IndieAuth community, I love what they stand for, and I love a lot of the technology they’ve built and defined.  But I have a hard time getting behind Webmentions, even though they clearly solve a problem that exists and the people who use them love them.  What’s going on here?&lt;/p&gt;
+
+&lt;p&gt;First, some background.  The &lt;a href=&quot;https://indieweb.org/IndieWeb&quot;&gt;IndieWeb&lt;/a&gt; community wants an internet that isn’t dominated by a few giant silos.  They want the internet to be free and open with a rich diversity of ways to interact with it.  When all of your posts and status updates live inside of Facebook or Twitter, then you don’t really own them.  The only way people can see them is to go to Facebook or Twitter and accept whatever comes with that relationship.  The IndieWeb is big on hosting your own content–maybe syndicating it to places like Facebook and Twitter–but making sure you have it available on your own website.&lt;/p&gt;
+
+&lt;p&gt;It is relatively easy to build a blog with Wordpress or Hugo or something else that publishes an RSS feed.  But we are social creatures and one thing that “Web 2.0” taught us was people like to talk and discuss.  The people want comments!  Technically, things get harder when the web gets social–especially when you want to keep owning your content.  The IndieWeb community suggests that owning your content means posting a comment on your own site, and telling the original poster that you’ve got a comment at your site.&lt;/p&gt;
+
+&lt;p&gt;Webmentions are a computer protocol to make this much easier.  Webmentions define how your comment should exist on your site, and how you can tall the original poster (or rather their web site software) about your comment so that it will understand your comment to display it and link back to the source on your site.&lt;/p&gt;
+
+&lt;p&gt;There’s even good precedent for this.  Twitter and Mastodon both work with a very similar semantic.  When you tweet (or toot) a reply, that’s still a tweet you posted which shows up on your own timeline.&lt;/p&gt;
+
+&lt;p&gt;Twitter is a great example too of the issue I take with not just Webmentions, but the model itself.  When anyone with lots of followers tweets something, they get inundated with reply tweets.  Reply tweets have to go through the same algorithmic filtering and ranking to try and separate the signal from the noise.  These are the same algorithms that we &lt;a href=&quot;https://barackobama.medium.com/my-remarks-on-disinformation-at-stanford-7d7af7ba28af&quot;&gt;bemoan for amplifying misinformation&lt;/a&gt;.  But however poorly implemented they are, we need something that plays that role when we want to have anything approaching a useful view of public content where truly anyone can post.  When anyone can post the first problem you run into is spam–before we even get to what legitimate content should be promoted.&lt;/p&gt;
+
+&lt;p&gt;And spam is the core of the problem I have with Webmentions.  They are a tool for letting anyone make unauthenticated posts on your own site.  Today, they are only used by a small group of people within the IndieWeb community–and with such limited usage, there isn’t much value to spammers–but with broader adoption spam would become a huge problem.&lt;/p&gt;
+
+&lt;p&gt;To be fair to the IndieWeb community, I’m not the only person who is worried about spam’s impact on Webmentions.  Wouter Groeneveld has a great article on his website about &lt;a href=&quot;https://brainbaking.com/post/2022/04/fighting-webmention-and-pingback-spam/&quot;&gt;combating Webmention spam&lt;/a&gt;.  He talks a lot about technical details, but ultimately builds for his own site, a content-moderation dashboard to manually approve or reject Webmentions from unknown source.&lt;/p&gt;
+
+&lt;p&gt;Before I built Haven, I tried to build a private blog on Wordpress.  I locked down self-signups with various plugins and I still had to wade through automated spam signup attempts (which were presumably hitting an exposed API directly) every day.  Based on that experience, I don’t even think that requiring manual approval of Webmention replies would be a great solution.  It improves the reading experience for people who visit your site, but forces you as the site owner to do a lot more work curating responses.&lt;/p&gt;
+
+&lt;p&gt;So what is the solution?  The people want comments!  How do we give them comments?&lt;/p&gt;
+
+&lt;p&gt;The answer is two-fold, and it depends on what kind of posting you do.  For very popular publishers, or news organizations that really want to engage with the public in their writing, something like Webmentions would be fine, but the publisher needs to devote the effort to curating the responses.  A great example of this is Scott Alexander of &lt;a href=&quot;https://astralcodexten.substack.com/&quot;&gt;Astral Codex Ten&lt;/a&gt;.  He allows open comments on his posts which he &lt;a href=&quot;https://astralcodexten.substack.com/p/open-thread-249&quot;&gt;moderates heavily&lt;/a&gt;.  A little while after a post, he will often make a separate post with &lt;a href=&quot;https://astralcodexten.substack.com/p/highlights-from-the-comments-on-bobos&quot;&gt;highlights from the comments&lt;/a&gt;. Engaging with an unauthenticated public community is a lot of work and we shouldn’t be satisfied with publishers who add a comment box without actually engaging with their audience.&lt;/p&gt;
+
+&lt;p&gt;For the rest of us who publish socially, I don’t really believe in public comments.  This shouldn’t be much of a surprise, I built Haven because I don’t really believe in public posting in a social context to begin with.  But, we can have something much more interesting.  When you post on your Haven or any other private blog, that post only goes to people who have access to your Haven–your friends and family.  The most interesting conversations that I have about what’s going on in the world are conversations with (surprise!) my friends and family.  What if Haven and other social feed readers let you make comments on public posts, but only shared those comments with people on your Haven.  Now we have &lt;em&gt;private conversations&lt;/em&gt; about &lt;em&gt;public content&lt;/em&gt;.  That is the vision I have for comments on Haven.&lt;/p&gt;
+
+&lt;p&gt;Just to be clear, this doesn’t exist yet in Haven–it is still a vision, but one I’m really excited about!  Today you can let your visitors comment on your own Haven posts, and you can make a post with a link to some public post to talk about it; but these features aren’t built into the reader to make them a pleasure to use.&lt;/p&gt;
+
+&lt;p&gt;So that’s it!  I’m down on Webmentions because their success and popularity will destroy their usability thanks to spam, but a similar model that enables private discussion on public content–right in your feed–could be a real game changer in how we interact socially on the internet.&lt;/p&gt;
+
+</description>
+				<pubDate>Mon, 10 Apr 2023 00:00:00 +0000</pubDate>
+				<link>https://havenweb.org/2023/04/10/private-comments.html</link>
+				<guid isPermaLink="true">https://havenweb.org/2023/04/10/private-comments.html</guid>
+			</item>
+		
+			<item>
+				<title>The Lie That Facebook Sold You</title>
+				<description>&lt;p&gt;&lt;img class=&quot;default&quot; src=&quot;https://havenweb.org/assets/images/pinocchio.jpg&quot; alt=&quot;A blue-colored jester, with a long nose like pinocchio lying.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;What is Facebook?&lt;/p&gt;
+
+&lt;p&gt;For a tool that so many people use every day, the answer is surprisingly difficult to pin-down. It’s a social network, which means it’s about connecting you to other people.  You have friends on Facebook, and it helps you keep in touch with those people.  You get to see what they are up to and they get to see what you are up to.  Right?&lt;/p&gt;
+
+&lt;p&gt;Wrong.&lt;/p&gt;
+
+&lt;p&gt;Facebook &lt;em&gt;should&lt;/em&gt; be those things.  It used to and it even pretends to still be those things–but it isn’t.  That’s the lie that gets you in the door, and then Facebook uses every nasty trick it can to do one thing: &lt;strong&gt;keep you scrolling&lt;/strong&gt;.  As long as you’re scrolling you’re looking at Facebook ads.  As long as you’re scrolling, your likes and even the pauses while you read something are signaling to Facebook what is engaging to you and might be engaging to someone else–so that they will keep scrolling, and looking at ads. Over the last quarter of 2021, Facebook made over $60 per user In the US and Canada&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;p&gt;Keeping up-to-date with your friends just doesn’t keep you scrolling long enough to show you that many ads.  Once you are on Facebook, it becomes a game of attention.  That means the competitors to Facebook aren’t other (potential) social networks.  They are the competitors for your online time: Youtube, TikTok, Netflix, Twitter, etc.  TikTok is a hit because it has an algorithm that is so well-tuned to feed people things that will keep them scrolling–and the future of Facebook looks a lot like TikTok.&lt;/p&gt;
+
+&lt;p&gt;This leaves an open question: how do you keep in touch with your friends online?  Can we build a safe space which serves that need without falling down the rabbit hole of fighting for engagement?  For example, your email doesn’t fight for your engagement.  You read your emails and get caught up–and then move on with your day.&lt;/p&gt;
+
+&lt;p&gt;In the early web, there was a problem.  Lots of people and companies ran websites and you as a user wanted to see the updates from all of these sites.  You could keep a list of bookmarks, and each day check every site for new updates, or you could use &lt;a href=&quot;https://en.wikipedia.org/wiki/RSS&quot;&gt;RSS&lt;/a&gt;.  RSS was a tool for aggregating updates from many different websites. RSS was built right into all of the major browsers, as central a feature as the bookmark.  Unfortunately, RSS wasn’t very good at tracking users or delivering ads so it was slowly removed from all the major browsers.  However, most web sites and blogs still serve RSS, and you can even use it for private things!&lt;/p&gt;
+
+&lt;p&gt;All of this means that RSS is an amazing tool for curating your own feed of information, and that’s why Haven uses RSS as the core means to connect between Havens.  The &lt;a href=&quot;https://havenweb.org/2022/01/29/haven-reader.html&quot;&gt;Haven Reader&lt;/a&gt; gives you the power to build your own feed from all the public websites and blogs you want to follow, and also follow your friends and family who write on their own Havens.  All without anyone tracking you around the web or serving your ads.  With Haven, you are in control because you run your own site.&lt;/p&gt;
+
+&lt;p&gt;Google used to have a guiding principle, “Don’t be evil.”  As the company has grown and it has become more ambitious, it dropped that principle. The incentives for any company are to make money.  For a company that runs a social network, that means exploiting users for their information and attention.  That’s why Haven isn’t a company and you can’t just sign up in one place.  Haven is software which is free, and which you can run anywhere you want.  This keeps the incentives as pure as possible.  Haven uses RSS–an open protocol–which means anyone else can write their own Haven-alternative and still share with all the people using Haven.  The network is as big as the internet, it isn’t siloed off behind one company.&lt;/p&gt;
+
+&lt;p&gt;So take the next step.  Explore one of the &lt;a href=&quot;https://github.com/havenweb/haven#deployment&quot;&gt;many ways&lt;/a&gt; you can run your own Haven and give it a try!&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://s21.q4cdn.com/399680738/files/doc_financials/2021/q4/Q4-2021_Earnings-Presentation-Final.pdf &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+				<pubDate>Wed, 02 Nov 2022 00:00:00 +0000</pubDate>
+				<link>https://havenweb.org/2022/11/02/facebook-lie.html</link>
+				<guid isPermaLink="true">https://havenweb.org/2022/11/02/facebook-lie.html</guid>
+			</item>
+		
+			<item>
+				<title>My Initial Thoughts on Bluesky's AT Protocol</title>
+				<description>&lt;p&gt;&lt;img class=&quot;default&quot; src=&quot;https://havenweb.org/assets/images/bluesky.jpg&quot; alt=&quot;An oil painting of electric wires running across a blue sky&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://blueskyweb.xyz/&quot;&gt;Bluesky&lt;/a&gt; is a project/company that came from somewhere inside of Twitter or Jack Dorsey.  They’re moving forward with the idea that Twitter (or its replacement) should operate with an open protocol so that users can move between different hosting providers.  Under this vision, Twitter would just be one provider but the protocol would be compatible with people who want to run their own servers and still tweet at each other.&lt;/p&gt;
+
+&lt;p&gt;I’m a big fan of open protocols, that’s a commitment I’ve made in building Haven on top of RSS.  Bluesky decided to design their own protocol called AT, and shared an &lt;a href=&quot;https://atproto.com/&quot;&gt;initial preview&lt;/a&gt; yesterday.  I decided to write down some of my initial thoughts.&lt;/p&gt;
+
+&lt;p&gt;This is going to be a little bit of a technical post, so if that isn’t as interesting to you I’ll lead off with my general conclusion.  Open protocols are great!  If Twitter was built on something like this, then Haven could let you follow people on Twitter.  That said, building a new protocol from scratch instead of working with an existing protocol community (like ActivityPub) means we fracture the ways that systems can talk to each other.&lt;/p&gt;
+
+&lt;p&gt;Account mobility is hard.  In this case it means having an identifier that your friends can use to find you no matter where you live.  Imagine having an email address that you could move from Gmail to Yahoo Mail to Outlook, and all the emails would keep reaching you.  That’s the goal here.  And it’s a good goal!  Account migration is one of the big missing pieces in Haven, but even when it’s ready, you’ll have problems if you can’t bring your domain with you.  Bluesky defines a Distributed Identifier (DID) as an abstraction layer that lets you point to wherever you live right now.  Neat idea, but we’ll see if it works out.&lt;/p&gt;
+
+&lt;p&gt;If your account is mobile, then you need a way to prove that you actually wrote things that seem to come from you.  This is where cryptography comes in.  Instead of just trusting whichever server your DID points to, each message is cryptographically signed with a secret key.  As soon as we have cryptographic keys involved, any software gets much more complicated.  In general I lead towards signing as few things as possible.  In AT, I think they expect users to provide their signing keys to the hosting provider directly, which misses a lot of the value you get from having a user sign their own messages.  But key management is hard and I don’t expect most users to do it right (I haven’t even figured out how I would do it right!)  Haven uses domain as ID, and SSL as the only cryptography.  SSL certificates can be reissued as needed, so there is no need for long-term key management.  If we get to a place where everyone has and controls their own domain, then we don’t need an abstraction layer or extra cryptography–your domain is the authoritative source for what you did or did not say.&lt;/p&gt;
+
+&lt;p&gt;AT defines a new remote-procedure-call format, which they call XRPC.  It seems like this is mostly HTTPS/REST with built-in schema migrations.  Schema migrations are important for a versioned API that can evolve, but this is already a solved problem with things like gRPC or Avro before it.  Maybe they thought that an HTTPS and JSON API would be easier to build against but it seems like an unnecessary extra layer to reinvent.&lt;/p&gt;
+
+&lt;p&gt;On the whole there is a lot of good stuff, but I worry about the ability for it to stay an open standard.  Today Google has dominant browser market share with Chrome, so they get to dictate new web standards just by building them into Chrome.  If Bluesky is the behemoth using the AT Protocol and there are a few smaller groups also offering hosting, they might always be struggling to keep up with protocol changes that get forced into the ecosystem.  But even that would be better than locked down APIs that prevent you today from reading Twitter unless you’re on the Twitter website or App.&lt;/p&gt;
+
+</description>
+				<pubDate>Wed, 19 Oct 2022 00:00:00 +0000</pubDate>
+				<link>https://havenweb.org/2022/10/19/bluesky.html</link>
+				<guid isPermaLink="true">https://havenweb.org/2022/10/19/bluesky.html</guid>
+			</item>
+		
+			<item>
+				<title>Haven is now available on PikaPods</title>
+				<description>&lt;p&gt;&lt;img class=&quot;default&quot; src=&quot;https://havenweb.org/assets/images/pika.jpg&quot; alt=&quot;A rabbit-mouse wearing a suit&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You might have noticed a new “Run on PikaPods” button in the Haven &lt;a href=&quot;https://github.com/havenweb/haven&quot;&gt;Readme&lt;/a&gt; file.&lt;/p&gt;
+
+&lt;p&gt;&lt;a class=&quot;nostyle&quot; href=&quot;https://www.pikapods.com/pods?run=haven&quot;&gt;&lt;img src=&quot;https://www.pikapods.com/static/run-button.svg&quot; alt=&quot;Run on PikaPods&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.pikapods.com&quot;&gt;PikaPods&lt;/a&gt; is a company that offers very economical paid hosting for open source projects like Haven.  As of today, if you sign up with PikaPods you get a free $5 credit without needing to add a credit card.  PikaPods only charges $1.64 per month to run your Haven, so you get 3 months free to try out Haven before you have to start paying!  In this post, we’ll talk about how to setup your own Haven on PikaPods.&lt;/p&gt;
+
+&lt;p&gt;Before we get started, I want to talk about what it means to run a Haven.  Your Haven is yours, it is your own site.  You have an account on your Haven and you create accounts for your friends and family on your Haven.  All of those accounts are only for &lt;em&gt;your Haven&lt;/em&gt;.  PikaPods is a hosting provider.  You can pay them to host (or run) a Haven for you.  To do that you need an account with PikaPods.  The PikaPods account is different than your Haven account.  You have to sign up with PikaPods to use PikaPods and you use your PikaPods account to create a new Haven, or to pay them, or to shut down your Haven.  You use your Haven account to sign into and use your Haven.&lt;/p&gt;
+
+&lt;p&gt;Now, go ahead and click on that green “Run on PikaPods” button.  It will bring you to the PikaPods website where you need to register for a PikaPods account.&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;screenshot&quot; width=&quot;50%&quot; src=&quot;https://havenweb.org/assets/images/pikapods/01-login.png&quot; alt=&quot;PikaPods login page&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Click the “register” button to create your PikaPods account, or simply log in if you’ve already created an account.  Once you’re logged in, you can create a new Pod to run your Haven.  The new pod page looks like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;screenshot&quot; width=&quot;50%&quot; src=&quot;https://havenweb.org/assets/images/pikapods/02-addpod.png&quot; alt=&quot;PikaPods Add a New Pod&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Your app is “Haven”, and you can name your Pod.  With PikaPods you might run multiple different pods, for example you might run another Haven for a friend.  The Pod name helps you to keep track of which Pod is which.  Before clicking that “ADD POD” button, we need to do one more thing, add the account information for your Haven account.  We do that on the “ENV VARS” tab on the left.&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;screenshot&quot; width=&quot;50%&quot; src=&quot;https://havenweb.org/assets/images/pikapods/03-envvar.png&quot; alt=&quot;PikaPods Set Env Vars&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Here you enter the login information you want to use for your account on your Haven.  Enter your email (Haven never sends any emails) and pick a password.  Once your Haven is running, you will use this email and password to log in to it.  Now you can click the “ADD POD” button and wait a couple minutes for your pod to start up.  Once it is ready you’ll see information about your pod, along with a “OPEN POD” link to visit your new Haven for the first time!&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;screenshot&quot; width=&quot;50%&quot; src=&quot;https://havenweb.org/assets/images/pikapods/04-pod.png&quot; alt=&quot;PikaPods View Pod&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Click that “OPEN POD” link and you’ll be on your new Haven’s login screen.  Login with the email and password you setup for your Haven and you’re all set!  Congratulations on your new Haven!&lt;/p&gt;
+
+</description>
+				<pubDate>Wed, 10 Aug 2022 00:00:00 +0000</pubDate>
+				<link>https://havenweb.org/2022/08/10/pikapods.html</link>
+				<guid isPermaLink="true">https://havenweb.org/2022/08/10/pikapods.html</guid>
+			</item>
+		
+			<item>
+				<title>Some thoughts on 'Some thoughts on walled gardens'</title>
+				<description>&lt;p&gt;&lt;img class=&quot;default&quot; src=&quot;https://havenweb.org/assets/images/walled_garden.jpg&quot; alt=&quot;A flower garden in front of a heavy wooden door in a stone wall&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://indieweb.org/&quot;&gt;IndieWeb&lt;/a&gt; is an awesome community of people building their own websites.  In their words it “is a people-focused alternative to the corporate web.”  James is a blogger who I found through that community and this morning he has a post titled &lt;a href=&quot;https://jamesg.blog/2022/06/07/walled-gardens/&quot; class=&quot;u-in-reply-to&quot;&gt;Some thoughts on walled gardens&lt;/a&gt;.  It’s a topic very relevant to Haven since I think Haven offers an excellent path away from the walled gardens that own more and more of the internet, so I’m sharing some of my own thoughts.&lt;/p&gt;
+
+&lt;p&gt;One of James’ first thoughts focuses on money and incentives.  Facebook/Instagram/Twitter/etc capture the value of their networks by closing them off.  Unfortunately, the value they are capturing is the ability to sell attention to advertizers–they buy that attention with all of the posts and status updates that their users add.  James is spot on when he asks (rhetorically), “How does a social network make money if all data on the platform can be represented in a third-party client?”&lt;/p&gt;
+
+&lt;p&gt;The IndieWeb community answers this questions by saying that there should be no platform.&lt;/p&gt;
+
+&lt;p&gt;Think about that for a minute.  Online communication without a platform.  Imagine a group of people walking around in a public park.  Some of them are friends, others have never seen each other.  They can all have conversations by talking directly to each other.  There is no platform.  In this story, a platform might mean that there is a giant billboard hovering over the park, and to talk to anyone you send a message to be displayed on the giant billboard.  This story breaks down of course, because systems like Facebook let us talk to people who are far away from us, where we &lt;em&gt;need&lt;/em&gt; some tool.  But maybe we want something more like a telephone network instead of a giant billboard.&lt;/p&gt;
+
+&lt;p&gt;James talks about how “There are technologies and standards being incubated in the IndieWeb community that look at how we can build a more open, interoperable, social web.”  He’s right, and there is something refreshing about the philosophy behind the IndieWeb community.  It turns out we have that telephone network, and it’s called the internet.  In building Haven, I’ve taken a lot of inspiration from the IndieWeb.  Their core philosophy is that everyone should have their own web site on their own domain.  By controlling your own web site you can do whatever you want with your data.  Web feeds like RSS can connect the sites together and you can have online social interactions without any centralized platform.&lt;/p&gt;
+
+&lt;p&gt;Haven takes this idea and adds one more thing: privacy.  There is nothing special about Haven which puts up walls around the garden.  I read James’ blog post on my personal Haven’s reader because he publishes a feed–that’s the power of open protocols!  I don’t use my Haven to write for the world, I use my Haven to write for close friends and family.  Haven focuses on privacy because that seems like a huge gap in the tools we have today. The open protocols mean Haven connects to any site, blog, or podcast which publishes RSS, and anybody else can build their own Haven-like system to connect with people using Haven.  There are some really cool ideas that the IndieWeb community has shared with the world which let these distributed networks &lt;em&gt;do&lt;/em&gt; more–things like social readers–which do not exist in Haven yet, but I’m leaning on that inspiration and I have big dreams for what is possible.  I’m holding those dreams accountable however, accountable to a vision that doesn’t require me, accountable to a vision that doesn’t require a platform.&lt;/p&gt;
+
+&lt;p&gt;“people-centric, open experiences on the web” require everyone to have their own presence.  For some people that presence is public, and for others it is private.  I hope Haven makes it easier for people to have a private presense on the web and I hope that people like James keep exploring these ideas so that we as a global community can keep moving in that direction.&lt;/p&gt;
+
+&lt;p&gt;Thanks for the thoughts James!&lt;/p&gt;
+
+</description>
+				<pubDate>Tue, 07 Jun 2022 00:00:00 +0000</pubDate>
+				<link>https://havenweb.org/2022/06/07/walled-gardens.html</link>
+				<guid isPermaLink="true">https://havenweb.org/2022/06/07/walled-gardens.html</guid>
+			</item>
+		
+			<item>
+				<title>Images in Private RSS Feeds</title>
+				<description>&lt;p&gt;&lt;img class=&quot;default&quot; src=&quot;https://havenweb.org/assets/images/keyhole.jpg&quot; alt=&quot;picture of clouds seen through a keyhole&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We designed Haven for private sharing, and we built it on top of a combination of old, boring protocols: RSS feeds, and HTTP Basic Auth.  These are both very standard protocols, but the combination isn’t as popular. HTTP Basic Auth gets treated like a niche or premium feature by some of the feed readers that support it.  This means that there hasn’t been a well-discussed standard for including images in a private RSS feed.&lt;/p&gt;
+
+&lt;p&gt;When a feed reader fetches a private feed using HTTP basic auth, that feed may include images.  Those images can be publicly accessible–in which case there are no issues–or the images can be private.  For private images, we need an additional authentication scheme.  We could propose that the feed reader fetch all images using the same HTTP basic auth credentials, but there are many feed readers and none of them do this.  It also increases the complexity of a feed reader.  Instead of fetching the feed and displaying it–allowing the browser to handle the details–it requires active parsing of the feed content, proxying requests for images and rewriting the feed before displaying it.&lt;/p&gt;
+
+&lt;p&gt;If a user is logged into the site where the feed comes from, then they have a session cookie which their browser will use to fetch the image.  But the point of using feeds is to avoid needing to login to many different sites.&lt;/p&gt;
+
+&lt;p&gt;After a lot of deliberation, we decided that Haven’s private RSS feeds must expose images natively, without any additional features required in the feed reader.  We needed another way to send credentials.&lt;/p&gt;
+
+&lt;p&gt;Haven sends image credentials as query parameters in private feeds.  These are not universal credentials.  We should expect people to share links to images.  If those links contain universal credentials then sharing an image leaks full access to a private source.  Instead we create a unique credential per-user and per-image.  Haven uses an &lt;a href=&quot;https://en.wikipedia.org/wiki/HMAC&quot;&gt;HMAC&lt;/a&gt;, along with a user identifier, and saves a per-user key in the database.  The HMAC is built from the key and the image filename.  The server is then able to reconstruct the HMAC when a request comes in for an image to validate the credential.&lt;/p&gt;
+
+&lt;p&gt;Let’s take a look at the code!&lt;/p&gt;
+
+&lt;p&gt;First, let’s visit the &lt;a href=&quot;https://github.com/havenweb/haven/blob/4d0c37cb7398a92ca28f7d105be8151b05d0047e/db/schema.rb#L134-L136&quot;&gt;User table&lt;/a&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;...
+t.string &quot;basic_auth_username&quot;, null: false
+t.string &quot;basic_auth_password&quot;, null: false
+t.string &quot;image_password&quot;, null: false
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Each user has an email and password-hash for logging, but each user also has three additional fields: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;basic_auth_username&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;basic_auth_password&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;image_password&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;All three of these fields are generated by Haven, and are random strings.  The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;basic_auth_username&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;basic_auth_password&lt;/code&gt; serve as per-user credentials for RSS feeds.  Haven indexes the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;basic_auth_username&lt;/code&gt; for efficient lookup of a user in the database.  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;image_password&lt;/code&gt; is a bit of a misnomer since it isn’t really a password.  Haven uses the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;image_password&lt;/code&gt; as a secret key for generating image credentials.&lt;/p&gt;
+
+&lt;p&gt;Next we can take a look at the code which &lt;a href=&quot;https://github.com/havenweb/haven/blob/4d0c37cb7398a92ca28f7d105be8151b05d0047e/app/views/posts/rss.builder#L10-L18&quot;&gt;generates the RSS feed&lt;/a&gt; itself.  Specifically, there is a global substitution which takes a regular expression and passes each match to a block.&lt;/p&gt;
+
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;image_key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;vi&quot;&gt;@user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;image_password&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;basic_auth_user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;vi&quot;&gt;@user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;basic_auth_username&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;## embed HMAC image credentials as query parameters&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;rss_content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;gsub!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/\/images\/(\w*)\/(\d*)\/([^&quot;]*)&quot;/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;vg&quot;&gt;$3&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;hmac&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;OpenSSL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;HMAC&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;hexdigest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;SHA256&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&quot;/images/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;vg&quot;&gt;$1&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;vg&quot;&gt;$2&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;vg&quot;&gt;$3&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;?u=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basic_auth_user&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;amp;c=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hmac&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The regular expression uses capture groups for each part of an image path.  By referencing the right capture group, we can extract the filename and compute an HMAC from the filename and the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;image_password&lt;/code&gt;.  In the block we then replace the image path with an equivalent path that adds the newly-created HMAC and the basic_auth_username as query parameters.&lt;/p&gt;
+
+&lt;p&gt;Lastly, we can explore the &lt;a href=&quot;https://github.com/havenweb/haven/blob/4d0c37cb7398a92ca28f7d105be8151b05d0047e/app/controllers/images_controller.rb#L18-L30&quot;&gt;validation code for serving images&lt;/a&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;basic_auth_user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:u&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;credential&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;basic_auth_user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;nil?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;credential&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;nil?&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;authenticate_user!&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#check for a session cookie&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;.&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;find_by&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;basic_auth_username: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basic_auth_user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;image_key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;image_password&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;hmac&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;OpenSSL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;HMAC&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;hexdigest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;SHA256&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hmac&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;credential&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;RecordNotFound&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Here we extract the included &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;basic_auth_username&lt;/code&gt; and HMAC-based credential from the query parameters.  We extract the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;filename&lt;/code&gt; from the path parameters.  We use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;basic_auth_username&lt;/code&gt; to lookup the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;image_password&lt;/code&gt; for that user from the database.  With the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;filename&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;image_password&lt;/code&gt;, we can recompute the HMAC and compare it to the credential in the query.&lt;/p&gt;
+
+&lt;p&gt;With this logic, we get to save a single per-user key in the database (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;image_password&lt;/code&gt;), and still create a unique per-image credential to securely allow feed readers to show images in Haven’s private feeds.&lt;/p&gt;
+
+&lt;p&gt;This works great for Haven’s private feeds and should be a viable best-practice for anyone else publishing private RSS feeds.&lt;/p&gt;
+
+</description>
+				<pubDate>Mon, 30 May 2022 00:00:00 +0000</pubDate>
+				<link>https://havenweb.org/2022/05/30/images-in-feeds.html</link>
+				<guid isPermaLink="true">https://havenweb.org/2022/05/30/images-in-feeds.html</guid>
+			</item>
+		
+			<item>
+				<title>Private Blogs Are A Better Social Internet - Video</title>
+				<description>&lt;p&gt;I got a chance to share a short lightning talk at the LibrePlanet 2022 free-software conference a few weeks agao.  The talk describes some of the motivations for Haven and the ways that Facebook fails it’s purported mission.&lt;/p&gt;
+
+&lt;p&gt;As I’ve shared this video with more people, they tell me is really helped them understand the value that a system like Haven can provide.  I hope you find it useful too!&lt;/p&gt;
+
+&lt;p&gt;You can find a recording on the &lt;a href=&quot;https://media.libreplanet.org/u/libreplanet/m/lightning-talk-private-blogs-are-a-better-social-internet/&quot;&gt;LibrePlanet website&lt;/a&gt;, or watch the video below.&lt;/p&gt;
+
+&lt;video controls=&quot;&quot;&gt;
+  &lt;source src=&quot;https://havenweb.org/assets/video/privateblogs-2022.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+  Your browser does not support videos.
+&lt;/video&gt;
+
+</description>
+				<pubDate>Fri, 08 Apr 2022 00:00:00 +0000</pubDate>
+				<link>https://havenweb.org/2022/04/08/libreplanet.html</link>
+				<guid isPermaLink="true">https://havenweb.org/2022/04/08/libreplanet.html</guid>
+			</item>
+		
+			<item>
+				<title>Haven Reader</title>
+				<description>&lt;p&gt;&lt;img class=&quot;default&quot; src=&quot;https://havenweb.org/assets/images/aaron-burden-6jYoil2GhVk-unsplash.jpg&quot; alt=&quot;Child reading a book&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;There are two sides to most social networks: writing and reading.  One thing that the popular platforms do really well is to integrate the two sides.  For example, your Facebook feed has a very convenient box at the top to share “what’s on your mind”; while your main feed is full of what other people have written in that box.  The broader internet doesn’t really work the same way.  Building and publishing a website uses one set of tools while reading a web page uses a browser.&lt;/p&gt;
+
+&lt;p&gt;Haven lets you use the power of the internet to privately and independently do the things that social media platforms have shown us we like to do.  When we first built Haven, it was just a tool for writing and sharing privately with the people closest to you.  But you would use your Haven to write while still using your browser to visit other web pages–including other peoples’ Havens.  Today that changes.&lt;/p&gt;
+
+&lt;p&gt;Haven has always included private RSS feeds for your Haven.  Everyone who has access to your Haven has a personal RSS link they can see at the top of their account page.  That link is attached to their account and lets them use a feed reader to read everything on your Haven.  We’ve built a feed reader directly into Haven.  Feed readers are amazing tools that let you collect sites from all over the internet (including other Havens) and see all of the updates in one place.  You get to recreate the equivalent of an Instagram/Facebook/Twitter feed, but curated by you without an algorithm deciding what you should see.&lt;/p&gt;
+
+&lt;p&gt;Feed readers are amazing tools and they’ve been around for a very long time.  They used to be built into every major web browser.  However, the internet evolved according to the demands of companies built around advertising.  Web feeds weaken the protective network effects that keep people coming back to centralized social media apps and sites.  Haven wants to recapture feeds as a tool to help you connect with the people closest to you using technology that &lt;em&gt;you&lt;/em&gt; control.&lt;/p&gt;
+
+&lt;p&gt;If you have Haven installed, there’s a new “Read” link on the top of the page that you can check out.  It’s only visible to you on your own Haven.  If you want to see what it’s like, try it out on the &lt;a href=&quot;/demo.html&quot;&gt;free Haven Demo&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Happy Reading.&lt;/p&gt;
+
+</description>
+				<pubDate>Sat, 29 Jan 2022 00:00:00 +0000</pubDate>
+				<link>https://havenweb.org/2022/01/29/haven-reader.html</link>
+				<guid isPermaLink="true">https://havenweb.org/2022/01/29/haven-reader.html</guid>
+			</item>
+		
+			<item>
+				<title>Tips and Tricks - Full Bleed Images</title>
+				<description>&lt;p&gt;Have you wondered what you can do with the &quot;Custom CSS&quot; box in your Haven's settings?  The custom CSS help page on your Haven describes changing colors or using different fonts, but you can use CSS to change almost any part of how your Haven looks.  In this post, we're going to describe how to make full-bleed images that go from edge to edge.
+
+&lt;p&gt;Normally, when you upload an image on your Haven, it might look something like this:
+
+&lt;p&gt;&lt;img class=&quot;default&quot; src=&quot;https://havenweb.org/assets/images/kiana-bosman.jpg&quot; alt=&quot;Picture of child smiling&quot;&gt;&lt;/img&gt;
+&lt;br&gt;Photo by &lt;a href=&quot;https://unsplash.com/@capturedby_kiana&quot;&gt;Kiana Bosman&lt;/a&gt; on &lt;a href=&quot;https://unsplash.com/s/photos/black-girl-baby&quot;&gt;Unsplash&lt;/a&gt;
+
+&lt;p&gt;To make the image stretch all the way to the edge, add the following custom CSS in your Haven's settings:
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nt&quot;&gt;img&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100vw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;relative&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;margin-left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;-50vw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;margin-right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;-50vw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;max-width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100vw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Now your image will stretch edge to edge like this:
+
+&lt;p class=&quot;feedonly&quot;&gt;&lt;em&gt;Quick note: you're reading this on a feed reader (which is great), but it means you wont see the effect of the edge to edge styling in the image below.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;fullbleed&quot; src=&quot;https://havenweb.org/assets/images/kiana-bosman.jpg&quot; alt=&quot;Picture of child smiling&quot;&gt;&lt;/img&gt;
+&lt;br&gt;Photo by &lt;a href=&quot;https://unsplash.com/@capturedby_kiana&quot;&gt;Kiana Bosman&lt;/a&gt; on &lt;a href=&quot;https://unsplash.com/s/photos/black-girl-baby&quot;&gt;Unsplash&lt;/a&gt;
+
+&lt;p&gt;The &lt;code&gt;img&lt;/code&gt; selector at the top means this CSS will apply to all images on your Haven.  If you only want some images to show up this way, you can use a more specific selector.  Change &lt;code&gt;img&lt;/code&gt; to &lt;code&gt;img.fullbleed&lt;/code&gt; in the first line of your custom CSS.  Then you'll have to specify a CSS &lt;em&gt;class&lt;/em&gt; on any image you want displayed full-bleed.&lt;/p&gt;
+
+&lt;p&gt;When you upload an image to your Haven, it creates the HTML image code for you.  It will look something like this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/images/raw/123/cute_kid.jpg&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/images/resized/123/cute_kid.jpg&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/img&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The &lt;code&gt;&amp;lt;img src=...&lt;/code&gt; line shows the actual image on your page, that's where you can add a CSS class.  Since you named the selector &lt;code&gt;img.fullbleed&lt;/code&gt;, add the &lt;code&gt;fullbleed&lt;/code&gt; class in the HTML code.  The section will look like this:
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/images/raw/123/cute_kid.jpg&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fullbleed&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/images/resized/123/cute_kid.jpg&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/img&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This is just one example of what you can do with the Custom CSS on your Haven to make it look the way you want it to look.  Expect to see some other tips and tricks here in the future!
+</description>
+				<pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
+				<link>https://havenweb.org/2021/12/15/fullbleed-images.html</link>
+				<guid isPermaLink="true">https://havenweb.org/2021/12/15/fullbleed-images.html</guid>
+			</item>
+		
+	</channel>
+</rss>
