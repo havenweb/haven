@@ -7,23 +7,29 @@ test_users = {washington: {email: "george@washington.com", pass: "georgepass"}, 
                 lincoln: {email: "abraham@lincoln.com", pass: "lincolnpass"}}     # subscriber
 
   test "admin can add a feed and view it" do
-    log_in_with test_users[:washington]
-    assert_text "Read"
-    click_on "Read"
-    assert_no_text "xkcd.com" # feed not added yet
-    assert_no_selector "img"
-    click_button "Manage Feeds"
-    fill_in "feed_url", with: "havenweb.org"
-    click_on "Add Feed"
-    assert_text "You've added"
-    assert_text "to your feeds"
-    assert_text "Haven Blog"
-    click_on "Haven Blog" # view just that feed
-    assert_text "Haven Blog"
-    assert_selector "img"
-    click_on "Read" # reader view for all feeds
-    assert_text "Haven Blog"
-    assert_selector "img"
+    [ # test only works with one remote feed at a time
+     {url: "havenweb.org", title: "Haven Blog"},
+#     {url: "xkcd.com", title: "xkcd.com"}
+    ].each do |feed_source|
+      log_in_with test_users[:washington]
+      assert_text "Read"
+      click_on "Read"
+      assert_no_text feed_source[:title] # feed not added yet
+      assert_no_selector "img"
+      click_button "Manage Feeds"
+      fill_in "feed_url", with: feed_source[:url]
+      click_on "Add Feed"
+      assert_text "You've added"
+      assert_text "to your feeds"
+      assert_text feed_source[:title]
+      click_on feed_source[:title] # view just that feed
+      assert_text feed_source[:title]
+      assert_selector "img"
+      click_on "Read" # reader view for all feeds
+      assert_text feed_source[:title]
+      assert_selector "img"
+      click_on "Logout"
+    end
   end
 
   test "non-admins cannot view a feed" do

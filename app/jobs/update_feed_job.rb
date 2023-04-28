@@ -1,15 +1,9 @@
+require File.join(Rails.root, "lib","haven_feed_entry.rb")
+
 class UpdateFeedJob < ApplicationJob
   queue_as :default
 
   # Constants for feed entry keys
-  ENTRY_TITLE = "title"
-  FEED_TITLE = "feed"
-  ENTRY_LINK = "link"
-  ENTRY_DATE = "date"
-  ENTRY_CONTENT = "content"
-  ENTRY_GUID = "guid"
-  ENTRY_AUDIO = "audio"
-
   ERROR_UNKNOWN = "Unknown Feed Type (not RSS or Atom)"
   ERROR_INVALID = "Invalid Feed"
 
@@ -47,29 +41,31 @@ class UpdateFeedJob < ApplicationJob
   end
 
   def update_feed(feed, earliest_time, latest_time)
-    # update feed title if not yet set
-    if feed.name.nil?
-      begin
-        feed.name = fetch_feed_title(feed.url)
-        feed.save
-      rescue
-        # TODO: retry with RSS autodiscovery?
-        feed.name = ERROR_INVALID
-        feed.save
+    feed.with_lock do
+      # update feed title if not yet set
+      if feed.name.nil?
+        begin
+          feed.name = fetch_feed_title(feed.url)
+          feed.save
+        rescue
+          # TODO: retry with RSS autodiscovery?
+          feed.name = ERROR_INVALID
+          feed.save
+          return
+        end
+      end
+      if ([ERROR_UNKNOWN, ERROR_INVALID].include? feed.name)
+        feed.feed_invalid!
         return
       end
-    end
-    if ([ERROR_UNKNOWN, ERROR_INVALID].include? feed.name)
-      feed.feed_invalid!
-      return
-    end
+    end # release lock
 
     # fetch feed content
     return unless feed.last_update.nil? or feed.last_update < 10.minutes.ago
     feed.with_lock do
       entries = []
       begin
-        entries = fetch_feed_content(feed.url)
+        entries = HavenFeedEntry.fetch_feed_content(feed.url)
         feed.fetch_succeeded!
         feed.last_update = DateTime.now
         feed.save
@@ -77,9 +73,9 @@ class UpdateFeedJob < ApplicationJob
         feed.fetch_failed!
       end
       entries.each do |entry|
-        title = entry[ENTRY_TITLE]
-        link = entry[ENTRY_LINK]
-        published = entry[ENTRY_DATE]
+        title = entry.title
+        link = entry.link
+        published = entry.date
         if published.nil?
           published = Time.zone.now
         end
@@ -94,14 +90,14 @@ class UpdateFeedJob < ApplicationJob
             sort_date = latest_time
           end
         end
-        content = entry[ENTRY_CONTENT]
-        guid = entry[ENTRY_GUID]
-        audio = entry[ENTRY_AUDIO]
+        content = entry.content
+        guid = entry.guid
+        audio = entry.audio
         matching_entry = feed.feed_entries.find_by(guid: guid)
         record_data = {title: title, link: link, published: published, sort_date: sort_date, content: content, audio: audio, guid: guid}
         update_data = {title: title, link: link, audio: audio, content: content}
         if matching_entry.nil?
-          feed.feed_entries.create(record_data)
+          feed.feed_entries.create!(record_data)
         else
           matching_entry.update(update_data)
         end
@@ -114,7 +110,7 @@ class UpdateFeedJob < ApplicationJob
   end
 
   def fetch_feed_title(feed_url)
-    cleanurl, auth_opts = parse_auth(feed_url)
+    cleanurl, auth_opts = HavenFeedEntry.parse_auth(feed_url)
     URI.open(cleanurl, auth_opts) do |rss|
       feed = RSS::Parser.parse(rss, validate: false)
       if (feed.feed_type == "rss")
@@ -130,70 +126,4 @@ class UpdateFeedJob < ApplicationJob
     return "Invalid Feed"
   end
 
-  def fetch_feed_content(feed_url)
-    entries = []
-    cleanurl, auth_opts = parse_auth(feed_url)
-    URI.open(cleanurl, auth_opts) do |rss|
-      feed = RSS::Parser.parse(rss, validate: false)
-      if (feed.feed_type == "rss")
-        feed.items.each do |item|
-          entry = {}
-          entry[FEED_TITLE] = feed.channel.title
-          entry[ENTRY_TITLE] = item.title
-          entry[ENTRY_LINK] = item.link
-          entry[ENTRY_DATE] = item.date
-          entry[ENTRY_CONTENT] = item.description
-          entry[ENTRY_CONTENT] = item.content_encoded if item.content_encoded
-          entry[ENTRY_GUID] = item.guid.content
-          if item.enclosure 
-            if item.enclosure.type == "audio/mpeg"
-              entry[ENTRY_AUDIO] = item.enclosure.url
-            elsif item.enclosure.type.start_with? "image/" # If there is an image in the enclosure
-              unless entry[ENTRY_CONTENT].include? "<img " # and no images in the content
-                entry[ENTRY_CONTENT] = "<img src=\"#{item.enclosure.url}\" /><br/>" + entry[ENTRY_CONTENT] # then include the enclosure image
-              end
-            end
-          else
-            entry[ENTRY_AUDIO] = nil
-          end
-          entries << entry
-        end
-      elsif (feed.feed_type == "atom")
-        feed.entries.each do |item|
-          entry = {}
-          entry[FEED_TITLE] = feed.title.content
-          entry[ENTRY_TITLE] = item.title.content
-          entry[ENTRY_LINK] = item.link.href
-          if !item.published.nil?
-            entry[ENTRY_DATE] = item.published.content
-          else
-            entry[ENTRY_DATE] = item.updated.content
-          end 
-          if !item.content.nil?
-            entry[ENTRY_CONTENT] = CGI.unescapeHTML(item.content.to_s)
-          else
-            entry[ENTRY_CONTENT] = CGI.unescapeHTML(item.summary.to_s)
-          end
-          entry[ENTRY_GUID] = item.id.to_s
-          entry[ENTRY_AUDIO] = nil # TODO podcast support for Atom feeds
-          entries << entry
-        end
-      end
-    end
-    entries
-  end
-
-  def parse_auth(full_url)
-    scheme, rest = full_url.split("://",2)
-    opts = {}
-    opts["User-Agent"] = "haven"
-    if (rest.include?(":") and rest.include?("@")) # scheme://user:pass@url...
-      user, rest = rest.split(":",2)
-      pass, rest = rest.split("@",2)
-      opts[:http_basic_authentication] = [user,pass]
-      return ["#{scheme}://#{rest}", opts]
-    else
-      return [full_url, opts]
-    end
-  end
 end
