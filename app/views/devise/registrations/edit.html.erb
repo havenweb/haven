@@ -6,7 +6,7 @@
    rss_url = "#{scheme}//#{rss_user}:#{rss_pass}@#{host}/rss" 
 %>
 
-<p title="RSS is feed of a web site.  You can use this RSS link in a feed-reader app or your own Haven to follow updates from this Haven.  Since Haven is private and requires you to login, the URL provided here is unique to you and includes secret credentials."><img src="/feed-icon.svg" style="width:1em"/> <%= rss_url %></p>
+<p title="RSS is feed of a web site.  You can use this RSS link in a feed-reader app or your own Haven to follow updates from this Haven.  Since Haven is private and requires you to login, the URL provided here is unique to you and includes secret credentials.  Note that not all feed readers support private feeds."><img src="/feed-icon.svg" style="width:1em"/> <%= rss_url %></p>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
@@ -47,6 +47,26 @@
   <div class="actions">
     <%= f.submit "Update" %>
   </div>
+<% end %>
+
+<% if current_user.indie_auth_tokens.size > 0 %>
+<h3>Access Tokens</h3>
+<p>The following applications have access to your Haven</p>
+<table>
+<tr><th>Application</th><th>Permissions</th><th>Created</th><th>Action</th></tr>
+<% current_user.indie_auth_tokens.each do |token| %>
+<tr>
+<td><%= token.client_id %></td>
+<td><%= token.scope %></td>
+<td><%= token.created_at.strftime("%b %-d, %Y") %></td>
+<td><%= link_to 'Revoke',
+          destroy_token_path(token), 
+          method: :delete, 
+          data: { confirm: "Are you sure you want to revoke #{token.client_id}'s access to your Haven?"} %>
+</td>
+</tr>
+<% end %>
+</table>
 <% end %>
 
 <h3>Delete Account</h3>

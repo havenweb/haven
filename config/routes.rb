@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  get 'indieauth/metadata', to: 'indieauth#metadata', as: "indie_auth_metadata"
+  get 'indieauth/authorization', to: 'indieauth#authorization', as: "indie_authorization_endpoint"
+  post 'indieauth/authorization', to: 'indieauth#profile', as: "indie_auth_profile"
+  post 'indieauth/approval', to: 'indieauth#approval', as: "indie_auth_approval"
+  post 'indieauth/token', to: 'indieauth#token', as: "indie_token_endpoint"
+  delete 'indieauth/token/:token_id', to: 'indieauth#token_destroy', as: "destroy_token"
+  get 'indieauth/user/:user_id', to: 'indieauth#user'
+
   resources :feeds, only: [:index, :create, :destroy]
   get 'read', to: 'feeds#read'
   get 'read/:id', to: 'feeds#read_feed', as: 'read_feed'
