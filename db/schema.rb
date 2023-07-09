@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_20_030604) do
+ActiveRecord::Schema.define(version: 2023_07_22_191607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,29 @@ ActiveRecord::Schema.define(version: 2023_04_20_030604) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "indie_auth_requests", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "code"
+    t.string "state"
+    t.string "code_challenge"
+    t.string "client_id"
+    t.string "scope"
+    t.integer "used", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_indie_auth_requests_on_code", unique: true
+  end
+
+  create_table "indie_auth_tokens", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "access_token"
+    t.string "scope"
+    t.string "client_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["access_token"], name: "index indie_auth_tokens_on_access_token", unique: true
+  end
+
   create_table "likes", force: :cascade do |t|
     t.string "reaction", default: "👍"
     t.datetime "created_at", null: false
@@ -151,6 +174,7 @@ ActiveRecord::Schema.define(version: 2023_04_20_030604) do
   add_foreign_key "comments", "users", column: "author_id"
   add_foreign_key "feed_entries", "feeds"
   add_foreign_key "feeds", "users"
+  add_foreign_key "indie_auth_requests", "users"
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
   add_foreign_key "login_links", "users"

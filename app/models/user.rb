@@ -11,6 +11,9 @@ class User < ApplicationRecord
   has_many :feeds, dependent: :destroy
   has_many :feed_entries, through: :feeds
 
+  has_many :indie_auth_requests, dependent: :destroy
+  has_many :indie_auth_tokens, dependent: :destroy
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

@@ -1,0 +1,25 @@
+<p>You are logged in as <%= current_user.name %> with email <%= current_user.email %> </p>
+
+<% render 'client' %>
+
+<% if @auth_request.scope.size > 0 %>
+  <p><span class="indie-auth-client"><%= @auth_request.client_id %></span> is requesting access to your Haven.  It it requesting permision to take the following actions on your behalf.  You can select each permission you want to grant individually.  Removing a permission will prevent the application from taking that action.</p>
+<% else %>
+  <p><span class="indie-auth-client"><%= @auth_request.client_id %></span> is requesting access to your Haven.  By approving the request, it will learn that you are able to sign into this Haven, but will not be able to access anything else about your Haven.
+<% end %>
+
+<%= form_with url: "/indieauth/approval", method: :post do |form| %>
+  <% if @auth_request.scope.size > 0 %>
+    <% @auth_request.scope.each do |s| %>
+      <%= form.check_box s, checked: true %>
+      <%= form.label s, "#{s}: #{IndieAuthScopes.scope_description(s)}" %><br/>
+    <% end %>
+  <% end %>
+  <%= form.hidden_field :state, value: @auth_request.state %>
+  <%= form.hidden_field :code_challenge, value: @auth_request.code_challenge %>
+  <%= form.hidden_field :client_id, value: @auth_request.client_id %>
+  <%= form.hidden_field :redirect_uri, value: @auth_request.redirect_uri %>
+  <%= form.submit "Approve" %> 
+  <%= form.submit "Deny" %>
+<% end %>
+

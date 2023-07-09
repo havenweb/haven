@@ -9,3 +9,23 @@ form.comments {
 a.feed_entry_skip {
   float: right;
 }
+
+img.indie-client-logo {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1em;
+}
+
+p.indie-client-logo {
+  text-align: center;
+}
+
+p.indie-client-name {
+  text-align: center;
+  font-weight: bold;
+}
+
+span.indie-auth-client {
+  font-weight: bold;
+}
