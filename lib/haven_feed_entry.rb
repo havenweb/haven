@@ -19,7 +19,7 @@ class HavenFeedEntry
         if item.enclosure.type == "audio/mpeg"
           @audio = item.enclosure.url
         elsif item.enclosure.type.start_with? "image/" # If there is an image in the enclosure
-          unless entry[ENTRY_CONTENT].include? "<img " # and no images in the content
+          unless @content.include? "<img " # and no images in the content
             # then include the enclosure image
             @content = "<img src=\"#{item.enclosure.url}\" /><br/>" + @content
           end
