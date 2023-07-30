@@ -29,8 +29,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - run: sudo apt-get -qqy install chrome-for-testing
-
     - name: Setup chrome driver (for Selenium)
       uses: nanasess/setup-chromedriver@v2
 
