@@ -29,6 +29,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - uses: browser-actions/setup-chrome@v1
+    - run: chrome --version
+
     - name: Setup chrome driver (for Selenium)
       uses: nanasess/setup-chromedriver@v2
 
