@@ -34,6 +34,8 @@ jobs:
 
     - name: Setup chrome driver (for Selenium)
       uses: nanasess/setup-chromedriver@v2
+      with:
+        chromedriver-version: '115.0.5790.102' # temporary, see: https://github.com/nanasess/setup-chromedriver/issues/199
 
     - name: Check versions of installed components
       run: |
