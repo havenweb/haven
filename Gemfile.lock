@@ -174,7 +174,7 @@ GEM
     orm_adapter (0.5.0)
     pg (1.2.3)
     public_suffix (5.0.3)
-    puma (4.3.12)
+    puma (5.6.7)
       nio4r (~> 2.0)
     racc (1.7.1)
     rack (2.2.8)
@@ -293,7 +293,7 @@ DEPENDENCIES
   letter_opener (~> 1.7.0)
   listen (>= 3.0.5, < 3.2)
   pg (~> 1.2.3)
-  puma (~> 4.3.12)
+  puma (~> 5.6.7)
   rails (~> 6.1.7.4)
   rb-readline
   rss (~> 0.2.9)
