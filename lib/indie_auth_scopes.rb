@@ -11,10 +11,10 @@ class IndieAuthScopes
 #      "block" => "silence a site in your Haven Reader",
       #"channels",
       ## Micropub
-#      "create" => "create a new post on your Haven",
-#      "update" => "modify existing posts on your Haven",
-#      "delete" => "delete posts on your Haven",
-#      "media" => "upload images and other media to include them in Haven posts"
+      "create" => "create a new post on your Haven",
+      "update" => "modify existing posts on your Haven",
+      "delete" => "delete posts on your Haven",
+      "media" => "upload images and other media to include them in Haven posts"
     }
   def self.valid_scopes
     ScopeList.keys

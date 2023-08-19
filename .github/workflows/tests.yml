@@ -70,4 +70,5 @@ jobs:
       run: |
         bin/rails test
         bin/rails test:system
+        bin/rails test:integration
 
