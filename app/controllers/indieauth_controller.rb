@@ -11,14 +11,16 @@ class IndieauthController < ApplicationController
   protect_from_forgery with: :null_session, only:[:profile, :user]
   skip_before_action :verify_authenticity_token, only:[:profile, :user]
 
+  rescue_from StandardError, with: :error_handler
+
   def metadata
     render json: {
       "issuer" => generate_issuer,
       "authorization_endpoint" => indie_authorization_endpoint_url,
       "token_endpoint" => indie_token_endpoint_url,
       "code_challenge_methods_supported" => ["S256"],
-#      "introspection_endpoint" => "TODO",
-#      "introspection_endpoint_auth_methods_supported" => "TODO",
+#      "introspection_endpoint" => # Not required
+#      "introspection_endpoint_auth_methods_supported" => # Not required
 #      "revocation_endpoint" => "TODO",
 #      "revocation_endpoint_auth_methods_supported" => ["none"],
       "scopes_supported" => IndieAuthScopes.valid_scopes,
@@ -134,6 +136,11 @@ class IndieauthController < ApplicationController
   end
 
   private
+
+  def error_handler(e)
+    render plain: e.message, status: 400
+  end
+ 
   def generate_issuer
     iss = request.protocol
     if iss == "http://" and request.host_with_port.end_with? ":80"

@@ -25,7 +25,7 @@ class IndieAuthRequestObj
     if params[:code_challenge]
       @code_challenge = params[:code_challenge]
     else
-      raise "request must have a code_challenge"
+      raise "Request must have a code_challenge.  Haven requires IndieAuth clients to use PKCE and provide a code_challenge. This client (#{@client_id}) may not be compatible."
     end      
     if params[:code_challenge_method] and params[:code_challenge_method]=="S256"
       @code_challenge_method = params[:code_challenge_method]
