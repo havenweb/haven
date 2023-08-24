@@ -90,6 +90,14 @@ class FeedsController < ApplicationController
   def read
     UpdateFeedJob.perform_later
     @entries = current_user.feed_entries.order(sort_date: :desc).page params[:page]
+    @first = nil
+    unless @entries.empty?
+      @first = @entries.first.sort_date.iso8601
+    end
+    if params[:first]
+      @first = Time.parse(params[:first]).iso8601
+      @entries = current_user.feed_entries.where('sort_date <= ?', @first).order(sort_date: :desc).page params[:page]
+    end
   end
 
   def read_feed
