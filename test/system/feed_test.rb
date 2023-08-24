@@ -41,4 +41,22 @@ test_users = {washington: {email: "george@washington.com", pass: "georgepass"}, 
       click_on "Logout"
     end
   end
+
+  test "feed pagination is consistent" do
+    # TODO
+    # login
+    # subscribe to a feed
+    # view the first page (/read)
+    # note the last feed entry (call it old_last)
+    # subscribe to another feed that only has one entry, newer than the others
+    # click to the second page
+    # assert that old_last is not present
+    # click to the first page
+    # assert that old_last is present
+    # visit /read directy
+    # assert that old_last is not present
+    # click to the second page
+    # assert that old_last is present
+    assert true
+  end
 end

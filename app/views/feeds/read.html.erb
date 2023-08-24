@@ -47,5 +47,5 @@ end
   <% entry_number += 1 %>
 <% end %>
 <div id="entry_<%= entry_number %>">
-  <%= paginate @entries %>
+  <%= paginate @entries, params: {first: @first} %>
 </div>
