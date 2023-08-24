@@ -8,6 +8,9 @@ class UpdateFeedJob < ApplicationJob
   ERROR_INVALID = "Invalid Feed"
 
   def perform(*feeds)
+    # If a feed were to future-date an entry, then it might stay at the top
+    # of the feed for a long time.  If a feed entry has a published time in
+    # the future, we set the sort_date to today.
     latest_time = Time.zone.now # latest a new feed_entry can be
     earliest_time = nil
     if FeedEntry.count > 0
@@ -15,7 +18,7 @@ class UpdateFeedJob < ApplicationJob
       # on Jan 2 with a date of Jan 1.  To prevent these from getting lost in 
       # the feed, we keep track of the earliest time an entry can be on each
       # fetch.  It must be no earlier than one second after the most recent
-      # entry.  This is the sole purpose of the `sort_date` field.
+      # entry.  This is the purpose of the `sort_date` field.
       earliest_time = FeedEntry.order(sort_date: :desc).first.sort_date + 1
     end
     if feeds.empty? # updating all feeds, enforce sort_date restrictions
@@ -72,16 +75,18 @@ class UpdateFeedJob < ApplicationJob
       rescue
         feed.fetch_failed!
       end
-      entries.each do |entry|
+      entries.each {|e| e.date = Time.zone.now if e.date.nil? }
+      # ensure that the newest entry is first in the array
+      entries
+       .sort_by{|e| e.date}
+       .reverse
+       .each_with_index do |entry, entry_index|
         title = entry.title
         link = entry.link
         published = entry.date
-        if published.nil?
-          published = Time.zone.now
-        end
         sort_date = published
         unless earliest_time.nil?
-          if sort_date < earliest_time
+          if (sort_date < earliest_time) and entry_index == 0
             sort_date = earliest_time
           end
         end
