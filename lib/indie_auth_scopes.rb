@@ -5,8 +5,8 @@ class IndieAuthScopes
       "profile" => "see your display name",
       "email" => "see your email address",
       ## Microsub
-#      "read" => "fetch your Haven Reader feed",
-#      "follow" => "subscribe to other sites in your Haven Reader",
+      "read" => "fetch your Haven Reader feed",
+      "follow" => "subscribe to other sites in your Haven Reader",
 #      "mute" => "silence a site in your Haven Reader",
 #      "block" => "silence a site in your Haven Reader",
       #"channels",

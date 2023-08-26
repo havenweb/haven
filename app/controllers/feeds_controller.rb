@@ -75,9 +75,9 @@ class FeedsController < ApplicationController
   end
 
   def destroy
-    @feed = Feed.find(params[:id])
-    feed_name = @feed.name
+    @feed = current_user.feeds.find(params[:id])
     if ( (!@feed.nil?) and (current_user == @feed.user) )
+      feed_name = @feed.name
       @feed.destroy!
       flash[:notice] = "You have removed #{feed_name} from your feeds"
     else
