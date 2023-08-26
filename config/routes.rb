@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   post 'micropub', to: 'micropub#create'
   post 'micropub_media', to: 'micropub#media', as: 'micropub_media'
 
+  get 'microsub', to: 'microsub#get', as: "microsub"
+  post 'microsub', to: 'microsub#create'
+
   resources :feeds, only: [:index, :create, :destroy]
   get 'read', to: 'feeds#read'
   get 'read/:id', to: 'feeds#read_feed', as: 'read_feed'
