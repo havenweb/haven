@@ -38,7 +38,7 @@ class UsersController < ApplicationController
     auth_user = Devise.friendly_token.first(10)
     auth_pass = Devise.friendly_token.first(10)
     image_pass = Devise.friendly_token.first(20)
-    @user.update_attributes(password: @password, basic_auth_username: auth_user, basic_auth_password: auth_pass, image_password: image_pass)
+    @user.update(password: @password, basic_auth_username: auth_user, basic_auth_password: auth_pass, image_password: image_pass)
     @verb = "updated"
     @user.login_links.each {|ll| ll.destroy} ## delete old links
     login_link = LoginLink.generate(@user)
