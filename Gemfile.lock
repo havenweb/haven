@@ -166,7 +166,7 @@ GEM
       timeout
     net-smtp (0.3.3)
       net-protocol
-    nio4r (2.5.9)
+    nio4r (2.7.0)
     nokogiri (1.15.4-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.15.4-x86_64-linux)
@@ -174,7 +174,7 @@ GEM
     orm_adapter (0.5.0)
     pg (1.2.3)
     public_suffix (5.0.3)
-    puma (5.6.7)
+    puma (5.6.8)
       nio4r (~> 2.0)
     racc (1.7.1)
     rack (2.2.8)
@@ -293,7 +293,7 @@ DEPENDENCIES
   letter_opener (~> 1.7.0)
   listen (>= 3.0.5, < 3.2)
   pg (~> 1.2.3)
-  puma (~> 5.6.7)
+  puma (~> 5.6.8)
   rails (~> 6.1.7.6)
   rb-readline
   rss (~> 0.2.9)
