@@ -13,7 +13,9 @@
 <div class="post-author"><%= post.author.name %></div>
 <% end %>
 
+<div dir="auto">
 <%= CommonMarker.render_html(post.content, [:UNSAFE, :HARDBREAKS], PostsController::GFM_EXT).html_safe %>
+</div>
 
 <% if @settings.comments %>
   <% if post.likes.size > 0 or post.comments.size > 0 %>
