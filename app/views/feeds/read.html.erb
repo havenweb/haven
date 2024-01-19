@@ -30,6 +30,17 @@ end
   <% end %>
 <% end %>
 
+<% unless @feed.nil? %>
+  <p><strong>Feed Name: </strong><%= link_to sanitize(@feed.name, tags:[], attributes:[]), @feed.feed_entries.first.link %></p>
+  <p><strong>Feed URL: </strong><%= @feed.url %>
+  <br/>
+  <p><%= link_to 'Delete this feed', feed_path(@feed),
+            method: :delete,
+            data: { confirm: "Are you sure you want to delete #{@feed.name} with url #{@feed.url}?" } %>
+  </p>
+  <hr/>
+<% end %>
+
 <% entry_number = 0 %>
 <% @entries.each do |entry| %>
   <div id="entry_<%= entry_number %>">
