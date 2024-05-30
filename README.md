@@ -74,7 +74,7 @@ Fully managed hosting of your personal Haven is available too, check out: https:
 1. Install `docker` and `docker-compose`
 2. Clone the repository: `git clone https://github.com/havenweb/haven.git`
 3. Run `cd haven`
-4. Run `docker-compose up`
+4. Run `docker compose up`
 
 Feel free to use the included `Dockerfile` and `docker-compose.yml`.  You probably want to modify the env vars in `docker-compose.yml` to specify a different `HAVEN_USER_EMAIL` and `HAVEN_USER_PASS`.  These will be used to create you initial user (and password) on startup.
 
