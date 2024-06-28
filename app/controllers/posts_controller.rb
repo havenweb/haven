@@ -226,7 +226,7 @@ class PostsController < ApplicationController
     time = params[:post][:time]
     post.datetime = DateTime.parse("#{date} #{time}")
     post.content = params[:post][:content]
-    post.author = current_user
+    post.author = current_user unless !!post.author
     post
   end
 
