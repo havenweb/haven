@@ -28,7 +28,7 @@ class IndieAuthClient
     @redirects = []
     if should_fetch?
       begin
-        URI.open(client_id) do |f|
+        URI(client_id).open do |f|
           doc = Nokogiri::HTML(f.read)
 
           url = ""
@@ -66,6 +66,7 @@ class IndieAuthClient
   def should_fetch?
     clean_host = parse_hostname(@client_id)
     begin
+      client_id_uri = URI.parse(@client_id) #for validation only
       ip = Resolv.getaddress(clean_host)
       return safe_ip? ip
     rescue
