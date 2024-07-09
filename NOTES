@@ -28,3 +28,7 @@ pg_dump ubuntu > dumpfile
 DROP SCHEMA public CASCADE;
 CREATE SCHEMA public;
 psql ubuntu < dumpfile
+
+## Debugging, might need to re-enable logs due to rotation: https://www.phusionpassenger.com/library/admin/nginx/log_rotation.html
+passenger-config reopen-logs
+
