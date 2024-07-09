@@ -33,6 +33,7 @@ git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 CONFIGURE_OPTS="--disable-install-doc" rbenv install 3.1.4 --verbose
 rbenv global 3.1.4
 gem update --system
+gem update strscan --default #resolves a gem conflict
 gem install bundler -v 2.4.12 --no-document
 
 # NodeJS and Yarn

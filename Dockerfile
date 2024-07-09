@@ -8,6 +8,7 @@ RUN apt-get update -yqq && \
         postgresql postgresql-contrib libpq-dev cron && \
 	npm install --global yarn && \
         gem update --system && \
+        gem update strscan --default && \
  	gem install bundler -v 2.4.12 --no-document
 
 ADD Gemfile Gemfile.lock Rakefile config.ru .ruby-version ./
