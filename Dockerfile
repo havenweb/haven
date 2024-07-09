@@ -7,6 +7,7 @@ RUN apt-get update -yqq && \
 	nginx nodejs dirmngr gnupg apt-transport-https ca-certificates npm imagemagick \
         postgresql postgresql-contrib libpq-dev cron && \
 	npm install --global yarn && \
+        gem update --system && \
  	gem install bundler -v 2.4.12 --no-document
 
 ADD Gemfile Gemfile.lock Rakefile config.ru .ruby-version ./
