@@ -26,12 +26,26 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+    <%= f.password_field :current_password, autocomplete: "current-password" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Update Account" %>
+  </div>
+<% end %>
+
+<h3>Change Password</h3>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="field">
+    <%= f.label :password %> <br />
     <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+      <em><%= @minimum_password_length %> characters minimum</em><br/>
     <% end %>
+    <%= f.password_field :password, autocomplete: "new-password" %>
   </div>
 
   <div class="field">
@@ -40,12 +54,12 @@
   </div>
 
   <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+    <%= f.label :current_password %> <i>(we need your current password to change your password)</i><br />
     <%= f.password_field :current_password, autocomplete: "current-password" %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Update" %>
+    <%= f.submit "Change Password" %>
   </div>
 <% end %>
 
@@ -69,8 +83,12 @@
 </table>
 <% end %>
 
+<% unless current_user.admin? %>
 <h3>Delete Account</h3>
 
-<p><%= button_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+<p><%= button_to "Delete my account", registration_path(resource_name), 
+    data: { confirm: "Are you sure you want to delete your account?  Your account will not be recoverable." }, 
+    method: :delete, "class" => "dangerbutton"  %></p>
+<% end %>
 
 <%= link_to "Back", :back %>
