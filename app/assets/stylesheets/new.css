@@ -13,6 +13,7 @@
 	--nc-ac-tx: #0C4047;
 	--nc-notice: #bcfab9;
 	--nc-alert: #fabab6;
+	--nc-danger: #f74033;
 }
 
 @media screen and (prefers-color-scheme: dark) {
@@ -29,6 +30,7 @@
 		--nc-ac-tx: #FFFFFF;
 		--nc-notice: #0e7708;
 		--nc-alert: #771008;
+		--nc-danger: #f74033;
 	}
 }
 
@@ -250,6 +252,10 @@ input[type="button"] {
 	box-sizing: border-box;
 	cursor: pointer;
 	color: var(--nc-lk-tx);
+}
+
+input.dangerbutton {
+	background: var(--nc-danger);
 }
 
 a button[disabled],
