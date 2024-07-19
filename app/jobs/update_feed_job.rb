@@ -116,7 +116,7 @@ class UpdateFeedJob < ApplicationJob
 
   def fetch_feed_title(feed_url)
     cleanurl, auth_opts = HavenFeedEntry.parse_auth(feed_url)
-    URI.open(cleanurl, auth_opts) do |rss|
+    URI(cleanurl).open(auth_opts) do |rss|
       feed = RSS::Parser.parse(rss, validate: false)
       if (feed.feed_type == "rss")
         return feed.channel.title

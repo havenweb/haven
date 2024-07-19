@@ -49,7 +49,7 @@ class HavenFeedEntry
   def self.fetch_feed_content(feed_url)
     entries = nil
     cleanurl, auth_opts = parse_auth(feed_url)
-    URI.open(cleanurl, auth_opts) do |rss|
+    URI(cleanurl).open(auth_opts) do |rss|
       entries = parse_feed_content(rss)
     end
     entries
