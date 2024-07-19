@@ -21,7 +21,7 @@
   <%= render "fonts", setting: @setting, allow_remove: false %>
   <p><%= link_to "Modify custom fonts", edit_fonts_path %></p>
   <p>
-    <%= form.label :css, (link_to "Custom CSS", "/themes", target: "_blank" )%><br>
+    <%= form.label :css, (link_to "Custom CSS (click for tips)", "/themes", target: "_blank" )%><br>
     <%= form.text_area :css, :style => 'display:block;width:100%;' %>
   </p>
  
