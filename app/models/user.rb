@@ -18,4 +18,14 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  def display_name
+    if self.name.nil?
+      return self.email
+    elsif self.name.empty?
+      return self.email
+    else
+      return self.name
+    end
+  end
 end

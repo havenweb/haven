@@ -29,3 +29,30 @@ p.indie-client-name {
 span.indie-auth-client {
   font-weight: bold;
 }
+
+details.recent_activity summary h2 {
+  display: inline-block;
+  padding-top: 0.25rem;
+}
+
+details.recent_activity summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+details.recent_activity div p:last-child {
+  margin-bottom: 0;
+}
+
+details.recent_activity[open] summary h2:before {
+  content: "▼ ";
+  font-size: 0.7em;
+}
+details.recent_activity summary h2:before {
+  content: "► ";
+  font-size: 0.7em;
+}
+
+span.reaction_age {
+  font-size: small;
+}
