@@ -30,12 +30,12 @@ jobs:
           username: ${{ github.repository_owner }} 
           password: ${{ secrets.GITHUB_TOKEN }} 
 
-      - name: Build and push image 
+      - name: Build image and push if commit on master
         uses: docker/build-push-action@v6 
         with: 
           context: . 
           platforms: linux/amd64, linux/arm64 
-          push: true 
+          push: ${{ github.ref == 'refs/heads/master' }}
           tags: ghcr.io/havenweb/haven:${{ steps.get_tag.outputs.tagname }}, ghcr.io/havenweb/haven:latest
 
       
