@@ -20,7 +20,7 @@ gem 'rb-readline'
 # Image processing
 gem 'image_processing', '~> 1.12.2'
 
-gem 'rss', '~> 0.2.9'
+gem 'rss', '~> 0.3.1'
 
 # For Auth
 gem 'devise', '~> 4.7.1'
