@@ -54,6 +54,12 @@ end
       <source src="<%= entry.audio %>" type="audio/mpeg">
     </audio> 
   <% end %>
+  <% if entry.link.start_with? "https://www.youtube.com/watch?v=" 
+       video_id = entry.link.split("?v=").last.split("&").first
+       video_img = "https://img.youtube.com/vi/#{video_id}/0.jpg"
+     %>
+       <a href="<%=entry.link%>"><img src="<%=video_img%>" /></a>
+  <% end %>
   <hr>
   <% entry_number += 1 %>
 <% end %>
