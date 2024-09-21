@@ -18,6 +18,7 @@ RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install 3.1.4
 rbenv global 3.1.4
 gem update --system
 gem update strscan --default #resolves a gem conflict
+gem update base64 --default #resolves a gem conflict
 gem install bundler -v 2.4.12 --no-document
 
 #### Nginx And Passenger #### https://www.phusionpassenger.com/library/install/nginx/install/oss/bionic/
