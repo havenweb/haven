@@ -53,6 +53,7 @@ class PostsController < ApplicationController
   end
 
   def edit
+    @show_date = true
     @settings = SettingsController.get_setting
     @post = Post.find(params[:id])
     verify_can_modify_post(@post)
