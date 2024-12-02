@@ -3,6 +3,7 @@ class PostsController < ApplicationController
   IMG_REGEX = /!\[.*\]\(.*\)/
   before_action :authenticate_user!, except: :rss
   before_action :verify_publisher, except: [:index, :show, :rss]
+#  content_security_policy false, only: [:new, :edit]
 
   def index
     @posts = Post.order(datetime: :desc).page(params[:page])
