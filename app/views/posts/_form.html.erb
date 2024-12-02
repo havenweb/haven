@@ -2,7 +2,7 @@
 <%= form_with model: @post, local: true do |form| %>
   <%= form.date_field :date, :style => 'display:inline;', :value => @post.datetime.strftime("%Y-%m-%d"), type: (@show_date ? :date : :hidden) %>
   <%= form.time_field :time, :style => 'display:inline;', :value => @post.datetime.strftime("%H:%M"), type: (@show_date ? :time : :hidden) %>
-  <%= form.text_area :content, :rows => 10, :dir => "auto", :style => 'display:block;width:100%;', :oninput => "doRender();", :value => @post.content %>
+  <%= form.text_area :content, :rows => 10, :dir => "auto", :style => 'display:block;width:100%;', :oninput => "doRender()", :value => @post.content %>
   <%= form.file_field :pic, :accept => "image/*,.mp4,.mp3", :style => "display:inline;" %>
   <%= form.submit :value => "Upload Selected Image", data: {disable_with: "Upload Selected Image"}, :style => "display:inline;" %>
   <%= form.submit :value => "Save Post", :style => "display:block;" %>
@@ -15,7 +15,8 @@
 <div id="display" dir="auto">
 </div>
 
-<script type="text/javascript">
+<%= javascript_tag nonce: true, type: 'application/javascript' do %>
+
 function doRender() {
   var converter = new showdown.Converter();
   converter.setFlavor('github');
@@ -24,6 +25,7 @@ function doRender() {
   document.getElementById("display").innerHTML = html;
 }
 doRender();
+
 function setTime() {
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
@@ -39,4 +41,4 @@ function setTime() {
 if (document.getElementById("post_content").value.trim()=="") {
   setTime();
 }
-</script>
+<% end %>
