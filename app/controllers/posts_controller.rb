@@ -196,15 +196,15 @@ class PostsController < ApplicationController
   def handle_form_submit(params, view)
     @post = post_from_form(params)
     if params[:commit] == "Upload Selected Image"
-      if  !(params[:post][:pic].nil?)
+      if !(params[:post][:pic].nil?)
         begin
           @image = Image.new
           @image.blob.attach params[:post][:pic]
           @image.save
-          file_ext = path_for(@image.blob).split(".").last
+          file_ext = path_for(@image.blob).split(".").last.downcase
           if (file_ext == "mp3")
             @post.content += process_new_audio(@image)
-          elsif ["mp4","mov"].include? file_ext
+          elsif ["mp4","mov","hevc"].include? file_ext
             @post.content += process_new_video(@image)
           else
             @post.content += process_new_image(@image)
