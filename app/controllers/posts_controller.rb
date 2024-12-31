@@ -211,7 +211,12 @@ class PostsController < ApplicationController
           end
         rescue => e
           @image.destroy
-          flash.now[:alert] = "Error uploading file: #{e}"
+          upload_filename = ""
+          begin
+            upload_filename = path_for(@image.blob).split("/").last
+          rescue
+          end
+          flash.now[:alert] = "Error uploading #{upload_filename}: #{e}"
         end
       else # attachment does not exist
         flash.now[:alert] = "You did not choose a file to upload"
