@@ -4,12 +4,18 @@
 # For further information see the following documentation
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
 
+ def csp_hash(s)
+   sha256_hash = Digest::SHA256.new.update(s).digest
+   b64_encoded_hash = Base64.urlsafe_encode64(sha256_hash)
+   return "'sha256-#{b64_encoded_hash}'"
+ end
+
  Rails.application.config.content_security_policy do |policy|
 #   policy.default_src :self, :https
 #   policy.font_src    :self, :https, :data
 #   policy.img_src     :self, :https, :data
    policy.object_src  :none
-   policy.script_src  :self, "'unsafe-hashes'", "'sha256-SVKFaZ87p3OYyL4QpdWTjBEy7aRLeCA7ImdqNG5YJe0='" # for "doRender()" script in app/views/posts/_form.html.erb
+   policy.script_src  :self, "'unsafe-hashes'", csp_hash("doRender()"), csp_hash("this.parentElement.style.display='none';")
 #   policy.style_src   :self, :https
 #   # If you are using webpack-dev-server then specify webpack-dev-server host
 #   policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development?
