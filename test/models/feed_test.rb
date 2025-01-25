@@ -53,4 +53,22 @@ class FeedTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test "broken_feeds_should_not_fail" do
+    user = User.find(1)
+    {
+      "https://www.questionablecontent.net/QCRSS.xml" => "broken-qc-rss.xml",
+    }.each do |feed_url, feed_file|
+      feed = user.feeds.create!({url:feed_url})
+      atom_file = File.open(File.join(Rails.root,"test","fixtures","files",feed_file))
+      entries = HavenFeedEntry.parse_feed_content(atom_file)
+      entries.each do |e|
+        record_data = {title: e.title, link: e.link, published: e.date, sort_date: e.date, content: e.content, audio: e.audio, guid: e.guid}
+        table_entry = feed.feed_entries.create!(record_data)
+        assert_not_nil table_entry.published
+        assert_not_nil table_entry.link
+      end
+    end
+  end
+
 end
