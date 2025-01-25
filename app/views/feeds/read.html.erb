@@ -54,7 +54,7 @@ end
       <source src="<%= entry.audio %>" type="audio/mpeg">
     </audio> 
   <% end %>
-  <% if entry.link.start_with? "https://www.youtube.com/watch?v=" 
+  <% if !entry.link.nil? && entry.link.start_with?("https://www.youtube.com/watch?v=")
        video_id = entry.link.split("?v=").last.split("&").first
        video_img = "https://img.youtube.com/vi/#{video_id}/0.jpg"
      %>

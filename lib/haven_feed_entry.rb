@@ -10,6 +10,7 @@ class HavenFeedEntry
       @feed_title = feed.channel.title
       @title = item.title
       @link = item.link
+      @link = "" if @link.nil?  ## prevent missing links from pulling nils into the DB
       @date = parse_time(item.date)
       @content = item.description
       @content = item.content_encoded if item.content_encoded
