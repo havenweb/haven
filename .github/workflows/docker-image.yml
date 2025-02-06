@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,6 +29,13 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get GCC Info
+        id: get_gcc_info
+        run: gcc -v
+        with:
+          context: .
+          platforms: linux/amd64, linux/arm64
 
       - name: Build and push image
         uses: docker/build-push-action@v6
