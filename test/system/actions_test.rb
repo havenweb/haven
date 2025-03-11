@@ -19,6 +19,7 @@ class ActionsTest < ApplicationSystemTestCase
   test "logged in users can see posts" do
     test_users.each_value do |u|
       log_in_with u
+      sleep 0.1
       assert_text "MyTextOne" # From Fixture
       assert_text "MyTextTwo" # From Fixture
       click_on "Logout"

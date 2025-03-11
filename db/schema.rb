@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_22_191607) do
-
+ActiveRecord::Schema[7.0].define(version: 2025_03_11_163322) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,7 +19,7 @@ ActiveRecord::Schema.define(version: 2023_07_22_191607) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -31,8 +30,8 @@ ActiveRecord::Schema.define(version: 2023_07_22_191607) do
     t.string "content_type"
     t.text "metadata"
     t.bigint "byte_size", null: false
-    t.string "checksum", null: false
-    t.datetime "created_at", null: false
+    t.string "checksum"
+    t.datetime "created_at", precision: nil, null: false
     t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
@@ -45,8 +44,8 @@ ActiveRecord::Schema.define(version: 2023_07_22_191607) do
 
   create_table "comments", force: :cascade do |t|
     t.text "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "author_id"
     t.bigint "post_id"
     t.index ["author_id"], name: "index_comments_on_author_id"
@@ -58,11 +57,11 @@ ActiveRecord::Schema.define(version: 2023_07_22_191607) do
     t.text "content"
     t.string "link"
     t.string "guid"
-    t.datetime "published"
+    t.datetime "published", precision: nil
     t.bigint "feed_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "sort_date"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "sort_date", precision: nil
     t.string "audio"
     t.index ["feed_id"], name: "index_feed_entries_on_feed_id"
     t.index ["guid"], name: "index_feed_entries_on_guid"
@@ -73,17 +72,17 @@ ActiveRecord::Schema.define(version: 2023_07_22_191607) do
   create_table "feeds", force: :cascade do |t|
     t.string "name"
     t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "last_update"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "last_update", precision: nil
     t.integer "status", default: 0
     t.bigint "user_id"
     t.index ["user_id"], name: "index_feeds_on_user_id"
   end
 
   create_table "images", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "indie_auth_requests", force: :cascade do |t|
@@ -94,8 +93,8 @@ ActiveRecord::Schema.define(version: 2023_07_22_191607) do
     t.string "client_id"
     t.string "scope"
     t.integer "used", default: 0
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["code"], name: "index_indie_auth_requests_on_code", unique: true
   end
 
@@ -104,15 +103,15 @@ ActiveRecord::Schema.define(version: 2023_07_22_191607) do
     t.string "access_token"
     t.string "scope"
     t.string "client_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["access_token"], name: "index indie_auth_tokens_on_access_token", unique: true
   end
 
   create_table "likes", force: :cascade do |t|
     t.string "reaction", default: "👍"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "user_id"
     t.bigint "post_id"
     t.index ["post_id"], name: "index_likes_on_post_id"
@@ -122,16 +121,16 @@ ActiveRecord::Schema.define(version: 2023_07_22_191607) do
   create_table "login_links", force: :cascade do |t|
     t.string "token"
     t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["user_id"], name: "index_login_links_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
-    t.datetime "datetime"
+    t.datetime "datetime", precision: nil
     t.text "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "author_id"
     t.index ["author_id"], name: "index_posts_on_author_id"
   end
@@ -141,8 +140,8 @@ ActiveRecord::Schema.define(version: 2023_07_22_191607) do
     t.string "subtitle"
     t.string "visibility"
     t.text "css"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "compiled_css"
     t.string "css_hash"
     t.boolean "byline", default: false
@@ -155,10 +154,10 @@ ActiveRecord::Schema.define(version: 2023_07_22_191607) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "name"
     t.integer "admin"
     t.string "basic_auth_username", null: false

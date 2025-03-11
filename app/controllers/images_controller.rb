@@ -4,13 +4,13 @@ class ImagesController < ApplicationController
 
   def show
     expires_in ActiveStorage.service_urls_expire_in
-    redirect_to @blob.service_url(disposition: params[:disposition])
+    redirect_to @blob.url(disposition: params[:disposition])
   end
 
   def show_variant
     expires_in ActiveStorage.service_urls_expire_in
     variant = @blob.variant(thumbnail: "1600", quality: '65%', interlace: 'plane', auto_orient: true).processed
-    redirect_to variant.service_url(disposition: params[:disposition])
+    redirect_to variant.url(disposition: params[:disposition])
   end
 
   private

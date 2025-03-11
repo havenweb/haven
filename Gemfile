@@ -23,14 +23,14 @@ gem 'image_processing', '~> 1.12.2'
 gem 'rss', '~> 0.3.1'
 
 # For Auth
-gem 'devise', '~> 4.7.1'
+gem 'devise', '~> 4.9.4'
 gem 'bcrypt', '~> 3.1.16'
 
 # Pagination
 gem 'kaminari', '~> 1.2.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.7.9'
+gem 'rails', '~> 7.0.8.7'
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
 gem 'pg', '~> 1.2.3'
