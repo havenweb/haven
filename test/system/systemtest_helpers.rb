@@ -4,9 +4,6 @@
     fill_in "user_email", with: u[:email]
     fill_in "user_password", with: u[:pass]
     click_on "Log in"
-    sleep 0.1 ## uhg, this is ugly, but solves occasional errors during tests:
-              ## Selenium::WebDriver::Error::UnknownError: unknown error: unhandled inspector error: {"code":-32000,"message":"Node with given id does not belong to the document"}
-              ## might be related to redirects?  https://groups.google.com/g/chromedriver-users/c/jzB5FBvZaog?pli=1
   end
 
   # when a user is already logged in

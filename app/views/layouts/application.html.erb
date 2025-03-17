@@ -2,6 +2,7 @@
 <% @settings = SettingsController.get_setting %>
 <html>
   <head>
+    <%= capybara_lockstep if defined?(Capybara::Lockstep) %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= ApplicationController.get_settings.title || "New Blog" %></title>
     <link rel="icon" href="/favicon.ico" /><!-- 48×48 -->
