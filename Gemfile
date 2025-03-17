@@ -18,7 +18,7 @@ gem 'css_parser', '= 1.10.0' # pinned because we use private methods
 gem 'rb-readline'
 
 # Image processing
-gem 'image_processing', '~> 1.12.2'
+gem 'image_processing', '~> 1.13.0'
 
 gem 'rss', '~> 0.3.1'
 

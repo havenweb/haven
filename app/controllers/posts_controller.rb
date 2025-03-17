@@ -161,7 +161,7 @@ class PostsController < ApplicationController
   ## takes a saved Image object, returns the markdown content to refer to the image
   def process_new_image(image)
     blob_path = path_for(image.blob)
-    image_meta = ActiveStorage::Analyzer::ImageAnalyzer.new(image.blob).metadata
+    image_meta = ActiveStorage::Analyzer::ImageAnalyzer::ImageMagick.new(image.blob).metadata
     if image_meta[:width] > 1600 #resize at lower quality with link
       return "\n\n<a href=\"#{image_path(image)}\">\n  <img src=\"#{image_resized_path(image)}\"></img>\n</a>"
     else #simple full image
