@@ -1,11 +1,10 @@
 #!/bin/bash
 
 ## Prepare a clean Ubuntu installation with the pre-reqs required
-## to deploy a simple blog.  Generally this script should be used
-## to create a base AMI that can be reused for faster installs.
+## to deploy a simple blog.  Assumes Ubuntu 24.04
 
 sudo apt-get update
-sudo apt-get install -y autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm5 libgdbm-dev
+sudo apt-get install -y autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm6t64 libgdbm-dev gcc
 
 # Ruby
 git clone https://github.com/rbenv/rbenv.git ~/.rbenv
@@ -25,10 +24,9 @@ gem install bundler -v 2.4.12 --no-document
 sudo apt-get install -y nginx
 
 # Passenger
-sudo apt-get install -y dirmngr gnupg
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7
-sudo apt-get install -y apt-transport-https ca-certificates
-sudo sh -c 'echo deb https://oss-binaries.phusionpassenger.com/apt/passenger bionic main > /etc/apt/sources.list.d/passenger.list'
+sudo apt-get install -y dirmngr gnupg apt-transport-https ca-certificates curl
+curl https://oss-binaries.phusionpassenger.com/auto-software-signing-gpg-key.txt | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/phusion.gpg >/dev/null
+sudo sh -c 'echo deb https://oss-binaries.phusionpassenger.com/apt/passenger noble main > /etc/apt/sources.list.d/passenger.list'
 sudo apt-get update
 sudo apt-get install -y libnginx-mod-http-passenger
 
@@ -45,16 +43,11 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 sudo apt-get update && sudo apt-get install -y yarn
 
 # PostgreSQL
-### https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-ruby-on-rails-application-on-ubuntu-18-04
+### https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-ruby-on-rails-application-on-ubuntu-20-04 
 sudo apt-get install -y postgresql postgresql-contrib libpq-dev
 
 # HTTPS with Letsencrypt
-sudo apt-get update
-sudo apt-get install -y software-properties-common
-sudo add-apt-repository -y universe
-sudo add-apt-repository -y ppa:certbot/certbot
-sudo apt-get update
-sudo apt-get install -y certbot python-certbot-nginx
+sudo snap install --classic certbot
 
 ## For image processing in the app
 sudo apt-get install -y imagemagick

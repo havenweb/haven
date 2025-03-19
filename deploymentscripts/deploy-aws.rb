@@ -4,8 +4,9 @@ require 'uri'
 
 ## Configurable Constants
 
-ami = "ami-06f2f779464715dc5" # Ubuntu 18.04 LTS 64bit x86
+#ami = "ami-06f2f779464715dc5" # Ubuntu 18.04 LTS 64bit x86
 #ami = "ami-0cc5660626fe637a8" # Prepared Image
+ami = "ami-00c257e12d6828491" # Ubuntu 24.04 LTS 64bit x86
 
 instance_type = 't3a.micro'
 region = 'us-west-2'
