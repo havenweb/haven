@@ -1,4 +1,5 @@
-FROM ruby:3.1.4-slim-bullseye
+FROM ruby:3.3.7-slim-bookworm
+WORKDIR /app
 
 RUN apt-get update -yqq && \
     apt-get install -yqq \

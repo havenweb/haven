@@ -13,8 +13,8 @@ echo 'eval "$(rbenv init -)"' >> ~/.bashrc
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install 3.1.4
-rbenv global 3.1.4
+RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install 3.3.7
+rbenv global 3.3.7
 gem update --system
 gem update strscan --default #resolves a gem conflict
 gem update base64 --default #resolves a gem conflict

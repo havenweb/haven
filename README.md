@@ -42,7 +42,10 @@ PikaPods is a great platform for hosting open source apps. They currently offer 
 * If you get this error: `cannot load such file -- aws-sdk-ec2 (LoadError)`, then type `gem install aws-sdk` and try again
 
 ## Raspberry Pi
-Note, this requires a little bit more technical knowledge.  You should know how to flash an SD card and how to use the tools `ssh` and `scp`.  You should also be able to configure your own DNS and port forwarding. We're doing this fully headless, not plugging in a display or mouse/keybord to the Raspberry Pi.
+
+Note, Raspberry Pi install scripts are broken right now, I hope to have them fixed soon.
+
+this requires a little bit more technical knowledge.  You should know how to flash an SD card and how to use the tools `ssh` and `scp`.  You should also be able to configure your own DNS and port forwarding. We're doing this fully headless, not plugging in a display or mouse/keybord to the Raspberry Pi.
 * Configure your DNS to point to your home IP address.
   * If you're using AWS Route53 for your DNS, this script might be useful: https://github.com/havenweb/r53_dynamic_dns
 * Flash a micro SD card with Raspberry Pi OS Lite (May 2021)
