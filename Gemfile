@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.4'
+ruby '3.3.7'
 
 # For configuration files
 gem 'dotenv-rails', '2.7.6'
@@ -13,7 +13,7 @@ gem 'commonmarker', '~> 0.23'
 gem 'sassc', '~> 2.4.0'
 
 # For making user stylesheet !important
-gem 'css_parser', '= 1.10.0' # pinned because we use private methods
+gem 'css_parser', '= 1.21.1' # pinned because we use private methods
 
 gem 'rb-readline'
 
@@ -33,7 +33,7 @@ gem 'kaminari', '~> 1.2.1'
 gem 'rails', '~> 7.0.8.7'
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
-gem 'pg', '~> 1.2.3'
+gem 'pg', '~> 1.5.9'
 # Use Puma as the app server
 gem 'puma', '~> 5.6.9'
 # Use SCSS for stylesheets

@@ -11,7 +11,7 @@ ami = "ami-00c257e12d6828491" # Ubuntu 24.04 LTS 64bit x86
 instance_type = 't3a.micro'
 region = 'us-west-2'
 az = 'us-west-2a'
-ruby_version = "3.1.4"
+ruby_version = "3.3.7"
 
 ## Parameter Parsing
 
