@@ -9,7 +9,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - haven_storage:/storage
+      - haven_storage:/app/storage
     environment:
       - RAILS_ENV=production
       - HAVEN_DB_HOST=postgresql
