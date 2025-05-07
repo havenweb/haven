@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  GFM_EXT = [:table, :strikethrough, :autolink, :tagfilter]
+  GFM_EXT = [:table, :strikethrough, :autolink]
   IMG_REGEX = /!\[.*\]\(.*\)/
   before_action :authenticate_user!, except: :rss
   before_action :verify_publisher, except: [:index, :show, :rss]
