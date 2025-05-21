@@ -216,6 +216,8 @@ class PostsController < ApplicationController
             upload_filename = path_for(@image.blob).split("/").last
           rescue
           end
+          Rails.logger.error "Error uploading #{upload_filename}"
+          Rails.logger.error e.backtrace.join("\n") if e.backtrace
           flash.now[:alert] = "Error uploading #{upload_filename}: #{e}"
         end
       else # attachment does not exist

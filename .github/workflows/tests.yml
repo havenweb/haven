@@ -29,6 +29,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Install ImageMagick
+      run: |
+        sudo apt-get install -y imagemagick
+
     - name: Setup chrome driver (for Selenium)
       uses: nanasess/setup-chromedriver@v2
 
@@ -69,4 +73,13 @@ jobs:
         bin/rails test
         bin/rails test:system
         bin/rails test:integration
+
+    - name: Upload failed screenshots
+      uses: actions/upload-artifact@v4 # Use the upload-artifact action
+      if: failure() # Only run this step if the previous steps failed
+      with:
+        name: failed-screenshots 
+        path: /home/runner/work/haven/haven/tmp/screenshots/*.png # The path to your screenshot files. Use a wildcard if there can be multiple.
+        if-no-files-found: ignore # Prevents the workflow from failing if no screenshots are found
+        retention-days: 7 # (default is 90 days)
 
