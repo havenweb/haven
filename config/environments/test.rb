@@ -8,6 +8,11 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  logger           = ActiveSupport::Logger.new(STDOUT)
+  logger.formatter = config.log_formatter
+  config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  config.log_level = :error
+
   config.middleware.insert_before 0, Capybara::Lockstep::Middleware
 
   # Turn false under Spring and add config.action_view.cache_template_loading = true.
