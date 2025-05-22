@@ -1,5 +1,6 @@
 class ImagesController < ApplicationController
-  before_action :verify_auth!, :set_blob, :set_host
+  include ActiveStorage::SetCurrent
+  before_action :verify_auth!, :set_blob
   protect_from_forgery with: :exception
 
   def show
@@ -42,9 +43,5 @@ class ImagesController < ApplicationController
       end
     rescue ActiveSupport::MessageVerifier::InvalidSignature
       head :not_found
-    end
-
-    def set_host
-      ActiveStorage::Current.host = request.base_url
     end
 end
