@@ -35,9 +35,12 @@
 
   </head>
   <body>
+    <input type="checkbox" id="hamburger-toggle" style="display: none;">
     <nav>
     <header>
       <%=link_to "Home", root_path, class: 'navigation-home' %>
+      <label for="hamburger-toggle" class="hamburger-label">&#9776;</label>
+      <div class="nav-links">
         <% if user_signed_in? %>
           <% if current_user.admin == 1 %>
             <%= link_to "Read", read_path %>
@@ -47,6 +50,7 @@
           <%= link_to "Account", edit_user_registration_path %>
           <%= link_to "Logout", destroy_user_session_path, method: :delete  %>
         <% end %>
+      </div>
     </header>
     </nav>
     <div class="container">

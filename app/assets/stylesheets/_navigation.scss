@@ -1,0 +1,53 @@
+// Default (Desktop) Styles
+.hamburger-label {
+  display: none; // Hidden on desktop
+  cursor: pointer;
+  font-size: 1.5rem; // Match other header link sizes
+  padding-right: 1rem; // Spacing similar to other links
+  color: var(--nc-tx-1); // Use existing theme variable for text color
+}
+
+.nav-links {
+  display: inline; // Keep links inline on desktop by default
+}
+
+// Mobile Styles
+@media screen and (max-width: 768px) {
+  header {
+    // Adjust header padding on mobile if necessary, or ensure links can wrap
+    // For now, let's assume existing header padding is okay,
+    // but we might need to revisit this if the "Home" link and hamburger cause overflow.
+  }
+
+  .navigation-home {
+    // Potentially adjust padding or size if needed on mobile
+  }
+
+  .hamburger-label {
+    display: inline-block; // Show the hamburger icon
+    float: right; // Position it to the right
+  }
+
+  .nav-links {
+    display: none; // Hide the navigation links by default on mobile
+    width: 100%;  // Make the links container take full width
+    clear: both; // Ensure it clears any floats (like the hamburger icon if it was floated left)
+    
+    a {
+      display: block; // Stack links vertically
+      padding: 0.75rem 0; // Add some padding to each link
+      text-align: left; // Align text to the left
+      border-bottom: 1px solid var(--nc-bg-3); // Separator line, use theme variable
+
+      &:last-child {
+        border-bottom: none; // No border for the last link
+      }
+    }
+  }
+
+  // When the hamburger checkbox is checked, display the nav-links
+  #hamburger-toggle:checked ~ nav header .nav-links {
+    display: block;
+    margin-top: 1rem; // Add some space above the expanded links
+  }
+}
