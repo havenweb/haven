@@ -26,6 +26,28 @@
   .hamburger-label {
     display: inline-block; // Show the hamburger icon
     float: right; // Position it to the right
+    cursor: pointer;
+    font-size: 1.8rem; // Made slightly larger for better tap target and visual weight
+    padding-right: 0; // Remove padding from label itself if icon is ::before
+    position: relative; // For potential fine-tuning of ::before positioning
+    width: 1.8rem; // Give it a fixed width
+    height: 1.8rem; // Give it a fixed height
+    text-align: center;
+    color: var(--nc-tx-1); 
+
+    &::before {
+      content: '\2630'; // Unicode for ☰
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  // When the hamburger checkbox is checked, change the label to an "X"
+  #hamburger-toggle:checked ~ nav header .hamburger-label::before {
+    content: '\00d7'; // Unicode for ×
+    // font-size: 2rem; // Adjust if 'X' needs different sizing
   }
 
   .nav-links {
@@ -49,5 +71,8 @@
   #hamburger-toggle:checked ~ nav header .nav-links {
     display: block;
     margin-top: 1rem; // Add some space above the expanded links
+    padding-top: 0.5rem; // Add some padding inside the top border
+    border-top: 1px solid var(--nc-bg-3); // Use theme variable for border color
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); // Subtle shadow downwards
   }
 }

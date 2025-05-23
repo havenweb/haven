@@ -39,7 +39,7 @@
     <nav>
     <header>
       <%=link_to "Home", root_path, class: 'navigation-home' %>
-      <label for="hamburger-toggle" class="hamburger-label">&#9776;</label>
+      <label for="hamburger-toggle" class="hamburger-label"></label>
       <div class="nav-links">
         <% if user_signed_in? %>
           <% if current_user.admin == 1 %>
