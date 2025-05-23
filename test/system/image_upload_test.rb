@@ -18,5 +18,7 @@ class ImageUploadTest < ApplicationSystemTestCase
     click_on "Save Post"
 
     assert_selector "img[src*='test_image.png']"
+
+    click_on "Logout"
   end
 end
