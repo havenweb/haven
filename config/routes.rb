@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/favicon.ico', to: 'favicons#serve_ico'
 
   get 'indieauth/metadata', to: 'indieauth#metadata', as: "indie_auth_metadata"
   get 'indieauth/authorization', to: 'indieauth#authorization', as: "indie_authorization_endpoint"

@@ -16,8 +16,8 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     @setting.save! if @setting.new_record?
   end
 
-  # --- Test Successful Favicon Upload and Variant Generation ---
-  test "should upload valid favicon, generate variants, and save settings" do
+  # --- Test Successful Favicon Upload ---
+  test "should upload valid favicon_original and save settings" do
     patch setting_path(@setting), params: {
       setting: {
         favicon_original: fixture_file_upload('files/favicon_valid_512x512.png', 'image/png')
@@ -28,11 +28,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
     @setting.reload # Reload from DB to see attachment changes
     assert @setting.favicon_original.attached?, "Original favicon should be attached"
-    assert @setting.favicon_ico.attached?, "ICO variant should be attached"
-    assert @setting.favicon_apple_touch.attached?, "Apple Touch variant should be attached"
-    assert @setting.favicon_32x32.attached?, "32x32 PNG variant should be attached"
-    assert @setting.favicon_16x16.attached?, "16x16 PNG variant should be attached"
-    assert @setting.favicon_512x512.attached?, "512x512 PNG variant should be attached"
+    # Removed assertions for direct variant attachments on the model
   end
 
   # --- Test Validation: Image Too Small ---
@@ -47,7 +43,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     
     @setting.reload
     assert_not @setting.favicon_original.attached?, "Original favicon should NOT be attached if too small"
-    assert_not @setting.favicon_ico.attached?, "ICO variant should NOT be attached if original is invalid"
+    # Removed assertion for ICO variant as it's no longer directly attached
   end
 
   # --- Test Validation: Image Not Square ---
@@ -79,16 +75,16 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
   end
 
   # --- Test Favicon Removal ---
-  test "should remove custom favicon and all its variants" do
-    # 1. Setup: Attach a valid favicon and ensure variants are generated
+  test "should remove custom favicon_original" do
+    # 1. Setup: Attach a valid favicon_original
     patch setting_path(@setting), params: {
       setting: {
         favicon_original: fixture_file_upload('files/favicon_valid_512x512.png', 'image/png')
       }
     }
     @setting.reload
-    assert @setting.favicon_original.attached?, "Setup for removal test failed: Original favicon did not attach."
-    assert @setting.favicon_ico.attached?, "Setup for removal test failed: ICO variant did not attach."
+    assert @setting.favicon_original.attached?, "Setup for removal test failed: Original favicon_original did not attach."
+    # Removed assertion for ICO variant setup as it's no longer directly attached
 
     # 2. Test Removal
     patch setting_path(@setting), params: {
@@ -101,11 +97,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Settings Saved", flash[:notice], "Flash notice should indicate settings were saved after removal"
 
     @setting.reload
-    assert_not @setting.favicon_original.attached?, "Original favicon should be removed"
-    assert_not @setting.favicon_ico.attached?, "ICO variant should be removed"
-    assert_not @setting.favicon_apple_touch.attached?, "Apple Touch variant should be removed"
-    assert_not @setting.favicon_32x32.attached?, "32x32 PNG variant should be removed"
-    assert_not @setting.favicon_16x16.attached?, "16x16 PNG variant should be removed"
-    assert_not @setting.favicon_512x512.attached?, "512x512 PNG variant should be removed"
+    assert_not @setting.favicon_original.attached?, "Original favicon_original should be removed"
+    # Removed assertions for removal of direct variant attachments
   end
 end

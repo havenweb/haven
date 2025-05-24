@@ -41,11 +41,7 @@ class SettingsController < ApplicationController
     # Favicon Logic
     if setting_params[:remove_favicon] == '1'
       @setting.favicon_original.purge if @setting.favicon_original.attached?
-      @setting.favicon_ico.purge if @setting.favicon_ico.attached?
-      @setting.favicon_apple_touch.purge if @setting.favicon_apple_touch.attached?
-      @setting.favicon_32x32.purge if @setting.favicon_32x32.attached?
-      @setting.favicon_16x16.purge if @setting.favicon_16x16.attached?
-      @setting.favicon_512x512.purge if @setting.favicon_512x512.attached?
+      # Removed purging of other variants as they no longer exist on the model
     elsif setting_params[:favicon_original].present?
       @setting.favicon_original.attach(setting_params[:favicon_original])
 
@@ -60,42 +56,14 @@ class SettingsController < ApplicationController
             redirect_to settings_edit_path
             return
           else
-            # === Variant Generation ===
-            @setting.favicon_ico.purge if @setting.favicon_ico.attached?
-            @setting.favicon_apple_touch.purge if @setting.favicon_apple_touch.attached?
-            @setting.favicon_32x32.purge if @setting.favicon_32x32.attached?
-            @setting.favicon_16x16.purge if @setting.favicon_16x16.attached?
-            @setting.favicon_512x512.purge if @setting.favicon_512x512.attached?
-
-            @setting.favicon_ico.attach(
-              io: StringIO.new(image.format("ico") { |c| c.resize "48x48" }.to_blob),
-              filename: 'favicon.ico',
-              content_type: 'image/vnd.microsoft.icon'
-            )
-
-            @setting.favicon_apple_touch.attach(
-              io: StringIO.new(image.format("png") { |c| c.resize "180x180" }.to_blob),
-              filename: 'apple-touch-icon.png',
-              content_type: 'image/png'
-            )
-
-            @setting.favicon_32x32.attach(
-              io: StringIO.new(image.format("png") { |c| c.resize "32x32" }.to_blob),
-              filename: 'favicon-32x32.png',
-              content_type: 'image/png'
-            )
-
-            @setting.favicon_16x16.attach(
-              io: StringIO.new(image.format("png") { |c| c.resize "16x16" }.to_blob),
-              filename: 'favicon-16x16.png',
-              content_type: 'image/png'
-            )
-
-            @setting.favicon_512x512.attach(
-              io: StringIO.new(image.format("png") { |c| c.resize "512x512" }.to_blob),
-              filename: 'favicon-512x512.png',
-              content_type: 'image/png'
-            )
+            # === Variant Generation Removed ===
+            # Variants are now generated on-the-fly by Active Storage's #variant method
+            # or a dedicated controller for specific formats (like ICO).
+            # No need to attach them to the Setting model here.
+            # Purging of old model-level variants also removed.
+            pass # Placeholder if the else block becomes empty, or just remove the else.
+                 # In this case, the 'else' implies successful validation of favicon_original,
+                 # so no specific action is needed here anymore regarding variants.
           end
         rescue MiniMagick::Error => e
           @setting.favicon_original.purge if @setting.favicon_original.attached?
