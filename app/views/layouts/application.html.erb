@@ -5,10 +5,21 @@
     <%= capybara_lockstep if defined?(Capybara::Lockstep) %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= ApplicationController.get_settings.title || "New Blog" %></title>
-    <link rel="icon" href="/favicon.ico" /><!-- 48×48 -->
-    <link rel="icon" href="/icon.svg" type="image/svg+xml" sizes="any" />
-    <link rel="apple-touch-icon" href="/apple.png" /><!-- 180×180 -->
-    <link rel="manifest" href="/manifest.webmanifest" />
+    <%# Favicon links - updated %>
+    <link rel="icon" href="<%= custom_favicon_ico_url %>" sizes="48x48" /> <%# Main ICO, typically 16,32,48 %>
+    <link rel="icon" type="image/png" sizes="16x16" href="<%= custom_favicon_16x16_url %>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<%= custom_favicon_32x32_url %>">
+    <%# SVG icon - unchanged by this task %>
+    <link rel="icon" href="<%= ActionController::Base.helpers.asset_path('icon.svg') %>" type="image/svg+xml" sizes="any" />
+    <%# Apple touch icon - updated %>
+    <link rel="apple-touch-icon" href="<%= custom_favicon_apple_touch_url %>" /> <%# Typically 180x180 %>
+    <%# Web App Manifest - unchanged by this task %>
+    <link rel="manifest" href="<%= ActionController::Base.helpers.asset_path('manifest.webmanifest') %>" />
+    <%# Note: The manifest itself might reference icons like 192x192 or 512x512. %>
+    <%# The custom_favicon_512x512_url() helper is available if needed for the manifest's contents, %>
+    <%# or if a direct link to a 512x512 png is desired in HTML, e.g.: %>
+    <%# <link rel="icon" type="image/png" sizes="512x512" href="<%= custom_favicon_512x512_url %>"> %>
+    <%# For now, stick to common links and what was previously there + 16/32 pngs. %>
     
     <link rel="indieauth-metadata" href="<%=indie_auth_metadata_url %>" />
     <link rel="authorization_endpoint" href="<%=indie_authorization_endpoint_url %>" />

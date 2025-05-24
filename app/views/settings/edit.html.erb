@@ -20,6 +20,24 @@
   <p>Custom Fonts:</p>
   <%= render "fonts", setting: @setting, allow_remove: false %>
   <p><%= link_to "Modify custom fonts", edit_fonts_path %></p>
+
+  <h2>Favicon</h2>
+  <% if @setting.favicon_original.attached? %>
+    <p>
+      <strong>Current custom favicon:</strong><br>
+      <%= image_tag @setting.favicon_original.variant(resize_to_limit: [100, 100]) %>
+    </p>
+    <p>
+      <%= form.check_box :remove_favicon %>
+      <%= form.label :remove_favicon, "Remove custom favicon and use default" %>
+    </p>
+  <% end %>
+
+  <p>
+    <%= form.label :favicon_original, "Upload new favicon (PNG, JPG, GIF - must be square, min 512x512px)" %><br>
+    <%= form.file_field :favicon_original, accept: "image/png,image/jpeg,image/gif" %>
+  </p>
+
   <p>
     <%= form.label :css, (link_to "Custom CSS (click for tips)", "/themes", target: "_blank" )%><br>
     <%= form.text_area :css, :style => 'display:block;width:100%;' %>

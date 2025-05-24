@@ -1,3 +1,6 @@
+require 'mini_magick'
+require 'stringio'
+
 class SettingsController < ApplicationController
   before_action :authenticate_user!
   before_action :verify_admin, except:[:style, :show_fonts]
@@ -32,11 +35,93 @@ class SettingsController < ApplicationController
       compiled_css = parser.to_s
       @setting.compiled_css = compiled_css
       @setting.css_hash = Digest::MD5.hexdigest(compiled_css)
-      @setting.save
+      # @setting.save # Save will be called later by @setting.update
     end
-    @setting.update(setting_params)
-    flash[:notice] = "Settings Saved"
-    redirect_to settings_edit_path
+
+    # Favicon Logic
+    if setting_params[:remove_favicon] == '1'
+      @setting.favicon_original.purge if @setting.favicon_original.attached?
+      @setting.favicon_ico.purge if @setting.favicon_ico.attached?
+      @setting.favicon_apple_touch.purge if @setting.favicon_apple_touch.attached?
+      @setting.favicon_32x32.purge if @setting.favicon_32x32.attached?
+      @setting.favicon_16x16.purge if @setting.favicon_16x16.attached?
+      @setting.favicon_512x512.purge if @setting.favicon_512x512.attached?
+    elsif setting_params[:favicon_original].present?
+      @setting.favicon_original.attach(setting_params[:favicon_original])
+
+      if @setting.favicon_original.attached? && @setting.favicon_original.blob.content_type.start_with?('image/')
+        begin
+          image_blob = @setting.favicon_original.blob.download
+          image = MiniMagick::Image.read(image_blob)
+
+          unless image.width == image.height && image.width >= 512
+            @setting.favicon_original.purge # Remove the invalid attachment
+            flash[:alert] = "Favicon must be square and at least 512x512 pixels."
+            redirect_to settings_edit_path
+            return
+          else
+            # === Variant Generation ===
+            @setting.favicon_ico.purge if @setting.favicon_ico.attached?
+            @setting.favicon_apple_touch.purge if @setting.favicon_apple_touch.attached?
+            @setting.favicon_32x32.purge if @setting.favicon_32x32.attached?
+            @setting.favicon_16x16.purge if @setting.favicon_16x16.attached?
+            @setting.favicon_512x512.purge if @setting.favicon_512x512.attached?
+
+            @setting.favicon_ico.attach(
+              io: StringIO.new(image.format("ico") { |c| c.resize "48x48" }.to_blob),
+              filename: 'favicon.ico',
+              content_type: 'image/vnd.microsoft.icon'
+            )
+
+            @setting.favicon_apple_touch.attach(
+              io: StringIO.new(image.format("png") { |c| c.resize "180x180" }.to_blob),
+              filename: 'apple-touch-icon.png',
+              content_type: 'image/png'
+            )
+
+            @setting.favicon_32x32.attach(
+              io: StringIO.new(image.format("png") { |c| c.resize "32x32" }.to_blob),
+              filename: 'favicon-32x32.png',
+              content_type: 'image/png'
+            )
+
+            @setting.favicon_16x16.attach(
+              io: StringIO.new(image.format("png") { |c| c.resize "16x16" }.to_blob),
+              filename: 'favicon-16x16.png',
+              content_type: 'image/png'
+            )
+
+            @setting.favicon_512x512.attach(
+              io: StringIO.new(image.format("png") { |c| c.resize "512x512" }.to_blob),
+              filename: 'favicon-512x512.png',
+              content_type: 'image/png'
+            )
+          end
+        rescue MiniMagick::Error => e
+          @setting.favicon_original.purge if @setting.favicon_original.attached?
+          flash[:alert] = "Error processing favicon: #{e.message}"
+          redirect_to settings_edit_path
+          return
+        end
+      else
+        if @setting.favicon_original.attached? # It was attached, but not an image
+          @setting.favicon_original.purge
+          flash[:alert] = "Uploaded favicon is not a valid image type."
+          redirect_to settings_edit_path
+          return
+        end
+      end
+    end
+
+    setting_params_for_update = setting_params.except(:favicon_original, :remove_favicon)
+    if @setting.update(setting_params_for_update)
+      flash[:notice] = "Settings Saved"
+      redirect_to settings_edit_path
+    else
+      flash[:alert] = "Settings could not be saved."
+      # Ensure the view has the @setting object, especially if rendering edit
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   # Used to generate a CSS file that defines the fonts
@@ -82,7 +167,7 @@ class SettingsController < ApplicationController
   private
 
   def setting_params
-    params.require(:setting).permit(:title, :subtitle, :author, :css, :byline, :comments)
+    params.require(:setting).permit(:title, :subtitle, :author, :css, :byline, :comments, :favicon_original, :remove_favicon)
   end
 
   def set_font_hash
