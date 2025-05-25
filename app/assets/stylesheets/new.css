@@ -494,4 +494,70 @@ audio {
 	border-radius: 30px;
 }
 
+/* User List Styles */
+.users-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.user-card {
+  border: 1px solid var(--nc-bg-3);
+  padding: 1rem;
+  border-radius: 6px;
+  flex-basis: calc(50% - 2rem); /* Accounts for gap and padding, adjust as needed */
+  min-width: 300px; /* Minimum width before wrapping */
+  flex-grow: 1;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background-color: var(--nc-bg-2);
+  display: flex; /* Make user-card a flex container */
+  flex-direction: column; /* Stack user-info and user-actions vertically */
+  justify-content: space-between; /* Push user-actions to the bottom */
+}
+
+.user-info p {
+  margin-bottom: 0.5rem;
+}
+
+.user-info p:last-child {
+  margin-bottom: 0; /* Remove margin from the last paragraph in user-info */
+}
+
+.user-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem; /* Space between user info and actions */
+}
+
+/* Ensure a.button styles are consistent with button element styles */
+a.button {
+  font-size: 1rem;
+  display: inline-block;
+  padding: 6px 12px;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  background: var(--nc-lk-1);
+  color: var(--nc-lk-tx);
+  border: 0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+a.button:hover {
+  background: var(--nc-lk-2);
+  text-decoration: none; /* Ensure no underline on hover */
+}
+
+a.button.button-danger {
+  background: var(--nc-danger);
+  color: var(--nc-lk-tx); /* Ensure text color contrasts with danger background */
+}
+
+a.button.button-danger:hover {
+  background: color-mix(in srgb, var(--nc-danger) 80%, black); /* Darken danger color on hover */
+}
+
 
