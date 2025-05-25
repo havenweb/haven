@@ -8,7 +8,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     #   email: admin@example.com
     #   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
     #   admin: 1
-    @admin_user = users(:admin_user) 
+    @admin_user = users(:washington) # Changed from :admin_user to :washington
     sign_in @admin_user # Devise test helper
 
     @setting = SettingsController.get_setting
@@ -18,9 +18,9 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
   # --- Test Successful Favicon Upload ---
   test "should upload valid favicon_original and save settings" do
-    patch setting_path(@setting), params: {
+    patch settings_path, params: { # Changed from setting_path(@setting)
       setting: {
-        favicon_original: fixture_file_upload('files/favicon_valid_512x512.png', 'image/png')
+        favicon_original: fixture_file_upload('favicon_valid_512x512.png', 'image/png')
       }
     }
     assert_redirected_to settings_edit_path, "Should redirect to settings edit path after successful upload"
@@ -33,9 +33,9 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
   # --- Test Validation: Image Too Small ---
   test "should reject favicon if image is too small" do
-    patch setting_path(@setting), params: {
+    patch settings_path, params: { # Changed from setting_path(@setting)
       setting: {
-        favicon_original: fixture_file_upload('files/favicon_invalid_200x200.png', 'image/png')
+        favicon_original: fixture_file_upload('favicon_invalid_200x200.png', 'image/png')
       }
     }
     assert_redirected_to settings_edit_path, "Should redirect to settings edit path on validation error"
@@ -48,9 +48,9 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
   # --- Test Validation: Image Not Square ---
   test "should reject favicon if image is not square" do
-    patch setting_path(@setting), params: {
+    patch settings_path, params: { # Changed from setting_path(@setting)
       setting: {
-        favicon_original: fixture_file_upload('files/favicon_invalid_512x400.png', 'image/png')
+        favicon_original: fixture_file_upload('favicon_invalid_512x400.png', 'image/png')
       }
     }
     assert_redirected_to settings_edit_path, "Should redirect to settings edit path on validation error"
@@ -62,9 +62,9 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
   # --- Test Validation: Non-Image File Upload ---
   test "should reject favicon if file is not an image" do
-    patch setting_path(@setting), params: {
+    patch settings_path, params: { # Changed from setting_path(@setting)
       setting: {
-        favicon_original: fixture_file_upload('files/not_an_image.txt', 'text/plain')
+        favicon_original: fixture_file_upload('not_an_image.txt', 'text/plain')
       }
     }
     assert_redirected_to settings_edit_path, "Should redirect to settings edit path on file type error"
@@ -77,9 +77,9 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
   # --- Test Favicon Removal ---
   test "should remove custom favicon_original" do
     # 1. Setup: Attach a valid favicon_original
-    patch setting_path(@setting), params: {
+    patch settings_path, params: { # Changed from setting_path(@setting)
       setting: {
-        favicon_original: fixture_file_upload('files/favicon_valid_512x512.png', 'image/png')
+        favicon_original: fixture_file_upload('favicon_valid_512x512.png', 'image/png')
       }
     }
     @setting.reload
@@ -87,7 +87,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     # Removed assertion for ICO variant setup as it's no longer directly attached
 
     # 2. Test Removal
-    patch setting_path(@setting), params: {
+    patch settings_path, params: { # Changed from setting_path(@setting)
       setting: {
         remove_favicon: '1'
         # No other params needed, remove_favicon takes precedence

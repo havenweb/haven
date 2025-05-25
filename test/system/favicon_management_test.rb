@@ -5,7 +5,7 @@ class FaviconManagementTest < ApplicationSystemTestCase
   include Rails.application.routes.url_helpers # For url_for
 
   setup do
-    @admin_user = users(:admin_user) 
+    @admin_user = users(:washington) # Changed from :admin_user to :washington
     login_as @admin_user, scope: :user 
     @setting = SettingsController.get_setting
     @setting.save! if @setting.new_record?
@@ -78,14 +78,10 @@ class FaviconManagementTest < ApplicationSystemTestCase
     # Assert that the default favicon links are still in place
     assert_selector "link[rel='icon'][sizes='48x48'][href='/favicon.ico']", visible: false # Will serve default
     
-    default_apple_path = ActionController::Base.helpers.asset_path('apple.png')
-    assert_selector "link[rel='apple-touch-icon'][href='#{default_apple_path}']", visible: false
-
-    default_16_path = ActionController::Base.helpers.asset_path('favicon-16x16.png')
-    assert_selector "link[rel='icon'][type='image/png'][sizes='16x16'][href='#{default_16_path}']", visible: false
-    
-    default_32_path = ActionController::Base.helpers.asset_path('favicon-32x32.png')
-    assert_selector "link[rel='icon'][type='image/png'][sizes='32x32'][href='#{default_32_path}']", visible: false
+    # For conditionally rendered PNG links, assert they are NOT present
+    assert_no_selector "link[rel='apple-touch-icon']", visible: false
+    assert_no_selector "link[type='image/png'][sizes='16x16']", visible: false
+    assert_no_selector "link[type='image/png'][sizes='32x32']", visible: false
   end
 
   test "removing a custom favicon" do
@@ -108,14 +104,10 @@ class FaviconManagementTest < ApplicationSystemTestCase
     # Assert default favicons are back in <head>
     assert_selector "link[rel='icon'][sizes='48x48'][href='/favicon.ico']", visible: false # Will serve default
 
-    default_apple_path = ActionController::Base.helpers.asset_path('apple.png')
-    assert_selector "link[rel='apple-touch-icon'][href='#{default_apple_path}']", visible: false
-    
-    default_16_path = ActionController::Base.helpers.asset_path('favicon-16x16.png')
-    assert_selector "link[rel='icon'][type='image/png'][sizes='16x16'][href='#{default_16_path}']", visible: false
-    
-    default_32_path = ActionController::Base.helpers.asset_path('favicon-32x32.png')
-    assert_selector "link[rel='icon'][type='image/png'][sizes='32x32'][href='#{default_32_path}']", visible: false
+    # For conditionally rendered PNG links, assert they are NOT present after removal
+    assert_no_selector "link[rel='apple-touch-icon']", visible: false
+    assert_no_selector "link[type='image/png'][sizes='16x16']", visible: false
+    assert_no_selector "link[type='image/png'][sizes='32x32']", visible: false
   end
 
   test "visiting /favicon.ico serves custom ico if set, otherwise default" do

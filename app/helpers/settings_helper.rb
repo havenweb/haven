@@ -16,10 +16,10 @@ module SettingsHelper
         url_for(current_settings.favicon_original.variant(resize_to_fill: [180, 180]))
       rescue ActiveStorage::InvariableError
         # Fallback if this specific original cannot be varianted
-        ActionController::Base.helpers.asset_path('apple.png')
+        nil 
       end
     else
-      ActionController::Base.helpers.asset_path('apple.png')
+      nil # Fallback if no original is attached
     end
   end
 
@@ -28,10 +28,10 @@ module SettingsHelper
       begin
         url_for(current_settings.favicon_original.variant(resize_to_fill: [32, 32]))
       rescue ActiveStorage::InvariableError
-        ActionController::Base.helpers.asset_path('favicon-32x32.png')
+        nil
       end
     else
-      ActionController::Base.helpers.asset_path('favicon-32x32.png')
+      nil
     end
   end
 
@@ -40,10 +40,10 @@ module SettingsHelper
       begin
         url_for(current_settings.favicon_original.variant(resize_to_fill: [16, 16]))
       rescue ActiveStorage::InvariableError
-        ActionController::Base.helpers.asset_path('favicon-16x16.png')
+        nil
       end
     else
-      ActionController::Base.helpers.asset_path('favicon-16x16.png')
+      nil
     end
   end
 
@@ -52,10 +52,10 @@ module SettingsHelper
       begin
         url_for(current_settings.favicon_original.variant(resize_to_fill: [512, 512]))
       rescue ActiveStorage::InvariableError
-        ActionController::Base.helpers.asset_path('512.png')
+        nil
       end
     else
-      ActionController::Base.helpers.asset_path('512.png')
+      nil
     end
   end
 end

@@ -7,12 +7,18 @@
     <title><%= ApplicationController.get_settings.title || "New Blog" %></title>
     <%# Favicon links - updated %>
     <link rel="icon" href="<%= custom_favicon_ico_url %>" sizes="48x48" /> <%# Main ICO, typically 16,32,48 %>
-    <link rel="icon" type="image/png" sizes="16x16" href="<%= custom_favicon_16x16_url %>">
-    <link rel="icon" type="image/png" sizes="32x32" href="<%= custom_favicon_32x32_url %>">
+    <% if (url_16x16 = custom_favicon_16x16_url).present? %>
+      <link rel="icon" type="image/png" sizes="16x16" href="<%= url_16x16 %>">
+    <% end %>
+    <% if (url_32x32 = custom_favicon_32x32_url).present? %>
+      <link rel="icon" type="image/png" sizes="32x32" href="<%= url_32x32 %>">
+    <% end %>
     <%# SVG icon - unchanged by this task %>
     <link rel="icon" href="<%= ActionController::Base.helpers.asset_path('icon.svg') %>" type="image/svg+xml" sizes="any" />
     <%# Apple touch icon - updated %>
-    <link rel="apple-touch-icon" href="<%= custom_favicon_apple_touch_url %>" /> <%# Typically 180x180 %>
+    <% if (apple_touch_url = custom_favicon_apple_touch_url).present? %>
+      <link rel="apple-touch-icon" href="<%= apple_touch_url %>" /> <%# Typically 180x180 %>
+    <% end %>
     <%# Web App Manifest - unchanged by this task %>
     <link rel="manifest" href="<%= ActionController::Base.helpers.asset_path('manifest.webmanifest') %>" />
     <%# Note: The manifest itself might reference icons like 192x192 or 512x512. %>

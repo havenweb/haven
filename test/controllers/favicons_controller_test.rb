@@ -25,7 +25,7 @@ class FaviconsControllerTest < ActionDispatch::IntegrationTest
     # Note: If 'favicon_valid_512x512.png' is an empty placeholder, 
     # MiniMagick might error, and this test might behave like the 'fails processing' test.
     # For this test to truly pass as 'custom', the fixture needs to be a valid image.
-    @setting.favicon_original.attach(fixture_file_upload('files/favicon_valid_512x512.png', 'image/png'))
+    @setting.favicon_original.attach(fixture_file_upload('favicon_valid_512x512.png', 'image/png'))
     
     get '/favicon.ico'
     assert_response :success
@@ -52,7 +52,7 @@ class FaviconsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should serve default favicon.ico if custom is attached but fails processing (e.g., not an image)" do
-    @setting.favicon_original.attach(fixture_file_upload('files/not_an_image.txt', 'text/plain'))
+    @setting.favicon_original.attach(fixture_file_upload('not_an_image.txt', 'text/plain'))
     
     get '/favicon.ico'
     assert_response :success
