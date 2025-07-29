@@ -141,7 +141,11 @@ class FeedsController < ApplicationController
       if feed.feed_invalid?
         alerts << "Error adding #{feed_url} to your feeds"
       else
-        notices << "You've added #{feed.name} to your feeds"
+        if current_user.feeds.count == 1
+          notices << "You've added #{feed.name} to your feeds.  You can view your feeds by clicking the Read link above."
+        else
+          notices << "You've added #{feed.name} to your feeds"
+        end
       end
     else # feed already exists
       notices << "You are already subscribed to #{matching_feed.name}"
