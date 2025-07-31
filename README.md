@@ -41,27 +41,6 @@ PikaPods is a great platform for hosting open source apps. They currently offer 
 * Note: if anything goes wrong, you can run `ruby cleanup-aws.rb <domain>` to tear down everything the script created
 * If you get this error: `cannot load such file -- aws-sdk-ec2 (LoadError)`, then type `gem install aws-sdk` and try again
 
-## Raspberry Pi
-
-Note, Raspberry Pi install scripts are broken right now, I hope to have them fixed soon.
-
-this requires a little bit more technical knowledge.  You should know how to flash an SD card and how to use the tools `ssh` and `scp`.  You should also be able to configure your own DNS and port forwarding. We're doing this fully headless, not plugging in a display or mouse/keybord to the Raspberry Pi.
-* Configure your DNS to point to your home IP address.
-  * If you're using AWS Route53 for your DNS, this script might be useful: https://github.com/havenweb/r53_dynamic_dns
-* Flash a micro SD card with Raspberry Pi OS Lite (May 2021)
-  * 32 bit: http://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-05-28/
-  * or 64 bit if you know what you're doing: https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2021-05-28/
-* Enable SSH and Wifi: https://raspberrytips.com/raspberry-pi-wifi-setup/
-* Insert the card into the Pi, and turn it on
-* Make sure you can SSH to the Pi, then copy `deploymentscripts/deploy-pi.sh` from this repository to the Pi's home directory
-  * Note, the script assumes your default home directory of `/home/pi` and that you're using the default `pi` user.
-* Configure your home router to forward port 80 (http) and 443 (https) to the Raspberry Pi.
-  * You might also want/need to configure a static IP address for the Raspberry Pi.
-* SSH to the Pi and run: `bash deploy-pi.sh DOMAIN "YOUREMAIL"`
-* Wait.  On the Raspberry Pi Zero W, installation can take over three hours.
-* The script will give you your initial login information, enjoy your new blog!
-* Note, there are no backups setup.  You may want to backup the database (PostgreSQL) and uploaded images (`/home/pi/simpleblog/storage`).
-
 ## Heroku
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/havenweb/haven)
@@ -80,13 +59,13 @@ Fully managed hosting of your personal Haven is available too, check out: https:
 2. Clone the repository: `git clone https://github.com/havenweb/haven.git`
 3. Run `cd haven`
 4. Run `docker compose up`
+5. Haven will be listening on port 3000
 
-Feel free to use the included `Dockerfile` and `docker-compose.yml`.  You probably want to modify the env vars in `docker-compose.yml` to specify a different `HAVEN_USER_EMAIL` and `HAVEN_USER_PASS`.  These will be used to create you initial user (and password) on startup.
+Feel free to use the included `Dockerfile` and `docker-compose.yml`.  You will  want to modify the env vars in `docker-compose.yml` to specify a different `HAVEN_USER_EMAIL` and `HAVEN_USER_PASS`.  These will be used to create you initial user (and password) on startup.  The `docker-compose.yml` file will build the docker image from source.  If you want to use a standalone `docker-compose.yml` that pulls a pre-built image, use the file in the `deploymentscrips/` directory.
 
 Docker images are published to the [GitHub Container Registry](https://github.com/havenweb/haven/pkgs/container/haven)
 
-## Other Linux Systems
+## Raspberry Pi and Other Linux Systems
 
-Given the differences between Linux platforms I can't give fool-proof deployment instructions for every platform but take a look at the Raspberry PI deployment script.  It is not universal, but it should be pretty close for most debian-based systems.
-
+I strongly suggest you use to the docker installation method above.
 
