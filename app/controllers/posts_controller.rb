@@ -6,22 +6,27 @@ class PostsController < ApplicationController
 #  content_security_policy false, only: [:new, :edit]
 
   def index
-    @posts = Post.order(datetime: :desc).page(params[:page])
+    if params[:tag]
+      @posts = Post.tagged_with(params[:tag]).order(datetime: :desc).page(params[:page])
+    else
+      @posts = Post.order(datetime: :desc).page(params[:page])
+    end
+
     recent_comments = Comment.where('created_at >= ?', 1.week.ago).order(created_at: :desc).to_a
     recent_likes = Like.where('created_at >= ?', 1.week.ago).order(created_at: :desc).to_a
     @recent_comments_and_likes = []
     while recent_comments.size > 0 or recent_likes.size > 0
-      if recent_comments.size == 0
+        if recent_comments.size == 0
         @recent_comments_and_likes << recent_likes.shift
-      elsif recent_likes.size == 0
+        elsif recent_likes.size == 0
         @recent_comments_and_likes << recent_comments.shift
-      else
-        if recent_likes.first.created_at > recent_comments.first.created_at
-          @recent_comments_and_likes << recent_likes.shift
         else
-          @recent_comments_and_likes << recent_comments.shift
+        if recent_likes.first.created_at > recent_comments.first.created_at
+            @recent_comments_and_likes << recent_likes.shift
+        else
+            @recent_comments_and_likes << recent_comments.shift
         end
-      end
+        end
     end
     @settings = SettingsController.get_setting
     @css = true
@@ -176,6 +181,10 @@ class PostsController < ApplicationController
     "/images/raw/#{image.id}/#{image.blob.filename.to_s}"
   end
 
+  def post_params
+    params.require(:post).permit(:content, :tag_list)
+  end
+
   def image_resized_path(image)
     "/images/resized/#{image.id}/#{image.blob.filename.to_s}"
   end
@@ -241,6 +250,7 @@ class PostsController < ApplicationController
     post.datetime = DateTime.parse("#{date} #{time}")
     post.content = params[:post][:content]
     post.author = current_user unless !!post.author
+    post.tag_list = params[:post][:tag_list] # <-- Add this line
     post
   end
 

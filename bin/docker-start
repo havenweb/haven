@@ -3,6 +3,9 @@
 set +e ## allow startup to continue if operating in a shared DB without creation permissions
 bin/rails db:create 
 set -e
+if ! bin/rails runner "ActiveRecord::Base.connection.data_source_exists?('tags')" | grep true; then
+  bundle exec rake acts_as_taggable_on_engine:install:migrations
+fi
 bin/rails db:migrate
 bin/rails assets:precompile
 
