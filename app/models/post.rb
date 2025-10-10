@@ -1,4 +1,5 @@
 class Post < ApplicationRecord
+  acts_as_taggable_on :tags
   belongs_to :author, class_name: :User, inverse_of: :posts
   has_many :comments, foreign_key: :post_id, dependent: :destroy
   has_many :likes, foreign_key: :post_id, dependent: :destroy

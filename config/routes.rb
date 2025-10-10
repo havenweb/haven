@@ -68,6 +68,9 @@ Rails.application.routes.draw do
 
   get 'rss', to: 'posts#rss'
 
+  get 'tags/:tag', to: 'posts#index', as: :tag
+  get 'all_tags', to: 'tags#all', as: :all_tags
+
   get 'login_links/validate', as: :login_link
 
   root 'welcome#index'

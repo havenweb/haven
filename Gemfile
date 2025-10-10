@@ -52,6 +52,9 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
+# Tagging
+gem 'acts-as-taggable-on', '~> 10.0'
+
 #gem 'aws-sdk-rails', '~> 2.1.0'  #email with AWS SES
 
 group :production do

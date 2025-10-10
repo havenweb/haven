@@ -1,12 +1,16 @@
 <% if current_user.admin >= 1 %>
-<p><%= link_to raw("<button type=\"button\" id=\"New Post Button\">New Post</button>"), new_post_path %>
+  <p>
+    <%= link_to new_post_path do %>
+      <button type="button" id="New Post Button">New Post</button>
+    <% end %>
+  </p>
 <% end %>
-<hr> 
+<hr>
 
 <% if @posts.empty? %>
   <p>Nobody has written anything yet.</p>
   <% if current_user.admin >= 1 %>
-  <p>You can click the New Post button above to start writing your first post.</p>
+    <p>You can click the New Post button above to start writing your first post.</p>
   <% end %>
 <% end %>
 
@@ -14,12 +18,20 @@
   <%= render "activity" %>
 <% end %>
 
-<% unless params[:page].nil? || params[:page]=="1" %>
+<% unless params[:page].nil? || params[:page] == "1" %>
   <%= paginate @posts %>
 <% end %>
 
 <% @posts.each do |post| %>
   <%= render "posts", post: post, show_page: false %>
+  <div>
+    <% if post.tag_list.present? %>
+      <p>
+        <strong>Tags:</strong>
+        <%= raw post.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %>
+      </p>
+    <% end %>
+  </div>
   <hr>
 <% end %>
 <%= paginate @posts %>

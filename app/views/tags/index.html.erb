@@ -1,0 +1,26 @@
+<div style="display: flex; flex-direction: row; align-items: flex-start; width: 100%;">
+  <section style="width: 33%; padding: 1em; border-right: 1px solid #ccc;">
+    <h3>Most Recent Tags</h3>
+    <ul>
+      <% @recent_tags.each do |tag| %>
+        <li><%= link_to tag.name, tag_path(tag.name) %></li>
+      <% end %>
+    </ul>
+  </section>
+  <section style="width: 33%; padding: 1em; border-right: 1px solid #ccc;">
+    <h3>Most Used Tags</h3>
+    <ul>
+      <% @most_used_tags.each do |tag| %>
+        <li><%= link_to tag.name, tag_path(tag.name) %> (<%= tag.count %>)</li>
+      <% end %>
+    </ul>
+  </section>
+  <section style="width: 34%; padding: 1em;">
+    <h3>All Tags</h3>
+    <ul>
+      <% @all_tags.each do |tag| %>
+        <li><%= link_to tag.name, tag_path(tag.name) %></li>
+      <% end %>
+    </ul>
+  </section>
+</div>
