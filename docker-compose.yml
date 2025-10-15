@@ -10,7 +10,10 @@ services:
       - "3000:3000"
     volumes:
       - haven_storage:/app/storage
+    tmpfs:
+      - /tmp/pids/
     environment:
+      - PIDFILE=/tmp/pids/server.pid
       - RAILS_ENV=production
       - HAVEN_DB_HOST=postgresql
       - HAVEN_DB_NAME=haven
