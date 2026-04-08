@@ -23,7 +23,7 @@ gem 'image_processing', '~> 1.13.0'
 gem 'rss', '~> 0.3.1'
 
 # For Auth
-gem 'devise', '~> 4.9.4'
+gem 'devise', '~> 5.0.3'
 gem 'bcrypt', '~> 3.1.22'
 
 # Pagination
