@@ -24,7 +24,7 @@ gem 'rss', '~> 0.3.1'
 
 # For Auth
 gem 'devise', '~> 4.9.4'
-gem 'bcrypt', '~> 3.1.16'
+gem 'bcrypt', '~> 3.1.22'
 
 # Pagination
 gem 'kaminari', '~> 1.2.1'
