@@ -13,4 +13,4 @@
 #
 # It is fine to use `:hybrid` long term; you should do that until you're confident *all* your cookies
 # have been converted to JSON.
-Rails.application.config.action_dispatch.cookies_serializer = :hybrid
+Rails.application.config.action_dispatch.cookies_serializer = :json
