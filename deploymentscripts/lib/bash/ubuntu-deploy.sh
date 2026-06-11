@@ -28,7 +28,9 @@ echo 'HAVEN_DB_NAME="ubuntu"' >> .env
 echo 'HAVEN_DB_ROLE="ubuntu"' >> .env
 echo "HAVEN_DB_PASSWORD=\"$DB_PASS\"" >> .env
 
-bundle install --deployment --without development test
+bundle config set --local deployment 'true'
+bundle config set --local without 'development test'
+bundle install
 bin/rails db:create
 bin/rails db:migrate
 bin/rails assets:precompile

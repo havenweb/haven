@@ -18,6 +18,7 @@ rbenv global 3.3.7
 gem update --system
 gem update strscan --default #resolves a gem conflict
 gem update base64 --default #resolves a gem conflict
+gem update stringio --default #resolves a gem conflict
 gem install bundler -v 2.4.12 --no-document
 
 #### Nginx And Passenger #### https://www.phusionpassenger.com/library/install/nginx/install/oss/bionic/
@@ -25,21 +26,26 @@ sudo apt-get install -y nginx
 
 # Passenger
 sudo apt-get install -y dirmngr gnupg apt-transport-https ca-certificates curl
-curl https://oss-binaries.phusionpassenger.com/auto-software-signing-gpg-key.txt | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/phusion.gpg >/dev/null
-sudo sh -c 'echo deb https://oss-binaries.phusionpassenger.com/apt/passenger noble main > /etc/apt/sources.list.d/passenger.list'
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://oss-binaries.phusionpassenger.com/auto-software-signing-gpg-key-2025.txt | sudo gpg --dearmor -o /etc/apt/keyrings/phusion-passenger.gpg
+sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/phusion-passenger.gpg] https://oss-binaries.phusionpassenger.com/apt/passenger noble main" > /etc/apt/sources.list.d/passenger.list'
 sudo apt-get update
 sudo apt-get install -y libnginx-mod-http-passenger
+if [ ! -f /etc/nginx/modules-enabled/50-mod-http-passenger.conf ]; then sudo ln -s /usr/share/nginx/modules-available/mod-http-passenger.load /etc/nginx/modules-enabled/50-mod-http-passenger.conf ; fi
 
 # Configure Passenger
-if [ ! -f /etc/nginx/modules-enabled/50-mod-http-passenger.conf ]; then sudo ln -s /usr/share/nginx/modules-available/mod-http-passenger.load /etc/nginx/modules-enabled/50-mod-http-passenger.conf ; fi
 sudo service nginx restart
 #sudo /usr/bin/passenger-config validate-install
 #sudo /usr/sbin/passenger-memory-stats
 
 # NodeJS and Yarn
 sudo apt-get install -y nodejs && sudo ln -sf /usr/bin/nodejs /usr/local/bin/node
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+# Ensure the keyrings directory exists
+sudo mkdir -p /etc/apt/keyrings
+# Download and dearmor the Yarn key
+curl -fsSL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/yarn.gpg
+# Explicitly tell apt to use this key for the Yarn repository
+echo "deb [signed-by=/etc/apt/keyrings/yarn.gpg] https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 sudo apt-get update && sudo apt-get install -y yarn
 
 # PostgreSQL
