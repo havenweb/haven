@@ -14,7 +14,7 @@ The following are some motivating philosophies:
 * No spam. There is no self-signup for users so there is no place for unauthorized users to impact your life.
 * Media support for images, videos, and audio.
 * Private RSS feeds for your friends to follow you.
-* Build-in RSS reader to follow your favorite blogs.
+* Build-in RSS reader to follow your favorite blogs and other Havens.
 
 # Deployment
 
@@ -22,7 +22,11 @@ The following are some motivating philosophies:
 
 [![Run on PikaPods](https://www.pikapods.com/static/run-button.svg)](https://www.pikapods.com/pods?run=haven)
 
-PikaPods is a great platform for hosting open source apps. They currently offer a $5 credit for new members and it costs as little as $1.64/month to host your Haven on PikaPods.  You don't even need to give them a credit card to get the $5 credit and try out Haven for a couple of months.
+PikaPods is a great platform for hosting open source apps. They currently offer a $5 credit for new members and it costs as little as $2.40/month to host your Haven on PikaPods.  You don't even need to give them a credit card to get the $5 credit and try out Haven for a couple of months.
+
+## Paid Hosting
+
+Fully managed hosting of your personal Haven is available, check out: https://havenweb.org/order.html
 
 ## KubeSail
 
@@ -46,10 +50,6 @@ PikaPods is a great platform for hosting open source apps. They currently offer 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/havenweb/haven)
 
 The Heroku install is meant for exploration and experimentation as images uploaded to your Haven will usually disapear within 24 hours and the reader will not automatically update until you visit the reader page.  The Heroku install requires a Heroku account ~and should fall under Heroku's free-tier~. Update: Heroku is [eliminating their free tier](https://help.heroku.com/RSBRUH58/removal-of-heroku-free-product-plans-faq), Haven on Heroku will probably cost ~$16/month.
-
-## Paid Hosting
-
-Fully managed hosting of your personal Haven is available too, check out: https://havenweb.org/order.html
 
 ## Docker
 
