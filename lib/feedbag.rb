@@ -94,12 +94,13 @@ class Feedbag
 
     begin
       html = URI(url).open do |f|
+        resolved_url = f.base_uri.to_s # Capture final URL after any redirects
         content_type = f.content_type.downcase
         if content_type == "application/octet-stream" # open failed
           content_type = f.meta["content-type"].gsub(/;.*$/, '')
         end
         if CONTENT_TYPES.include?(content_type)
-          return self.add_feed(url, nil)
+          return self.add_feed(resolved_url, nil)
         end
 
         doc = Nokogiri::HTML(f.read)
@@ -114,37 +115,37 @@ class Feedbag
         (doc/"atom:link").each do |l|
           next unless l["rel"] && l["href"].present?
           if l["type"] and CONTENT_TYPES.include?(l["type"].downcase.strip) and l["rel"].downcase == "self"
-            self.add_feed(l["href"], url, @base_uri)
+            self.add_feed(l["href"], resolved_url, @base_uri)
           end
         end
 
         doc.xpath("//link[@rel='alternate' or @rel='service.feed'][@href][@type]").each do |l|
           if CONTENT_TYPES.include?(l['type'].downcase.strip)
-            self.add_feed(l["href"], url, @base_uri)
+            self.add_feed(l["href"], resolved_url, @base_uri)
           end
         end
 
 #        doc.xpath("//link[@rel='alternate' and @type='application/json'][@href]").each do |e|
-#          self.add_feed(e['href'], url, @base_uri) if self.looks_like_feed?(e['href'])
+#          self.add_feed(e['href'], resolved_url, @base_uri) if self.looks_like_feed?(e['href'])
 #        end
 
         (doc/"a").each do |a|
           next unless a["href"]
-          if self.looks_like_feed?(a["href"]) and (a["href"] =~ /\// or a["href"] =~ /#{url_uri.host}/)
-            self.add_feed(a["href"], url, @base_uri)
+          if self.looks_like_feed?(a["href"]) and (a["href"] =~ /\// or a["href"] =~ /#{URI.parse(resolved_url).host}/)
+            self.add_feed(a["href"], resolved_url, @base_uri)
           end
         end
 
         (doc/"a").each do |a|
           next unless a["href"]
           if self.looks_like_feed?(a["href"])
-            self.add_feed(a["href"], url, @base_uri)
+            self.add_feed(a["href"], resolved_url, @base_uri)
           end
         end
 
         # Added support for feeds like http://tabtimes.com/tbfeed/mashable/full.xml
         if url.match(/.xml$/) and doc.root and doc.root["xml:base"] and doc.root["xml:base"].strip == url.strip
-          self.add_feed(url, nil)
+          self.add_feed(resolved_url, nil)
         end
       end
     rescue Timeout::Error => err
