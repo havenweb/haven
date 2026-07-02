@@ -40,6 +40,11 @@ gem 'puma', '~> 7.2.1'
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
+
+# used by lib/link_preview.rb
+gem 'metainspector', '~> 5.15'
+gem 'microformats', '~> 4.5'
+
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 
@@ -51,8 +56,6 @@ gem 'jbuilder', '~> 2.5'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
-
-#gem 'aws-sdk-rails', '~> 2.1.0'  #email with AWS SES
 
 group :production do
   gem "aws-sdk-s3", require: false

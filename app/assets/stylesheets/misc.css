@@ -56,3 +56,32 @@ details.recent_activity summary h2:before {
 span.reaction_age {
   font-size: small;
 }
+
+.link-preview-card {
+  display: block;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  max-width: 70%; 
+  margin: 1rem 0;
+}
+.preview-content {
+  padding: 1rem;
+}
+.preview-title {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.preview-description {
+  font-size: 0.8rem;
+  color: #555;
+  margin: 0;
+  line-height: 1.4;
+}
+.preview-image {
+  max-width: 100%;
+  height: auto;
+}
