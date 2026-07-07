@@ -4,6 +4,9 @@ class PostsController < ApplicationController
   before_action :authenticate_user!, except: :rss
   before_action :verify_publisher, except: [:index, :show, :rss]
 #  content_security_policy false, only: [:new, :edit]
+  before_action :set_post, only: [:show, :edit, :destroy]
+  before_action :set_post_or_new, only: [:update, :create]
+  before_action :verify_can_modify_post, only: [:edit, :destroy, :update, :create]
 
   def index
     @posts = Post.order(datetime: :desc).page(params[:page])
@@ -40,8 +43,8 @@ class PostsController < ApplicationController
     end
   end
 
+  # before_action: set_post
   def show
-    @post = Post.find(params[:id])
     @settings = SettingsController.get_setting
     @css = true
   end
@@ -53,11 +56,10 @@ class PostsController < ApplicationController
     @post.content = "" if @post.content.nil?
   end
 
+  # before_action: set_post
   def edit
     @show_date = true
     @settings = SettingsController.get_setting
-    @post = Post.find(params[:id])
-    verify_can_modify_post(@post)
     @post
   end
 
@@ -66,15 +68,15 @@ class PostsController < ApplicationController
     handle_form_submit(params, 'new')
   end
 
+  # before_action: set_post_or_new
   def update
     @settings = SettingsController.get_setting
     handle_form_submit(params, 'edit')
   end
 
+  # before_action: set_post
   def destroy
     @settings = SettingsController.get_setting
-    @post = Post.find(params[:id])
-    verify_can_modify_post(@post)
     @post.destroy
     redirect_to posts_path
   end
@@ -172,19 +174,30 @@ class PostsController < ApplicationController
 
   private
 
+  def set_post
+    @post = Post.find(params[:id])
+  end
+
+  def set_post_or_new
+    @post = Post.find_by(id: params[:id]) || Post.new
+  end
+
+  def verify_can_modify_post
+    # nil ID means it is a new post that doesn't exist in the DB yet
+    # admins can edit anything
+    # otherwise only authors can edit their own posts
+    unless @post.id.nil? or current_user.admin==1 or @post.author == current_user
+      flash[:alert] = "You are not authorized to edit this post"
+      redirect_to @post
+    end
+  end
+
   def image_path(image)
     "/images/raw/#{image.id}/#{image.blob.filename.to_s}"
   end
 
   def image_resized_path(image)
     "/images/resized/#{image.id}/#{image.blob.filename.to_s}"
-  end
-
-  def verify_can_modify_post(post)
-    unless current_user.admin==1 or post.author == current_user
-      flash[:alert] = "You are not authorized to edit this post"
-      redirect_to post
-    end
   end
 
   def require_signed_in
@@ -194,7 +207,7 @@ class PostsController < ApplicationController
   end
 
   def handle_form_submit(params, view)
-    @post = post_from_form(params)
+    post_from_form(params) # sets up @post object
     if params[:commit] == "Upload Selected Image"
       if !(params[:post][:pic].nil?)
         begin
@@ -231,17 +244,13 @@ class PostsController < ApplicationController
   end
 
   ## Generates a Post object from form submission content, or initializes a new one
+  ## @post is already set from a before_action (this is messy code)
   def post_from_form(params)
-    post = Post.find_by(id: params[:id]) || Post.new
-    unless post.id.nil?
-      verify_can_modify_post(post)
-    end
     date = params[:post][:date]
     time = params[:post][:time]
-    post.datetime = DateTime.parse("#{date} #{time}")
-    post.content = params[:post][:content]
-    post.author = current_user unless !!post.author
-    post
+    @post.datetime = DateTime.parse("#{date} #{time}")
+    @post.content = params[:post][:content]
+    @post.author = current_user unless !!@post.author
   end
 
   #assumes url_for() returns "http://some.domain.name/path/to/obj"
