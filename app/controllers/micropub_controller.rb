@@ -16,6 +16,10 @@ class MicropubController < ApplicationController
             "name": "Post",
             "properties": [ "content", "published" ]
           },
+          {
+            "type": "photo",
+            "name": "Image"
+          }
         ]
       }, status: 200
     elsif params[:q] == "source"
@@ -158,24 +162,58 @@ class MicropubController < ApplicationController
 
   # supported params: name, content, published
   def post_from_params(params)
-    unless params[:h] and params[:h]=="entry"
+    if params[:h] and params[:h]=="entry"
+      # we handle this case
+    elsif params[:type] and params[:type].first=="h-entry"  
+      raise JsonError.new("invalid_request","JSON params not supported by this server",400)
+    else
       raise JsonError.new("invalid_request","Only h-entry types supported by this server",400)
     end
+
     content = ""
-    if params[:content]
+    if params["bookmark-of"]
+      content_array = []
+      if params[:name]
+        content_array << "## Bookmark: #{params[:name]}"
+      else
+        content_array << "## Bookmark"
+      end
+      content_array << params[:content] if params[:content]
+      link_preview = LinkPreview.fetch(params["bookmark-of"])
+      content_array << LinkPreview.render(params["bookmark-of"],link_preview)
+      content = content_array.join("\n\n")
+    elsif params[:content]
       content = params[:content]
       if params[:name]
         content = "# #{params[:name]}\n\n#{content}"
       end
     elsif params[:name]
-      content = "# #{params[:name]}"
+      content = "## #{params[:name]}"
+    elsif params["like-of"]
+      link_preview = LinkPreview.fetch(params["like-of"])
+      content = "<p>❤️  Liked <a class=\"u-like-of\" href=\"#{params['like-of']}\">#{link_preview[:title]}</a></p>"
+      content += LinkPreview.render(params['like-of'],link_preview)
+    elsif params["repost-of"] 
+      link_preview = LinkPreview.fetch(params["repost-of"])
+      content = "<p>🔁 Reposted: <a class=\"u-repost-of\" href=\"#{params['repost-of']}\">#{link_preview[:title]}</a></p>"
+      content += LinkPreview.render(params['repost-of'],link_preview)
     else
-      raise JsonError.new("invalid_request","New h-entry must have content or a name (or both)",400)
+      raise JsonError.new("invalid_request","New h-entry must have content or a name (or both), or have a repost-of or like-of",400)
     end
     datetime = DateTime.now
     if params[:published]
       datetime = DateTime.parse(params[:published])
     end
+
+    ## these blocks insert in-reply-to or bookmark-of (etc..) links directly in the content
+    ## we might consider richer database structure to store/display that data better.
+    if params["in-reply-to"]
+      link_preview = LinkPreview.fetch(params["in-reply-to"])
+      reply_html = "In reply to: <a class=\"u-in-reply-to\" href=\"#{params["in-reply-to"]}\">#{link_preview[:title]}</a>"
+      content += "\n\n#{reply_html}"
+      content += "\n\n#{LinkPreview.render(params["in-reply-to"], link_preview)}"
+    end
+
     post = Post.new
     post.datetime = datetime
     post.content = content

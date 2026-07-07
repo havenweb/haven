@@ -15,8 +15,9 @@ class IndieAuthClient
 
   def valid_redirect? (redirect)
     return true if redirect.start_with? @client_id
+    return true if URI.parse(redirect).origin == URI.parse(@client_id).origin
     return true if @redirects.include? redirect
-    #puts "redirect validation error.  Indie auth client #{@client_id} requesting redirect to #{redirect} which does not have #{@client_id} as a prefix, and is not in list of valid redirects fetched: #{@redirects.join(",")}"
+    # puts "redirect validation error.  Indie auth client #{@client_id} requesting redirect to #{redirect} which does not have #{@client_id} as a prefix, and is not in list of valid redirects fetched: [#{@redirects.join(",")}]"
     return false
   end
 
