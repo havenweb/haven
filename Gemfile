@@ -18,7 +18,8 @@ gem 'css_parser', '1.22.0' # pinned because we use private methods
 gem 'rb-readline'
 
 # Image processing
-gem 'image_processing', '~> 1.13.0'
+gem 'image_processing', '~> 2.0.2'
+gem 'mini_magick', '~> 5.3.1'
 
 gem 'rss', '~> 0.3.1'
 
@@ -30,7 +31,7 @@ gem 'bcrypt', '~> 3.1.22'
 gem 'kaminari', '~> 1.2.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '= 7.1.6'
+gem 'rails', '= 7.2.3.1'
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
 gem 'pg', '~> 1.5.9'
