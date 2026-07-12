@@ -13,7 +13,7 @@ gem 'commonmarker', '~> 0.23'
 gem 'sassc', '~> 2.4.0'
 
 # For making user stylesheet !important
-gem 'css_parser', '1.22.0' # pinned because we use private methods
+gem 'css_parser', '3.0.0' # pinned because we use private methods
 
 gem 'rb-readline'
 
