@@ -13,7 +13,7 @@ class ActionsTest < ApplicationSystemTestCase
 
   test "non-user cannot log in" do 
     log_in_with({user: "notmy@email.com", pass: "notapassword"})
-    assert_text "Invalid Email or password."
+    assert_text "Invalid email or password."
   end
 
   test "logged in users can see posts" do
