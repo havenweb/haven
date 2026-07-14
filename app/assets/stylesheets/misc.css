@@ -11,14 +11,19 @@ a.feed_entry_skip {
 }
 
 img.indie-client-logo {
-  display: inline-block;
-  width: 80px;
-  height: 80px;
-  margin-bottom: 1em;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
-p.indie-client-logo {
-  text-align: center;
+div.indie-client-logo {
+  object-fit: contain;
+  overflow: hidden;
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+  margin: 0 auto;
 }
 
 p.indie-client-name {
