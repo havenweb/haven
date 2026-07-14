@@ -35,7 +35,7 @@ class IndieauthController < ApplicationController
     @auth_request = IndieAuthRequestObj.new(params)
     @client = IndieAuthClient.new(@auth_request.client_id)
     if !@client.valid_redirect?(@auth_request.redirect_uri)
-      head :bad_request
+      render html: "<h1>Bad Request</h1><p>IndieAuth client ID doesn't match the provided redirect url.</p>".html_safe, status: :bad_request
     end
   end
 
@@ -59,7 +59,7 @@ class IndieauthController < ApplicationController
       redirect_to redirect_url, allow_other_host: true
     elsif params[:commit] == 'Deny'
       flash[:alert] = "You denied the request"
-      redirect_to root
+      redirect_to posts_url
     end
   end
 

@@ -13,11 +13,20 @@ class IndieAuthClient
     return output
   end
 
-  def valid_redirect? (redirect)
-    return true if redirect.start_with? @client_id
-    return true if @redirects.include? redirect
-    #puts "redirect validation error.  Indie auth client #{@client_id} requesting redirect to #{redirect} which does not have #{@client_id} as a prefix, and is not in list of valid redirects fetched: #{@redirects.join(",")}"
-    return false
+  def valid_redirect?(redirect)
+    return true if @redirects.include?(redirect)
+    begin
+      client_uri = URI.parse(@client_id)
+      redirect_uri = URI.parse(redirect)
+      return true if redirect_uri.host && 
+                     client_uri.scheme == redirect_uri.scheme &&
+                     client_uri.host == redirect_uri.host &&
+                     client_uri.port == redirect_uri.port
+    rescue URI::InvalidURIError
+      return false
+    end
+    # puts "Redirect validation error: Client #{@client_id} requested invalid redirect #{redirect}."
+    false
   end
 
   def initialize(client_id)
@@ -26,10 +35,51 @@ class IndieAuthClient
     @logo = "/warning.svg"
     @url = @client_id
     @redirects = []
-    if should_fetch?
+    if should_fetch? @client_id
       begin
         URI(client_id).open do |f|
-          doc = Nokogiri::HTML(f.read)
+          if f.content_type == 'application/json' || client_id.end_with?('.json')
+            parse_json_client(f.read)
+          else
+            parse_html_client(f.read)
+          end
+          @logo = "/warning.svg" unless should_fetch? @logo
+        end
+      rescue
+        # do we need to complain loudly if unable to fetch client_id?
+      end
+    else
+      @name = "A test application at #{@client_id}"
+    end
+  end
+
+  private
+
+  def parse_json_client(raw_content)
+    data = JSON.parse(raw_content)
+
+    @name = data['client_name'] unless data['client_name'].nil? || data['client_name'].empty?
+    
+    # Handle optional relative paths for URL and Logo, though JSON usually uses absolute URIs
+    @url = data['client_uri']
+    @url = client_id.chomp("/") + @url if @url&.start_with?("/")
+
+    @logo = data['logo_uri']
+    @logo = client_id.chomp("/") + @logo if @logo&.start_with?("/")
+
+    raw_redirects = data['redirect_uris'] || []
+    raw_redirects.each do |rr|
+      if rr.start_with?("/")
+        @redirects << client_id.chomp("/") + rr
+      else
+        @redirects << rr
+      end
+    end
+  end
+
+  def parse_html_client(raw_content)
+
+          doc = Nokogiri::HTML(raw_content)
 
           url = ""
           doc.xpath("//div[@class='h-app']//a[contains(@class, 'u-url')]/@href").each {|u| url = u.value}
@@ -43,7 +93,7 @@ class IndieAuthClient
           doc.xpath("//div[@class='h-app']//img[contains(@class, 'u-logo')]/@src").each {|l| logo = l.value}
           @logo = client_id.chomp("/") + logo if logo.start_with? "/"
 
-          raw_redirect = []
+          raw_redirects = []
           doc.xpath("//link[@rel='redirect_uri']").each {|l| raw_redirects << l["href"]}
           raw_redirects.each do |rr|
             if rr.start_with? "/"
@@ -52,22 +102,18 @@ class IndieAuthClient
               @redirects << rr
             end
           end
-        end
-      rescue
-        # do we need to complain loudly if unable to fetch client_id?
-      end
-    else
-      @name = "A test application at #{@client_id}"
-    end
   end
 
-  private
-
-  def should_fetch?
-    clean_host = parse_hostname(@client_id)
+  ## Protect against server-side request forgery (SSRF) by validating the IP address
+  def should_fetch?(suspect_url)
+    return false unless URI(suspect_url).scheme=="https"
+    clean_host = URI.parse(suspect_url).host
+    puts "DEBUG: clean host: #{clean_host}"
     begin
-      client_id_uri = URI.parse(@client_id) #for validation only
+      client_id_uri = URI.parse(suspect_url) #for validation only
+      puts "DEBUG: client_id_uri: #{client_id_uri}"
       ip = Resolv.getaddress(clean_host)
+      puts "DEBUG: ip resolved: #{ip}"
       return safe_ip? ip
     rescue
       return false
@@ -88,21 +134,5 @@ class IndieAuthClient
     return false if ip.start_with? "fd"
     return false if ip.start_with? "fe80::"
     return true
-  end
-
-  def parse_hostname(client_id)
-    no_scheme = client_id
-    if no_scheme.include? "://"
-      scheme, no_scheme = client_id.split("://",2)
-    end
-    no_auth = no_scheme
-    if (no_auth.include?(":") and no_auth.include?("@")) #user:pass@host
-      auth, no_auth = no_scheme.split("@",2)
-    end
-    no_port = no_auth
-    if no_port.include? ":"
-      no_port, port = no_auth.split(":",2)
-    end
-    return no_port
   end
 end
