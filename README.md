@@ -24,13 +24,13 @@ The following are some motivating philosophies:
 
 PikaPods is a great platform for hosting open source apps. They currently offer a $5 credit for new members and it costs as little as $2.40/month to host your Haven on PikaPods.  You don't even need to give them a credit card to get the $5 credit and try out Haven for a couple of months.
 
+## Caliber Node
+
+[Run Haven on Caliber Node](https://calibernode.com/cloud-apps/haven) "One-click self-hosted apps, managed for you — with real logs, SFTP, and your data exportable."  Running Haven on Caliber Node costs $4 per month, they provide a $5 sign-up credit for new members--no credit card needed for the credit.
+
 ## Paid Hosting
 
-Fully managed hosting of your personal Haven is available, check out: https://havenweb.org/order.html
-
-## KubeSail
-
-[KubeSail](https://kubesail.com/) is a self-hosting platform that makes it easier to run a server in your home or office that runs websites & apps.  You can install Haven on Kubesail with the following Kubesail template: https://kubesail.com/template/jphj/haven
+Fully managed hosting of your personal Haven is also available from me, check out: [https://havenweb.org/order.html](https://havenweb.org/order.html)
 
 ## AWS
 * Register an account with AWS, the included scripts deploy to an AWS EC2 instance
