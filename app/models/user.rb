@@ -19,6 +19,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  after_update :reset_login_links_if_password_changed, if: :saved_change_to_encrypted_password?
+
+  def reset_login_links_if_password_changed
+    self.login_links.destroy_all
+    LoginLink.generate(self)
+  end
+
   def display_name
     if self.name.nil?
       return self.email
