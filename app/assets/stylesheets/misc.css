@@ -53,6 +53,7 @@ details.recent_activity[open] summary h2:before {
   content: "▼ ";
   font-size: 0.7em;
 }
+
 details.recent_activity summary h2:before {
   content: "► ";
   font-size: 0.7em;
@@ -60,4 +61,18 @@ details.recent_activity summary h2:before {
 
 span.reaction_age {
   font-size: small;
+}
+
+img[src*="apple-podcast.png"],
+img[src*="spotify.png"],
+img[src*="podbean-app.png"],
+img[src*="AmazonMusic.png"],
+img[src*="iHeartRadio.png"],
+img[src*="Podchaser.png"],
+img[src*="PlayerFM.png"],
+img[src*="YouTube_play_button"] {
+    max-width: 100px;
+    width: auto;
+    height: auto;
+    margin: 0;
 }
