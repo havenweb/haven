@@ -4,28 +4,28 @@
 # See the Securing Rails Applications Guide for more information:
 # https://guides.rubyonrails.org/security.html#content-security-policy-header
 
- def csp_hash(s)
-   sha256_hash = Digest::SHA256.new.update(s).digest
-   b64_encoded_hash = Base64.urlsafe_encode64(sha256_hash)
-   return "'sha256-#{b64_encoded_hash}'"
- end
+def csp_hash(s)
+  sha256_hash = Digest::SHA256.new.update(s).digest
+  b64_encoded_hash = Base64.urlsafe_encode64(sha256_hash)
+  return "'sha256-#{b64_encoded_hash}'"
+end
 
- Rails.application.configure do
-   config.content_security_policy do |policy|
+Rails.application.configure do
+  config.content_security_policy do |policy|
 #     policy.default_src :self, :https
 #     policy.font_src    :self, :https, :data
 #     policy.img_src     :self, :https, :data
-   policy.object_src  :none
-   policy.script_src  :self, "'unsafe-hashes'", csp_hash("doRender()"), csp_hash("this.parentElement.style.display='none';")
+    policy.object_src  :none
+    policy.script_src  :self, "'unsafe-hashes'", csp_hash("doRender()"), csp_hash("this.parentElement.style.display='none';")
 #     policy.style_src   :self, :https
 #     # Specify URI for violation reports
 #     # policy.report_uri "/csp-violation-report-endpoint"
-   end
-
+  end
+#
 #   # Generate session nonces for permitted importmap, inline scripts, and inline styles.
-   config.content_security_policy_nonce_generator = ->(request) { request.session.id.to_s }
-   config.content_security_policy_nonce_directives = %w(script-src style-src)
+  config.content_security_policy_nonce_generator = ->(request) { request.session.id.to_s }
+  config.content_security_policy_nonce_directives = %w(script-src style-src)
 #
 #   # Report violations without enforcing the policy.
 #   # config.content_security_policy_report_only = true
- end
+end
