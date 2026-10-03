@@ -283,7 +283,7 @@ GEM
     rexml (3.4.4)
     rss (0.3.3)
       rexml
-    rubyzip (2.4.1)
+    rubyzip (3.7.0)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -298,9 +298,10 @@ GEM
     sassc (2.4.0)
       ffi (~> 1.9)
     securerandom (0.4.1)
-    selenium-webdriver (4.11.0)
-      rexml (~> 3.2, >= 3.2.5)
-      rubyzip (>= 1.2.2, < 3.0)
+    selenium-webdriver (4.50.0)
+      base64 (~> 0.2)
+      logger (~> 1.4)
+      rubyzip (>= 1.2.2, < 4.0)
       websocket (~> 1.0)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
@@ -372,7 +373,7 @@ DEPENDENCIES
   rss (~> 0.3.1)
   sass-rails (~> 5.0)
   sassc (~> 2.4.0)
-  selenium-webdriver (~> 4.11.0)
+  selenium-webdriver (~> 4.50.0)
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
