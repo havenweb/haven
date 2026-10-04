@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [ "master" ]
 
+permissions:
+  contents: read
+  packages: write
+  security-events: write
+
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -36,4 +41,26 @@ jobs:
           context: .
           platforms: linux/amd64, linux/arm64
           push: ${{ github.ref == 'refs/heads/master' }}
-          tags: ghcr.io/havenweb/haven:${{ steps.get_tag.outputs.tagname }}, ghcr.io/havenweb/haven:latest
+          tags: |
+            ghcr.io/havenweb/haven:${{ steps.get_tag.outputs.tagname }}
+            ghcr.io/havenweb/haven:latest
+
+      - name: Scan image with Trivy
+        if: github.ref == 'refs/heads/master'
+        uses: aquasecurity/trivy-action@master
+        env:
+          TRIVY_AUTH_URL: "ghcr.io"
+          TRIVY_USERNAME: ${{ github.actor }}
+          TRIVY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          image-ref: ghcr.io/havenweb/haven:${{ steps.get_tag.outputs.tagname }}
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+          ignore-unfixed: true
+
+      - name: Upload scan results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        if: github.ref == 'refs/heads/master' && always()
+        with:
+          sarif_file: 'trivy-results.sarif'
