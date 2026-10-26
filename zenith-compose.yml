@@ -1,0 +1,93 @@
+services:
+  haven:
+    build: .
+    environment:
+      RAILS_ENV: production
+      HAVEN_DEPLOY: local
+      HAVEN_DB_HOST: postgresql
+      HAVEN_DB_NAME: haven
+      HAVEN_DB_ROLE: haven
+    volumes:
+      - haven_storage:/app/storage
+    depends_on:
+      postgresql:
+        condition: service_healthy
+  postgresql:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: haven
+      POSTGRES_USER: haven
+    volumes:
+      - postgresqldata:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U haven -d haven"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+volumes:
+  haven_storage:
+  postgresqldata:
+
+x-zenith:
+  catalog:
+    name: Haven
+    description: A private blog for sharing with friends and family, with a built-in RSS reader.
+    authors: [havenweb]
+    tags: [blogging, rss]
+    source: https://github.com/havenweb/haven
+    website: https://havenweb.org
+    license: MIT
+  expose:
+    - service: haven
+      port: 3000
+      web: true
+  storage:
+    uploads:
+      volume: haven_storage
+      label: Private uploads
+      public: false
+    database:
+      volume: postgresqldata
+      label: PostgreSQL data
+      public: false
+  env:
+    SECRET_KEY_BASE:
+      generate: '[a-f0-9]{128}'
+      services: [haven]
+    HAVEN_DB_PASSWORD:
+      generate: '[A-Za-z0-9]{32}'
+      services: [haven]
+    POSTGRES_PASSWORD:
+      alias: HAVEN_DB_PASSWORD
+      services: [postgresql]
+    HAVEN_USER_EMAIL:
+      services: [haven]
+      input:
+        label: Initial admin email
+        default_template: '{ZENITH_OWNER_EMAIL}'
+        required: true
+    HAVEN_USER_PASS:
+      generate: '[A-Za-z0-9]{32}'
+      services: [haven]
+      input:
+        label: Initial admin password
+        secret: true
+    HAVEN_PUBLIC_HOST:
+      alias: ZENITH_PUBLIC_HOST
+      services: [haven]
+    HAVEN_SMTP_HOST:
+      alias: ZENITH_SMTP_HOST
+      services: [haven]
+    HAVEN_SMTP_PORT:
+      alias: ZENITH_SMTP_PORT
+      services: [haven]
+    HAVEN_SMTP_USER:
+      alias: ZENITH_SMTP_USER
+      services: [haven]
+    HAVEN_SMTP_PASSWORD:
+      alias: ZENITH_SMTP_PASS
+      services: [haven]
+    HAVEN_SMTP_FROM:
+      alias: ZENITH_SMTP_FROM
+      services: [haven]

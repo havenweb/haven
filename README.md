@@ -18,6 +18,12 @@ The following are some motivating philosophies:
 
 # Deployment
 
+## Zenith
+
+[![Deploy with Zenith](https://cdn.zenith.hosting/buttons/deploy-with-zenith.svg)](https://zenith.hosting/host/haven)
+
+You can host Haven on Zenith without setting up or managing your own server.
+
 ## PikaPods
 
 [![Run on PikaPods](https://www.pikapods.com/static/run-button.svg)](https://www.pikapods.com/pods?run=haven)
