@@ -61,20 +61,7 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: ENV.fetch("HAVEN_PUBLIC_HOST", "example.com"), protocol: "https" }
-
-  if ENV["HAVEN_SMTP_HOST"].present?
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-      address: ENV.fetch("HAVEN_SMTP_HOST"),
-      port: Integer(ENV.fetch("HAVEN_SMTP_PORT", "587")),
-      user_name: ENV.fetch("HAVEN_SMTP_USER"),
-      password: ENV.fetch("HAVEN_SMTP_PASSWORD"),
-      authentication: :plain,
-      enable_starttls: true
-    }
-    config.action_mailer.default_options = { from: ENV.fetch("HAVEN_SMTP_FROM") }
-  end
+  config.action_mailer.default_url_options = { host: "example.com" }
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
   # config.action_mailer.smtp_settings = {

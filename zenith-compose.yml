@@ -73,21 +73,3 @@ x-zenith:
       input:
         label: Initial admin password
         secret: true
-    HAVEN_PUBLIC_HOST:
-      alias: ZENITH_PUBLIC_HOST
-      services: [haven]
-    HAVEN_SMTP_HOST:
-      alias: ZENITH_SMTP_HOST
-      services: [haven]
-    HAVEN_SMTP_PORT:
-      alias: ZENITH_SMTP_PORT
-      services: [haven]
-    HAVEN_SMTP_USER:
-      alias: ZENITH_SMTP_USER
-      services: [haven]
-    HAVEN_SMTP_PASSWORD:
-      alias: ZENITH_SMTP_PASS
-      services: [haven]
-    HAVEN_SMTP_FROM:
-      alias: ZENITH_SMTP_FROM
-      services: [haven]
