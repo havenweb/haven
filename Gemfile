@@ -31,7 +31,7 @@ gem 'bcrypt', '~> 3.1.22'
 gem 'kaminari', '~> 1.2.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '= 8.0.5.1'
+gem 'rails', '= 8.0.5.2'
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
 gem 'pg', '~> 1.5.9'
