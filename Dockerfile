@@ -1,4 +1,4 @@
-FROM ruby:3.3.7-slim-bookworm
+FROM ruby:3.3.14-slim-bookworm
 WORKDIR /app
 
 RUN apt-get update -yqq && \
