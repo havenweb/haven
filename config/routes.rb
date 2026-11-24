@@ -63,9 +63,6 @@ Rails.application.routes.draw do
   post 'settings/font', to: 'settings#create_font', as: "create_font"
   delete 'settings/font/:font_id', to: 'settings#destroy_font', as: "destroy_font"
 
-  get 'import_posts', to: 'posts#new_import'
-  post 'import_posts', to: 'posts#import'
-
   get 'rss', to: 'posts#rss'
 
   get 'login_links/validate', as: :login_link
