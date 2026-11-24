@@ -81,28 +81,6 @@ class PostsController < ApplicationController
     redirect_to posts_path
   end
 
-  ## expects import of a markdown file from a wordpress export and blog2md
-  ## Example:
-  ## ---
-  ## title: 'post title'
-  ## date: Mon, 16 Sep 2019 03:51:34 +0000
-  ## ---
-  ## ![](https://path.to/image.jpg)
-  ##
-  ## Post conent
-  def import
-    local_file_dir = params[:filedir]
-    local_img_dir = params[:imgdir]
-    Dir["#{local_file_dir}*"].each do |local_filename|
-      import_md_file(local_filename, local_img_dir)
-    end
-    redirect_to posts_path
-  end
-
-  def new_import
-    render :import
-  end
-
   def self.sanitize(txt)
     txt.gsub(/[^0-9A-Za-z]/, '-').squeeze("-")
   end
@@ -258,57 +236,6 @@ class PostsController < ApplicationController
   def path_for(obj)
     url = url_for(obj)
     "/#{url.split("/",4)[3]}"
-  end
-
-  ### Methods for Import
- 
-  ## TODO, support audio and video in import 
-  def parse_img_for_import(line, img_src)
-    img_file = "#{line.split("/").last.split("-").first}.jpg"
-    i = Image.new
-    i.blob.attach(io: File.open(img_src + img_file), filename: img_file)
-    i.save
-    return process_new_image(i)
-  end  
-
-  def import_md_file(filename, img_src) 
-    date = ""
-    out = ""
-    File.open(filename) do |file|
-      first = true
-      heading = true
-      file.each_line do |line|
-        if first
-          first = false
-          next
-        end
-        if heading
-          if line=="---\n"
-            heading = false
-            next
-          end
-          if line.start_with? "title: "
-            title = line.chomp.split(": ",2).last[1..-2].gsub("''","'")
-            out += "# #{title}\n"
-          elsif line.start_with? "date: "
-            d = DateTime.parse(line.split(": ",2).last)
-            date = d.in_time_zone("Pacific Time (US & Canada)").strftime("%Y-%m-%d %H:%M:%S") ##TODO: import with different timezones
-          end
-        else #not heading
-          if line.start_with? "![](http"
-            out += parse_img_for_import(line, img_src)
-          else
-            out += line
-          end
-        end
-      end
-    end
-    p = Post.new
-    p.content = out
-    p.datetime = date
-    p.author = current_user
-    p.save
-    p
   end
 
 end
