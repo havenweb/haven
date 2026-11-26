@@ -27,6 +27,10 @@ echo "AWS_BUCKET=\"$BUCKET_NAME\"" >> .env
 echo 'HAVEN_DB_NAME="ubuntu"' >> .env
 echo 'HAVEN_DB_ROLE="ubuntu"' >> .env
 echo "HAVEN_DB_PASSWORD=\"$DB_PASS\"" >> .env
+if ! grep -qE '^(export[[:space:]]+)?SECRET_KEY_BASE=.+' .env; then
+  SECRET_KEY_BASE=$(openssl rand -hex 64)
+  echo "SECRET_KEY_BASE=\"$SECRET_KEY_BASE\"" >> .env
+fi
 
 bundle config set --local deployment 'true'
 bundle config set --local without 'development test'
@@ -34,7 +38,7 @@ bundle install
 bin/rails db:create
 bin/rails db:migrate
 bin/rails assets:precompile
-bin/rails r ~/create_user.rb $EMAIL $RAILS_USER_PASS
+bin/rails r ~/create_user.rb "$EMAIL" "$RAILS_USER_PASS"
 
 # Nginx config and restart
 sudo mv ~/haven.conf /etc/nginx/sites-enabled/

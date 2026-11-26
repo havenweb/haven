@@ -70,6 +70,11 @@ echo "HAVEN_DB_NAME=\"$(whoami)\"" >> .env
 echo "HAVEN_DB_ROLE=\"$(whoami)\"" >> .env
 echo "HAVEN_DB_PASSWORD=\"$DB_PASS\"" >> .env
 
+if ! grep -qE '^(export[[:space:]]+)?SECRET_KEY_BASE=.+' .env; then
+  SECRET_KEY_BASE=$(openssl rand -hex 64)
+  echo "SECRET_KEY_BASE=\"$SECRET_KEY_BASE\"" >> .env
+fi
+
 bin/rails db:create
 bin/rails db:migrate
 bin/rails assets:precompile
