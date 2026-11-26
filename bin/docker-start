@@ -1,12 +1,28 @@
 #!/bin/bash
 
+SECRET_KEY_BASE_FILE="${SECRET_KEY_BASE_FILE:-storage/.secret_key_base}"
+if [ -z "${SECRET_KEY_BASE:-}" ]; then
+  if [ ! -s "$SECRET_KEY_BASE_FILE" ]; then
+    echo "SECRET_KEY_BASE not set; generating a new key at $SECRET_KEY_BASE_FILE"
+    mkdir -p "$(dirname "$SECRET_KEY_BASE_FILE")"
+    (
+      umask 077
+      tmp_file="${SECRET_KEY_BASE_FILE}.tmp.$$"
+      ruby -rsecurerandom -e 'puts SecureRandom.hex(64)' > "$tmp_file"
+      mv "$tmp_file" "$SECRET_KEY_BASE_FILE"
+    )
+  fi
+  SECRET_KEY_BASE="$(tr -d '[:space:]' < "$SECRET_KEY_BASE_FILE")"
+  export SECRET_KEY_BASE
+fi
+
 set +e ## allow startup to continue if operating in a shared DB without creation permissions
 bin/rails db:create 
 set -e
 bin/rails db:migrate
 bin/rails assets:precompile
 
-bin/rails r ./deploymentscripts/lib/ruby/create_user.rb "$HAVEN_USER_EMAIL" $HAVEN_USER_PASS
+bin/rails r ./deploymentscripts/lib/ruby/create_user.rb "$HAVEN_USER_EMAIL" "$HAVEN_USER_PASS"
 
 chmod +x ./deploymentscripts/lib/docker/copy_env.sh
 ./deploymentscripts/lib/docker/copy_env.sh
