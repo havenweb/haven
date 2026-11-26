@@ -32,7 +32,7 @@ RUN crontab /etc/cron.d/feed-fetch-cron
 RUN touch /var/log/cron.log
 
 ADD . .
-RUN bin/rails assets:precompile
+RUN SECRET_KEY_BASE_DUMMY=1 bin/rails assets:precompile
 
 EXPOSE 3000
 
